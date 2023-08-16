@@ -1,7 +1,7 @@
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
-import { getDatabase } from "firebase/database";
+const { initializeApp } = require("firebase/app");
+const { getFirestore } = require("firebase/firestore");
+const { getAuth } = require("firebase/auth");
+const { getDatabase } = require("firebase/database");
 
 const firebaseConfig = {
     apiKey: "AIzaSyCZDLfPHplyTOzke4UfJtLCYaBJrzctJAs",
@@ -14,14 +14,23 @@ const firebaseConfig = {
     measurementId: "G-38W8CS831Y"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
-const realtimeDB = getDatabase(app);
+let db, auth, realtimeDB; // Declare the variables outside the try-catch block
 
-console.log("Firebase App initialized:", !!app);
-console.log("Firestore initialized:", !!db);
-console.log("Auth initialized:", !!auth);
+// Initialize Firebase
+try {
+    const app = initializeApp(firebaseConfig);
+    db = getFirestore(app);
+    auth = getAuth(app);
+    realtimeDB = getDatabase(app);
+
+    console.log("Firebase App initialized:", !!app);
+    console.log("Firestore initialized:", !!db);
+    console.log("Auth initialized:", !!auth);
+    console.log("Realtime Database initialized:", !!realtimeDB);
+
+} catch (error) {
+    console.error("Error initializing Firebase:", error);
+}
 
 export { db, auth, realtimeDB };
+
