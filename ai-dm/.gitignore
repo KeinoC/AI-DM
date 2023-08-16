@@ -33,3 +33,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Ignore specific config file
+config.js
+
+# Ignore all files with a .env extension
+*.env
+
+# Ignore entire directory
+/secrets/
