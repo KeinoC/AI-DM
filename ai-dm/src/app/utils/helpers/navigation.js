@@ -7,3 +7,7 @@ export function navToMyProfile() {
 export function navToHome() {
     window.location.href = "/";
 }
+
+export function navToLogin() {
+    window.location.href = "/routes/login";
+}

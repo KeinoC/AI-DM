@@ -59,16 +59,20 @@ export const UserProvider = ({ children }) => {
     //     return unsubscribe;
     // }, []);
 
-    // const signOut = async () => {
-    //     await signOutWithFirebase();
-    //     setCurrentUser(null);
-    // };
+    const signOut = async () => {
+        await signOutWithFirebase();
+        setCurrentUser(null);
+        if (!currentUser) {
+            navToHome();
+            console.log("User signed out successfully");
+        }
+    };
 
     const value = {
         currentUser,
         signUp,
         signIn,
-        // signOut,
+        signOut,
         // ... Add other CRUD operations as needed
     };
 

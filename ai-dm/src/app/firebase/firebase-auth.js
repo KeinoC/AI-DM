@@ -96,8 +96,8 @@ export const signIn = async (email, password) => {
 
 
 
-// // Sign Out
-// export const signOut = () => auth.signOut();
+// Sign Out
+export const signOut = () => auth.signOut();
 
 // // Password Reset
 // export const resetPassword = (email) => auth.sendPasswordResetEmail(email);
