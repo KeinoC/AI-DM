@@ -10,8 +10,10 @@ const inter = Inter({ subsets: ["latin"] });
 export default function RootLayout({ children }) {
     return (
         <UserProvider>
+            <html>
                 <NavBar />
                 <body className={inter.className}>{children}</body>
+            </html>
         </UserProvider>
     );
 }
