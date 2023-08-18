@@ -1,8 +1,6 @@
 import { auth, db } from "./firebase-config"; // Note: You should also export 'db' from firebase-config
 import { navToMyProfile } from "../utils/helpers/navigation";
-const {
-    createUserWithEmailAndPassword,
-} = require("firebase/auth");
+const { createUserWithEmailAndPassword } = require("firebase/auth");
 import { signInWithEmailAndPassword } from "firebase/auth";
 const {
     doc,
@@ -14,8 +12,8 @@ const {
     updateDoc,
     getFirestore,
 } = require("firebase/firestore");
-
 import { USERS } from "../utils/variables/database-vars";
+
 
 // Sign Up
 // check if profile / email already exist. and throw error / exception
@@ -61,12 +59,15 @@ export const signUp = async (email, password) => {
     }
 };
 
-
 export const signIn = async (email, password) => {
     try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const userCredential = await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
         const user = userCredential.user;
-        
+
         // Successful sign-in logic
         if (user) {
             console.log("User signed in successfully:", user.uid);
@@ -77,7 +78,7 @@ export const signIn = async (email, password) => {
         // Handle sign-in errors
         const errorCode = error.code;
         const errorMessage = error.message;
-        
+
         // You can handle different error codes with custom messages
         if (errorCode === "auth/wrong-password") {
             console.error("Wrong password");
@@ -86,7 +87,7 @@ export const signIn = async (email, password) => {
         } else {
             console.error("Sign-in error:", errorMessage);
         }
-        
+
         // You can also return the error message or code for displaying to the user
         // return { errorCode, errorMessage };
     }
