@@ -32,32 +32,32 @@ export const UserProvider = ({ children }) => {
         setCurrentUser({ ...user, profile: userDoc.data() });
     };
 
-    useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged(async (user) => {
-            if (user) {
-                try {
-                    const userDocRef = doc(db, "users", user.uid); // Reference to the user document
-                    const userDocSnapshot = await getDoc(userDocRef); // Get the document snapshot
+    // useEffect(() => {
+    //     const unsubscribe = auth.onAuthStateChanged(async (user) => {
+    //         if (user) {
+    //             try {
+    //                 const userDocRef = doc(db, "users", user.uid); // Reference to the user document
+    //                 const userDocSnapshot = await getDoc(userDocRef); // Get the document snapshot
 
-                    if (userDocSnapshot.exists()) {
-                        const userData = userDocSnapshot.data(); // Get user data from the snapshot
-                        const updatedUser = { ...user, profile: userData };
-                        setCurrentUser(updatedUser);
-                        navToMyProfile();
-                    } else {
-                        console.log("User profile document does not exist.");
-                    }
-                } catch (error) {
-                    console.error("Error fetching user profile:", error);
-                }
-            } else {
-                setCurrentUser(null);
-                navToHome();
-            }
-        });
+    //                 if (userDocSnapshot.exists()) {
+    //                     const userData = userDocSnapshot.data(); // Get user data from the snapshot
+    //                     const updatedUser = { ...user, profile: userData };
+    //                     setCurrentUser(updatedUser);
+    //                     navToMyProfile();
+    //                 } else {
+    //                     console.log("User profile document does not exist.");
+    //                 }
+    //             } catch (error) {
+    //                 console.error("Error fetching user profile:", error);
+    //             }
+    //         } else {
+    //             setCurrentUser(null);
+    //             navToHome();
+    //         }
+    //     });
 
-        return unsubscribe;
-    }, []);
+    //     return unsubscribe;
+    // }, []);
 
     // const signOut = async () => {
     //     await signOutWithFirebase();
