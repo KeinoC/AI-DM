@@ -1,5 +1,0 @@
-{
-    // "plugins": ["next"],
-    "extends": ["plugin:next/recommended", "next/core-web-vitals"]
-    // "presets": ["next/babel"]
-}
