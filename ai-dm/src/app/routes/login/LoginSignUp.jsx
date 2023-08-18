@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useUser } from "../../contexts/UserContext"; // Assuming this file is in the same directory
+import { createUser } from "../../firebase/firebase-auth"
 
 const LoginSignUp = () => {
     const { signIn, signUp, loading } = useUser(); // Destructure the loading state
     const [isLoginMode, setLoginMode] = useState(true); // True for Login, False for Signup
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("hello@keino.dev");
+    const [password, setPassword] = useState("abc123");
     const [error, setError] = useState("");
+
+// useEffect(() => {
+//     createUser("1", "abc@abc.com", "now");
+// },[])
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();

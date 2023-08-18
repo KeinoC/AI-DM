@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { auth, db } from '../firebase/firebase-config';
 import { signUp as signUpWithFirebase, signIn as signInWithFirebase, signOut as signOutWithFirebase } from '../firebase/firebase-auth';
+import { doc, getDoc } from "firebase/firestore";
+import { navToMyProfile } from '../utils/helpers/navigation';
 
 const UserContext = createContext();
 
@@ -15,29 +17,8 @@ export const useUser = () => {
 export const UserProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null);
 
-    useEffect(() => {
-        const unsubscribe = auth?.onAuthStateChanged(async user => {
-            try {
-                if (user) {
-                    const userDoc = await db.collection('users').doc(user.uid).get();
-                    setCurrentUser({ ...user, profile: userDoc.data() });
-                } else {
-                    setCurrentUser(null);
-                }
-            } catch (error) {
-                console.error("Error during Firebase auth state change:", error);
-            }
-        });
-
-        return unsubscribe;
-    }, []);
-
     const signUp = async (email, password) => {
         const user = await signUpWithFirebase(email, password);
-        await db.collection('users').doc(user.uid).set({
-            email: user.email,
-            createdAt: new Date().toISOString()
-        });
         setCurrentUser(user);
     };
 
@@ -45,18 +26,19 @@ export const UserProvider = ({ children }) => {
         const user = await signInWithFirebase(email, password);
         const userDoc = await db.collection('users').doc(user.uid).get();
         setCurrentUser({ ...user, profile: userDoc.data() });
+        navToMyProfile();
     };
 
-    const signOut = async () => {
-        await signOutWithFirebase();
-        setCurrentUser(null);
-    };
+    // const signOut = async () => {
+    //     await signOutWithFirebase();
+    //     setCurrentUser(null);
+    // };
 
     const value = {
         currentUser,
         signUp,
         signIn,
-        signOut,
+        // signOut,
         // ... Add other CRUD operations as needed
     };
 

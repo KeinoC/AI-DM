@@ -1,7 +1,8 @@
 const { initializeApp } = require("firebase/app");
-const { getFirestore } = require("firebase/firestore");
+const { getFirestore, collection, getDocs, doc, setDoc } = require("firebase/firestore");
 const { getAuth } = require("firebase/auth");
 const { getDatabase } = require("firebase/database");
+
 
 const firebaseConfig = {
     apiKey: "AIzaSyCZDLfPHplyTOzke4UfJtLCYaBJrzctJAs",
@@ -23,6 +24,11 @@ try {
     auth = getAuth(app);
     realtimeDB = getDatabase(app);
 
+    // getUsers(db);
+    // createUser(db);
+
+
+
     console.log("Firebase App initialized:", !!app);
     console.log("Firestore initialized:", !!db);
     console.log("Auth initialized:", !!auth);
@@ -31,6 +37,31 @@ try {
 } catch (error) {
     console.error("Error initializing Firebase:", error);
 }
+// async function getUsers(db) {
+//     // debugger;
+//     const usersCol = collection(db, 'users');
+//     const usersSnapshot = await getDocs(usersCol);
+//     const usersList = usersSnapshot.docs.map(doc => doc.data());
+//     console.log(usersList);
+// }
+
+// async function createUser(db) {
+//     try {
+//         const newUser = {
+//             id: "1",
+//             email: "abc@abc.com",
+//             createdAt: "now",
+//         };
+//         // debugger;
+//         const docRef = doc(db, "users", "1");
+//         await setDoc(docRef, newUser);
+//         // const userCollection = db.ref("users")
+
+//         console.log("User document created successfully");
+//     } catch (error) {
+//         console.error("Error creating user document:", error);
+//     }
+// };
 
 export { db, auth, realtimeDB };
 
