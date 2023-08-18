@@ -11,3 +11,8 @@ export function navToHome() {
 export function navToLogin() {
     window.location.href = "/routes/login";
 }
+
+export function navToDashboard() {
+    window.location.href = "/routes/dashboard"
+}
+

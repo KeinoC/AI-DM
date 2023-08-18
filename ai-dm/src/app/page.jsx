@@ -76,7 +76,7 @@ export default function Home() {
         <layout>
             <div>
                 {/* <div className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1 className="text-4xl font-bold text-center"> Welcome to our AI D&D Project</h1>
+        <h1 className="text-4xl font-bold text-center"> Welcome to our AI D&D Project</h1>
     </div> */}
 
                 <AnimatedLogo />
