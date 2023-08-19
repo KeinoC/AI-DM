@@ -13,6 +13,7 @@ const {
 import { auth, db } from "./firebase-config";
 import { ITEMS } from "../utils/variables/database-vars";
 
+
 // * characters collection CRUD Methods * ----------------
 
 // Create Character
