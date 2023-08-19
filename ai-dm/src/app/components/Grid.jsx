@@ -14,9 +14,7 @@ const Grid = () => {
 
   const handleDrop = (event, x, y) => {
     event.preventDefault();
-    const newPosition = JSON.parse(event.dataTransfer.getData('text/plain'));
-    console.log(newPosition)
-    setPlayerPosition(newPosition);
+    setPlayerPosition({ x: x, y: y });
   };
 
   return (
