@@ -87,7 +87,7 @@ const Grid = () => {
               draggable
               onDragOver={handleDragOver}
               onDrop={(e) => handleDrop(e, x, y)}
-            >{isPlayerHere && "P1"}
+            >{isPlayerHere && <img src="https://i.imgur.com/0wWKQfp.png" />}
               {!isPlayerHere && (
                 <div
                   className="w-12 h-12 "
