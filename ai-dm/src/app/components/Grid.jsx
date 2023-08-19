@@ -1,6 +1,8 @@
 import { Holtwood_One_SC } from 'next/font/google';
 import React, { useState, useEffect } from 'react';
 
+import './grid.css'
+
 const Grid = () => {
   const [playerPosition, setPlayerPosition] = useState({ x: 0, y: 0 });
 
@@ -81,8 +83,8 @@ const Grid = () => {
           return (
             <div
               key={index}
-              className={`w-12 h-12 ${
-                isPlayerHere ? 'bg-blue-300' : 'bg-gray-300'
+              className={`w-12 h-12 bg-gray-300 ${
+                isPlayerHere && 'grabbable' 
               }`}
               draggable
               onDragOver={handleDragOver}
