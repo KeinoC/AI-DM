@@ -166,7 +166,7 @@ export async function removeItemFromAdventure(itemId) {
                 console.error("Error removing item from game: ", error);
                 throw error
             }
-        }
+}
 
 // Add Item to Character
 export async function addItemToCharacter(characterId, itemId) {
@@ -202,3 +202,21 @@ export async function addItemToCharacter(characterId, itemId) {
 }
 
 // Remove item from character
+export async function removeItemFromCharacter(characterId, itemId) {
+    try {
+        const characterDocRef = doc(db, CHARACTERS, characterId);
+        const characterData = await characterDocRef.get();
+
+        if (characterData.exists()) {
+            const updatedItems = characterData.data().items.filter(id => id !== itemId);
+            await updateDoc(characterDocRef, { items: updatedItems });
+
+            console.log("Item removed from character successfully");
+        } else {
+            throw new Error("Character not found");
+        }
+    } catch (error) {
+        console.error('Error removing item from character: ', error);
+        throw error;
+    }
+}
