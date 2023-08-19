@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import { Holtwood_One_SC } from 'next/font/google';
+import React, { useState, useEffect } from 'react';
 
 const Grid = () => {
   const [playerPosition, setPlayerPosition] = useState({ x: 0, y: 0 });
 
   const handleDragStart = (event, x, y) => {
     event.dataTransfer.setData('text/plain', JSON.stringify({ x, y }));
-    console.log('drag started from ', {x, y})
   };
 
   const handleDragOver = (event) => {
@@ -16,6 +16,59 @@ const Grid = () => {
     event.preventDefault();
     setPlayerPosition({ x: x, y: y });
   };
+
+
+  // const [playerPositions, setPlayerPositions] = useState(null); // Initialize playerPositions state
+  
+  // let characters = [
+  //   {
+  //     id: 1,
+  //     name: "Rangerfuxx",
+  //     user: "drewford",
+  //     player: 2,
+  //     inPlay: false,
+  //     position: { x: 3, y: 2 }
+  //   }
+  // ];
+  
+  // let adventure1 = {
+  //   host: "1",
+  //   players: ["1", "2", "3"]
+  // };
+  
+  // function loadPlayersOnBoard(adventure) {
+  //   const playersIds = adventure.players;
+  //   console.log(playersIds);
+  
+  //   const positions = {}; // Create an object to store positions
+  
+  //   playersIds.forEach((playerId) => {
+  //     const player = characters.find((character) => character.id === playerId);
+  
+  //     if (player) {
+  //       const position = { x: player.position.x, y: player.position.y };
+  //       positions[playerId] = position; // Store position in the object
+  //     } else {
+  //       console.log("Player not found for ID:", playerId);
+  //     }
+  //   });
+  
+  //   setPlayerPositions(positions); // Update playerPositions state
+  //   console.log(positions)
+  // }
+  
+  // useEffect(() => {
+  //   loadPlayersOnBoard(adventure1);
+  // },[])
+  
+  // ... Rest of your component code
+
+
+  
+ 
+
+
+
 
   return (
     <div className="flex justify-center items-center h-screen">

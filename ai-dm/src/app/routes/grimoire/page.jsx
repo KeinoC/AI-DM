@@ -2,14 +2,22 @@
 
 import React, { useState } from 'react';
 import Form from '../../components/Form';
+import { createItem } from '@/app/firebase/firebase-db-items';
 
 import formData from './forms/FormData';
 
 export default function Grimoire() {
-    const [onSubmit, setOnSubmit] = useState([])
+    const [submitData, setSubmitData] = useState([])
     const [selectedForm, setSelectedForm] = useState(0)
 
     const formFields = formData[selectedForm].inputFields
+
+    console.log(submitData)
+
+    // createItem(onSubmit)
+
+
+    // Create API function, pass in onSubmit
 
     return (
         <>
@@ -34,7 +42,7 @@ export default function Grimoire() {
                 })}
             </select>
 
-            <Form  formFields={formFields} onSubmit={onSubmit}/>
+            <Form  formFields={formFields} submitData={submitData} setSubmitData={setSubmitData}/>
         </>
     )
 }

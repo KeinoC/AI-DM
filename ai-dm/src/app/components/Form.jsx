@@ -1,6 +1,6 @@
 import { React, useState } from 'react'
 
-const Form= ({ formFields, onSubmit }) => {
+const Form= ({ formFields, submitData, setSubmitData }) => {
   const [formData, setFormData] = useState({});
 
   const handleInputChange = (e) => {
@@ -10,11 +10,11 @@ const Form= ({ formFields, onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData);
+    setSubmitData(formData);
   };
 
   return (
-    <form onSubmit={handleSubmit}
+    <form submitData={handleSubmit}
       className="bg-red-800 p-6 w-[28rem] rounded-md">
       {Object.keys(formFields).map((fieldName) => {
         const field = formFields[fieldName];
