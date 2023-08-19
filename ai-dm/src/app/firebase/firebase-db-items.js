@@ -11,12 +11,12 @@ const {
     getFirestore,
 } = require("firebase/firestore");
 import { auth, db } from "./firebase-config";
-import { ITEMS } from "../utils/variables/database-vars";
+import { ITEMS, ADVENTURES, CHARACTERS } from "../utils/variables/database-vars";
 
 
 
 
-// * items collection CRUD Methods * ----------------
+// * items collection basic CRUD Methods * ----------------
 
 // create item
 export async function createItem(ItemData) {
@@ -96,3 +96,109 @@ export async function deleteItem(itemId) {
         throw error;
     }
 }
+
+// * item interaction methods * --------------------------------
+
+// Add Item to Adventure
+export async function addItemToAdventure(adventureId, itemId) {
+    try {
+        const adventureDocRef = doc(db, ADVENTURES, adventureId);
+        const adventureData = await adventureDocRef.get();
+
+        if (adventureData.exists()) {
+            const updatedItems = [...(adventureData.data().items || []), itemId];
+            await updateDoc(adventureDocRef, { items: updatedItems });
+
+            console.log("Item added to adventure successfully");
+        } else {
+            throw new Error("Adventure not found");
+        }
+    } catch (error) {
+        console.error('Error adding item to adventure: ', error);
+        throw error;
+    }
+}
+
+// Remove Item from Adventure
+export async function removeItemFromAdventure(itemId) {
+    try {
+        const itemDocRef = doc(db, ITEMS, itemId);
+        const itemData = await itemDocRef.get();
+
+        if (itemData.exists()) {
+            const adventureId = itemData.data().adventureId;
+
+            if (!adventureId) {
+                throw new Error("Item is not associated with any adventures");
+            }
+
+            const adventureDocRef = doc(db, ADVENTURES, adventureId);
+            const adventureData = await adventureDocRef.get();
+
+            if (adventureData.exists()) {
+                const characterCollection = collection(db, CHARACTERS);
+                const characterDataSnapshot = await getDocs(characterCollection)
+
+                // Remove items from characters who have it
+                characterDataSnapshot.forEach(async (characterDoc) => {
+                    const characterData = characterDoc.data();
+                    if (characterData.items && characterData.items.includes(itemId)) {
+                        const updatedItems = characterData.items.filter(id => id !== itemId)
+                        await updateDoc(adventureDocRef, {items: updatedItems});
+                    }
+                });
+
+                    // remove item from adventure
+                    const updatedAdventureItems = adventureData.data().items.filter(id => id !== itemId);
+                    await updateDoc(adventureDocRef, { items: updatedAdventureItems });
+
+                        // Delete the actual item (not sure if we want to delete the original item, just from adventure and character is enough)
+                        // await deleteDoc(itemDocRef);
+
+                        console.log("Item removed from game successfully");
+                    } else {
+                        throw new Error("Adventure not found");
+                    }
+                } else {
+                    throw new Error("Item not found");
+                }
+            } catch (error) {
+                console.error("Error removing item from game: ", error);
+                throw error
+            }
+        }
+
+// Add Item to Character
+export async function addItemToCharacter(characterId, itemId) {
+    try {
+        const characterDocRef = doc(db, CHARACTERS, characterId);
+        const characterData = await characterDocRef.get();
+
+        if (characterData.exists()) {
+            const adventureId = characterData.data().adventureId;
+
+            if (!adventureId) {
+                throw new Error("Character is not associated with any adventure");
+            }
+
+            const adventureDocRef = doc(db, ADVENTURES, adventureId);
+            const adventureData = await adventureDocRef.get();
+
+            if (adventureData.exists() && adventureData.data().items.includes(itemId)) {
+                const updatedItems = [...(characterData.data().items || []), itemId];
+                await updateDoc(characterDocRef, { items: updatedItems });
+
+                console.log("Item added to character successfully");
+            } else {
+                throw new Error("Item is not in the adventure the character is playing in");
+            }
+        } else {
+            throw new Error("Character not found");
+        }
+    } catch (error) {
+        console.error('Error adding item to character: ', error);
+        throw error;
+    }
+}
+
+// Remove item from character
