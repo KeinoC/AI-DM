@@ -1,88 +1,94 @@
 let formData = [
   {
     id: 1,
+    label: "Weapon",
     form: "weapons",
     inputFields: [
       {
         id: 1,
-        input: "weapon name",
+        name: "weapon name",
         label: "Weapon Name",
         placeholder: "Short Sword",
+        defaultValue: "",
         type: "text"
       },
       {
         id: 2,
-        input: "rank",
+        name: "rank",
         label: "Rank",
         placeholder: "1",
+        defaultValue: "",
         type: "number"
       },
-      // {
-      //   id: 3,
-      //   input: "id",
-      //   placeholder: "weapon ID",
-      //   type: "number"
-      // }
       {
         id: 3,
-        input: "type",
+        name: "type",
         label: "Type",
         placeholder: "Martial",
+        defaultValue: "",
         type: "text"
       },
       {
         id: 4,
-        input: "range",
+        name: "range",
         label: "Range",
         placeholder: "5",
+        defaultValue: "",
         type: "number",
       },
       {
         id: 5,
-        input: "hitMod",
+        name: "hitMod",
         label: "Hit Modifier",
         placeholder: "1",
+        defaultValue: "",
         type: "number"
       },
       {
-        id: 5,
-        input: "dmgMod",
+        id: 6,
+        name: "dmgMod",
         label: "Damage Modifier",
         placeholder: "1",
+        defaultValue: "",
         type: "number"
       }
     ]
   },
   {
     id: 2,
+    label: "Consumable",
     form: "items",
     inputFields: [
       {
         id: 1,
-        input: "type",
+        name: "type",
         label: "Item Type",
         placeholder: "Healing",
+        defaultValue: "",
         type: "text"
       },
       {
         id: 2,
-        input: "numRolls",
+        name: "numRolls",
         label: "Number of Rolls",
         placeholder: "1",
+        defaultValue: "",
         type: "number"
       },
       {
         id: 3,
-        input: "sides",
+        name: "sides",
         label: "Dice Type",
         placeholder: 6,
+        defaultValue: "",
         type: "number"
       },
       {
         id: 4,
-        input: "mod",
+        name: "mod",
         label: "Modifier",
         placeholder: "1",
+        defaultValue: "",
         type: "number"
       }
     ]
