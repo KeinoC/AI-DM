@@ -1,9 +1,7 @@
 'use client'
 
-import { React, useState } from 'react';
+import React, { useState } from 'react';
 import Form from '../../components/Form';
-
-import Grid from '@/app/components/Grid';
 
 import formData from './forms/FormData';
 
@@ -37,10 +35,6 @@ export default function Grimoire() {
             </select>
 
             <Form  formFields={formFields} onSubmit={onSubmit}/>
-
-
-            <br /><br />
-            <Grid />
         </>
     )
 }
