@@ -1,4 +1,4 @@
-import { auth, db } from "./firebase-config"; // Note: You should also export 'db' from firebase-config
+import { auth, db } from "./firebase-config";
 import { navToMyProfile } from "../utils/helpers/navigation";
 const { createUserWithEmailAndPassword } = require("firebase/auth");
 import { signInWithEmailAndPassword } from "firebase/auth";

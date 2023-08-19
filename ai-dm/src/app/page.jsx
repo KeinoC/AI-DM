@@ -11,6 +11,7 @@ function AnimatedLogo() {
         <motion.div className="homepage scroll-snap-align-start h-full min-h-screen  items-center justify-center bg-gradient-to-r from-gray-900 to-black-900">
             <AnimatePresence>
                 <motion.div
+                key="logo"
                     initial={{ opacity: 0, x: "-100vw" }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{
@@ -32,6 +33,7 @@ function AnimatedLogo() {
             </AnimatePresence>
             <AnimatePresence>
                 <motion.div
+                key="tag"
                     className="tag"
                     initial={{ opacity: 0, x: "100vw" }}
                     animate={{ opacity: 1, x: 0 }}
@@ -47,6 +49,7 @@ function AnimatedLogo() {
                 </motion.div>
 
                 <motion.div
+                key="button"
                     // className="text-lg text-gray-300 bg-gray-900 hover:bg-yellow-700 "
                     initial={{ opacity: 0, y: 0, scale: 0.8 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
