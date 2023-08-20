@@ -1,6 +1,6 @@
 import { auth, db } from "./firebase-config";
-import { navToMyProfile } from "../utils/helpers/navigation";
-const { createUserWithEmailAndPassword } = require("firebase/auth");
+import { navToMapNamed } from "../utils/helpers/navigation";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
 const {
     doc,
@@ -13,6 +13,7 @@ const {
     getFirestore,
 } = require("firebase/firestore");
 import { USERS } from "../utils/variables/database-vars";
+import { WATERDEEP } from "../utils/variables/map-vars";
 
 
 // Sign Up
@@ -50,7 +51,7 @@ export const signUp = async (email, password) => {
             await createUser(id, email, createdAt);
         }
         console.log("Document written with ID:", user.uid);
-        navToMyProfile();
+        navToMapNamed(WATERDEEP);
         return user;
     } catch (error) {
         const errorCode = error.code;
@@ -71,7 +72,7 @@ export const signIn = async (email, password) => {
         // Successful sign-in logic
         if (user) {
             console.log("User signed in successfully:", user.uid);
-            navToMyProfile(); // Navigate to the user's profile page
+            navToMapNamed(WATERDEEP);
             return user;
         }
     } catch (error) {

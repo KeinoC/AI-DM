@@ -29,10 +29,10 @@ try {
 
 
 
-    console.log("Firebase App initialized:", !!app);
-    console.log("Firestore initialized:", !!db);
-    console.log("Auth initialized:", !!auth);
-    console.log("Realtime Database initialized:", !!realtimeDB);
+    // console.log("Firebase App initialized:", !!app);
+    // console.log("Firestore initialized:", !!db);
+    // console.log("Auth initialized:", !!auth);
+    // console.log("Realtime Database initialized:", !!realtimeDB);
 
 } catch (error) {
     console.error("Error initializing Firebase:", error);

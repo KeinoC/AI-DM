@@ -1,12 +1,13 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { auth, db } from "../firebase/firebase-config";
+const { USERS } = require("../utils/variables/database-vars");
 import {
     signUp as signUpWithFirebase,
     signIn as signInWithFirebase,
     signOut as signOutWithFirebase,
 } from "../firebase/firebase-auth";
 import { doc, getDoc } from "firebase/firestore";
-import { navToMyProfile, navToHome } from "../utils/helpers/navigation";
+import { navToMyProfile, navToMapNamed, navToHome } from "../utils/helpers/navigation";
 
 const UserContext = createContext();
 
@@ -23,14 +24,39 @@ export const UserProvider = ({ children }) => {
 
     const signUp = async (email, password) => {
         const user = await signUpWithFirebase(email, password);
-        setCurrentUser(user);
+        // TODO: create firestore instance and set currentUser to it
     };
 
-    const signIn = async (email, password) => {
-        const user = await signInWithFirebase(email, password);
-        const userDoc = await db.collection("users").doc(user.uid).get();
-        setCurrentUser({ ...user, profile: userDoc.data() });
-    };
+    // const signIn = async (email, password) => {
+    //     const user = await signInWithFirebase(email, password);
+    //     const userDoc = await db.collection("users").doc(user.uid).get();
+    //     setCurrentUser({ ...user, profile: userDoc.data() });
+    // };
+
+const signIn = async (email, password) => {
+
+    try {
+        const authUser = await signInWithFirebase(email, password);
+        console.log(authUser.uid);
+
+        // Get user data from Firestore USERS collection
+        const userDocRef = doc(db, USERS, authUser.uid);
+        const userDocSnapshot = await getDoc(userDocRef)
+        console.log(userDocSnapshot)
+
+        if (userDocSnapshot.exists()) {
+            const userData = userDocSnapshot.data();
+            setCurrentUser(userData);
+        } else {
+            console.error("User data not found in Firestore for:", authUser.uid);
+        }
+    } catch (error) {
+        console.error("Sign-in error:", error);
+    }
+};
+
+
+
 
     // useEffect(() => {
     //     const unsubscribe = auth.onAuthStateChanged(async (user) => {

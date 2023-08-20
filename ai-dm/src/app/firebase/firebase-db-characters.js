@@ -11,7 +11,7 @@ const {
     getFirestore,
 } = require("firebase/firestore");
 import { auth, db } from "./firebase-config";
-import { ITEMS } from "../utils/variables/database-vars";
+import { ITEMS, CHARACTERS } from "../utils/variables/database-vars";
 
 
 // * characters collection CRUD Methods * ----------------
@@ -19,7 +19,7 @@ import { ITEMS } from "../utils/variables/database-vars";
 // Create Character
 export async function createCharacter(characterData) {
     try {
-        const charactersCollection = collection(db, "characters");
+        const charactersCollection = collection(db, CHARACTERS);
 
         const newCharacterRef = await addDoc(charactersCollection, {
             ...characterData,
@@ -38,7 +38,7 @@ export async function createCharacter(characterData) {
 // Get All Characters from DB
 export async function getAllCharacters() {
     try {
-        const charactersCollection = collection(db, "characters");
+        const charactersCollection = collection(db, CHARACTERS);
         const querySnapshot = await getDocs(charactersCollection);
 
         const allCharacters = [];
@@ -56,7 +56,7 @@ export async function getAllCharacters() {
 // Get Character by ID
 export async function getCharacterById(characterId) {
     try {
-        const characterDocRef = doc(db, "characters", characterId);
+        const characterDocRef = doc(db, CHARACTERS, characterId);
         const characterSnapshot = await getDoc(characterDocRef);
 
         if (characterSnapshot.exists()) {
@@ -74,7 +74,7 @@ export async function getCharacterById(characterId) {
 // Update Character by ID
 export async function updateCharacter(characterId, updateData) {
     try {
-        const characterDocRef = doc(db, "characters", characterId);
+        const characterDocRef = doc(db, CHARACTERS, characterId);
         await updateDoc(characterDocRef, updateData);
 
         console.log("Character updated successfully");
@@ -87,7 +87,7 @@ export async function updateCharacter(characterId, updateData) {
 // Delete Character by ID
 export async function deleteCharacter(characterId) {
     try {
-        const characterDocRef = doc(db, "characters", characterId);
+        const characterDocRef = doc(db, CHARACTERS, characterId);
         await deleteDoc(characterDocRef);
 
         console.log("Character deleted successfully");
