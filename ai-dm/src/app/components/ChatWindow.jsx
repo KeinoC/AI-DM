@@ -72,9 +72,6 @@ export default function ChatWindow() {
         <div className="fixed bottom-0 left-0 w-1/4 max-h-1/4-screen bg-white bg-opacity-50 p-4 text-salmon">
             <div
                 className="max-h-25vh overflow-y-auto"
-                style={{
-                    maxHeight: window.innerHeight / 4,
-                }}
             >
                 {chatHistoryWindow}
             </div>
