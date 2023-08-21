@@ -4,9 +4,10 @@ import { React, useState } from "react";
 import Form from "../../components/Form";
 
 import formData from "./forms/FormData";
+import { createItem } from "@/app/firebase/firebase-db-items";
 
 export default function Admin() {
-    const [onSubmit, setOnSubmit] = useState([]);
+    const [submitData, setSubmitData] = useState([]);
     const [selectedForm, setSelectedForm] = useState(0);
 
     const formFields = formData[selectedForm].inputFields;
@@ -34,7 +35,7 @@ export default function Admin() {
                     );
                 })}
             </select>
-            <Form formFields={formFields} onSubmit={onSubmit} />
+            <Form formFields={formFields} onSubmit={createItem(submitData)} />
         </>
     );
 }

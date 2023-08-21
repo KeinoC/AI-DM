@@ -37,16 +37,18 @@ export async function createItem(ItemData) {
     }
 }
 
+
 // get All items from db
 export async function getAllItems() {
     try {
-        const itemsCollection = collection(db, ITEMS);
+        const itemsCollection = collection(db, ITEMS); // Assuming ITEMS is a string
         const querySnapshot = await getDocs(itemsCollection);
-
+        // console.log(querySnapshot);
         const allItems = [];
         querySnapshot.forEach((item) => {
-            allItems.push({id: doc.id, ...doc.data()});
+            allItems.push({ id: item.id, ...item.data() });
         });
+        // console.log(allItems);
 
         return allItems;
     } catch (error) {
@@ -54,6 +56,7 @@ export async function getAllItems() {
         throw error;
     }
 }
+
 
 // get item by id
 export async function getItemById(itemId) {
