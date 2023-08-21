@@ -17,7 +17,10 @@ export default function RootLayout({ children }) {
                 <GrimoireProvider>
                     <DNDApiProvider>
                 <html>
-                    <body className={inter.className}>{children}</body>
+                    <body className={inter.className}>
+                        <NavBar />
+                        {children}
+                    </body>
                 </html>
                 </DNDApiProvider>
                 </GrimoireProvider>

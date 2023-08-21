@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { useChat } from "../contexts/ChatContext";
 import { useUser } from "../contexts/UserContext";
 import {
@@ -10,12 +10,13 @@ import {
 // TODO: chat history needs to auto scroll to bottom
 
 export default function ChatWindow() {
+    const scrollRef = useRef(null);
     const { chatHistory, setChatHistory, newChatMessage, setNewChatMessage } =
         useChat();
     const { currentUser } = useUser();
 
     const handleSubmit = async (e) => {
-        if (e.key === "Enter") {
+        if (e?.key === "Enter" || e == "submit") {
             const currentTimeNormalized = convertUnixToTime(
                 await getCurrentUnixTimestamp()
             );
@@ -41,11 +42,18 @@ export default function ChatWindow() {
 
     const chatHistoryWindow = chatHistory.map((entry, index) => {
         return (
-            <div key={index} className="bg-gray-100 p-2 m-1 rounded">
-                <li className="text-gray-500">{entry}</li>
+            <div key={index} className=" bg-slate-600 p-2 m-1 rounded">
+                <li className="text-white">{entry}</li>
             </div>
         );
     });
+
+    useEffect(() => {
+        console.log(chatHistory)
+        if (scrollRef.current) {
+          scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+        }
+      }, [chatHistory]);
 
     const newChatMessageWindow = () => {
         return (
@@ -55,11 +63,11 @@ export default function ChatWindow() {
                     value={newChatMessage}
                     onChange={(e) => setNewChatMessage(e.target.value)}
                     onKeyUp={handleSubmit} // Handle Enter key press
-                    className="flex-grow border rounded-l p-2 text-gray-500"
+                    className="flex-grow border-none outline-none rounded-l p-2 text-white"
                 />
                 <button
-                    onSubmit={() => handleSubmit()}
-                    onClick={() => handleSubmit()}
+                    onSubmit={() => handleSubmit("submit")}
+                    onClick={() => handleSubmit("submit")}
                     className="bg-blue-500 text-white px-4 py-2 rounded-r"
                 >
                     Send
@@ -69,13 +77,20 @@ export default function ChatWindow() {
     };
 
     return (
-        <div className="fixed bottom-0 left-0 w-1/4 max-h-1/4-screen bg-white bg-opacity-50 p-4 text-salmon">
-            <div
-                className="max-h-25vh overflow-y-auto"
-            >
+        <div className="fixed bottom-0 left-0 sm:w-[400px] sm:h-[400px] bg-slate-800 bg-opacity-90 p-6 rounded-lg text-salmon">
+
+            <div ref={scrollRef} className="overflow-y-scroll sm:h-[300px]">
                 {chatHistoryWindow}
             </div>
-            {newChatMessageWindow()}
+
+            { currentUser ?
+                newChatMessageWindow()
+                :
+                <div className="flex justify-center items-center">
+                    <h1>Login to chat.</h1>
+                </div>
+            }
+
         </div>
     );
 }

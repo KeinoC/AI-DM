@@ -59,8 +59,8 @@
 }
 
 .doppelganger {
-    margin-top: 25dvh;
-    min-width: 100dvw;
+    margin-top: 25vh;
+    max-width: 100vw;
     height: 16dvw;
     padding: 0;
     display: inline-block;

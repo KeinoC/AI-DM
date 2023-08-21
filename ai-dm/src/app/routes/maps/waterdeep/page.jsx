@@ -8,10 +8,9 @@ import Grid from '@/app/components/Grid';
 export default function WaterdeepMap() {
     return (
         <div className="h-screen overflow-y-none">
-        <NavBar />
-        <h1>Welcome to Waterdeep</h1>
-        <Grid />
-        <ChatWindow />
+            <h1>Welcome to Waterdeep</h1>
+            <Grid />
+            <ChatWindow />
         </div>
     )
 }

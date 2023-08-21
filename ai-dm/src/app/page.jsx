@@ -8,10 +8,11 @@ import { navToLogin } from "./utils/helpers/navigation";
 
 function AnimatedLogo() {
     return (
-        <motion.div className="homepage scroll-snap-align-start h-full min-h-screen  items-center justify-center bg-gradient-to-r from-gray-900 to-black-900">
+        <motion.div className="homepage flex flex-col max-w-full scroll-snap-align-start h-full min-h-screen items-center bg-gradient-to-r from-gray-900 to-black-900">
+            
             <AnimatePresence>
                 <motion.div
-                key="logo"
+                    key="logo"
                     initial={{ opacity: 0, x: "-100vw" }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{
@@ -21,7 +22,7 @@ function AnimatedLogo() {
                         bounce: 0.25,
                     }}
                     exit={{ opacity: 0, x: "-100vw", delay: 0 }} // Delay the exit animation by 2 seconds
-                    className="doppelganger"
+                    className="doppelganger max-w-[90vw]"
                 >
                     <span className="letters">A</span>
                     <span className="letters">I</span>
@@ -31,6 +32,7 @@ function AnimatedLogo() {
                     <span className="letters">D</span>
                 </motion.div>
             </AnimatePresence>
+
             <AnimatePresence>
                 <motion.div
                 key="tag"
@@ -66,7 +68,7 @@ function AnimatedLogo() {
                         >
                             ENTER
                         </button>
-                        <div className="tooltip">If you dare.. 😈</div>
+                        <div className="tooltip w-[120px]">If you dare.. 😈</div>
                     </div>
                 </motion.div>
             </AnimatePresence>

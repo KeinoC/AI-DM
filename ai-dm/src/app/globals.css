@@ -25,3 +25,8 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+/* to help debug css */
+/* * {
+  outline: 1px solid #f00 !important;
+}  */
