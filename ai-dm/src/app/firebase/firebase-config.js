@@ -37,6 +37,36 @@ try {
 } catch (error) {
     console.error("Error initializing Firebase:", error);
 }
+
+async function signIn(email, password) {
+
+    try {
+        const authUser = await signInWithFirebase(email, password);
+        console.log(authUser.uid);
+
+        // Get user data from Firestore USERS collection
+        const userDocRef = doc(db, "users", authUser.uid);
+        const userDocSnapshot = await getDoc(userDocRef);
+
+        if (userDocSnapshot.exists()) {
+            const userData = userDocSnapshot.data();
+            console.log('user data: ', userData)
+            setCurrentUser(userData);
+        } else {
+            // User does not exist in Firestore, create a new document
+            const user = {
+                uid: authUser.uid,
+                email: email,
+            };
+            setCurrentUser(user);
+        }
+
+    } catch (error) {
+        console.error("Sign-in error:", error);
+    }
+};
+
+
 // async function getUsers(db) {
 //     // debugger;
 //     const usersCol = collection(db, 'users');
@@ -63,5 +93,5 @@ try {
 //     }
 // };
 
-export { db, auth, realtimeDB };
+export { db, auth, realtimeDB, signIn };
 

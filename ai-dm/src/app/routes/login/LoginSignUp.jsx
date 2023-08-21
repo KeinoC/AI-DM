@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useUser } from "../../contexts/UserContext"; // Assuming this file is in the same directory
+import { signIn, signUp } from '../../firebase/firebase-auth';
 
 const LoginSignUp = () => {
-    const { signIn, signUp, loading } = useUser();
     const [isLoginMode, setLoginMode] = useState(true);
     const [email, setEmail] = useState("hello@keino.dev");
     const [password, setPassword] = useState("abc123");
     const [error, setError] = useState("");
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -22,10 +23,6 @@ const LoginSignUp = () => {
             setError(err.message);
         }
     };
-
-    if (loading) {
-        return <p>Loading...</p>;
-    }
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-gray-900 to-black-900">

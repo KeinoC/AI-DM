@@ -75,7 +75,7 @@ const Grid = () => {
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="grid grid-cols-5 gap-2">
-        {Array.from({ length: 25 }, (_, index) => {
+        {Array.from({ length: 50}, (_, index) => {
           const x = index % 5;
           const y = Math.floor(index / 5);
           const isPlayerHere = x === playerPosition.x && y === playerPosition.y;

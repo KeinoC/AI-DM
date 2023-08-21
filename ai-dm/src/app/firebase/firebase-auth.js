@@ -19,7 +19,8 @@ import { WATERDEEP } from "../utils/variables/map-vars";
 // Sign Up
 // check if profile / email already exist. and throw error / exception
 
-export const createUser = async (id, email, createdAt) => {
+export const createFirestoreUser = async (id, email) => {
+    const createdAt = Timestamp.fromDate(new Date());
     try {
         const newUser = {
             id: id,
@@ -48,7 +49,7 @@ export const signUp = async (email, password) => {
             const id = user?.uid;
             const email = user?.email;
             const createdAt = Timestamp.fromDate(new Date());
-            await createUser(id, email, createdAt);
+            await createFirestoreUser(id, email, createdAt);
         }
         console.log("Document written with ID:", user.uid);
         navToMapNamed(WATERDEEP);

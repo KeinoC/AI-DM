@@ -3,11 +3,15 @@ import { auth, db } from "../firebase/firebase-config";
 const { USERS } = require("../utils/variables/database-vars");
 import {
     signUp as signUpWithFirebase,
-    signIn as signInWithFirebase,
     signOut as signOutWithFirebase,
+    createUser
 } from "../firebase/firebase-auth";
-import { doc, getDoc } from "firebase/firestore";
-import { navToMyProfile, navToMapNamed, navToHome } from "../utils/helpers/navigation";
+const { doc, getDoc } = require("firebase/firestore");
+import {
+    navToMyProfile,
+    navToMapNamed,
+    navToHome,
+} from "../utils/helpers/navigation";
 
 const UserContext = createContext();
 
@@ -27,36 +31,62 @@ export const UserProvider = ({ children }) => {
         // TODO: create firestore instance and set currentUser to it
     };
 
-    // const signIn = async (email, password) => {
-    //     const user = await signInWithFirebase(email, password);
-    //     const userDoc = await db.collection("users").doc(user.uid).get();
-    //     setCurrentUser({ ...user, profile: userDoc.data() });
-    // };
+    // auth change
 
-const signIn = async (email, password) => {
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged(async (authUser) => {
+            if (authUser) {
+                const userDocRef = doc(db, "users", authUser.uid);
+                const userDocSnapshot = await getDoc(userDocRef);
 
-    try {
-        const authUser = await signInWithFirebase(email, password);
-        console.log(authUser.uid);
+                if (userDocSnapshot.exists()) {
+                    const userData = userDocSnapshot.data();
+                    console.log("user data: ", userData);
+                    setCurrentUser(userData);
+                } else {
+                    // User does not exist in Firestore, create a new document
+                    const user = {
+                        uid: authUser.uid,
+                        email: authUser.email,
+                    };
+                    // ... creates new user in firestore
+                    createFirestoreUser(user)
 
-        // Get user data from Firestore USERS collection
-        const userDocRef = doc(db, USERS, authUser.uid);
-        const userDocSnapshot = await getDoc(userDocRef)
-        console.log(userDocSnapshot)
+                }
+            } else {
+                // Auth user is null, meaning user signed out
+                setCurrentUser(null);
+            }
+        });
 
-        if (userDocSnapshot.exists()) {
-            const userData = userDocSnapshot.data();
-            setCurrentUser(userData);
-        } else {
-            console.error("User data not found in Firestore for:", authUser.uid);
-        }
-    } catch (error) {
-        console.error("Sign-in error:", error);
-    }
-};
+        return () => unsubscribe();
+    }, []);
 
+    // async function signIn(email, password) {
+    //     try {
+    //         const authUser = await signInWithFirebase(email, password);
+    //         console.log(authUser.uid);
+    //         debugger;
 
-
+    //         // Get user data from Firestore USERS collection
+    //         const userDocRef = doc(db, "users", authUser.uid);
+    //         const userDocSnapshot = await getDoc(userDocRef);
+    //         if (userDocSnapshot.exists()) {
+    //             const userData = userDocSnapshot.data();
+    //             console.log("user data: ", userData);
+    //             setCurrentUser(userData);
+    //         } else {
+    //             // User does not exist in Firestore, create a new document
+    //             const user = {
+    //                 uid: authUser.uid,
+    //                 email: email,
+    //             };
+    //             setCurrentUser(user);
+    //         }
+    //     } catch (error) {
+    //         console.error("Sign-in error:", error);
+    //     }
+    // }
 
     // useEffect(() => {
     //     const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -97,7 +127,6 @@ const signIn = async (email, password) => {
     const value = {
         currentUser,
         signUp,
-        signIn,
         signOut,
         // ... Add other CRUD operations as needed
     };
