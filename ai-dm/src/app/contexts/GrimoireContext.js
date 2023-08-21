@@ -18,6 +18,7 @@ export const GrimoireProvider = ({ children }) => {
 
     const [displayedItems, setDisplayedItems] = useState([])
     const [allItems, setAllItems] = useState([])
+    const [itemFilters, setItemFilters] = useState([{}])
 
     // fetch and set all items to allItems state
     useEffect(() => {
@@ -33,14 +34,14 @@ export const GrimoireProvider = ({ children }) => {
             }
         };
 
-        fetchItems();
+        fetchItems();   
     }, []);
 
     useEffect(() => {
         if (allItems.length > 0) {
             setDisplayedItems(allItems);
         }
-    }, [allItems])
+    }, [allItems, itemFilters])
 
 
 

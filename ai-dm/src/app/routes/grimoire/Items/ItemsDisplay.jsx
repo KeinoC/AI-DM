@@ -1,9 +1,10 @@
 import React from 'react';
 import { useGrimoire } from '@/app/contexts/GrimoireContext';
+import { useDNDApi } from '@/app/contexts/DNDApiContext';
 
 export default function ItemsDisplay() {
     const { displayedItems } = useGrimoire();
-    console.log(displayedItems);
+    const { apiItems } = useDNDApi();
 
     return (
         <ul>
