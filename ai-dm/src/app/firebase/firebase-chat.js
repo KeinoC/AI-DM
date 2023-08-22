@@ -1,5 +1,5 @@
 import { realtimeDB } from "./firebase-config";
-const { ref, set, orderByChild, limitToLast, query } = require("firebase/database");
+const { ref, set, orderByChild, limitToLast, query, get } = require("firebase/database");
 
 export async function sendGlobalMessage(channel, message, currentUser) {
     try {
