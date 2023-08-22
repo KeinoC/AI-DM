@@ -1,6 +1,6 @@
 'use client'
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { getApiEquipmentByIndex, getAllApiEquipment } from "../dnd-api/api-equipment";
+import { getApiEquipmentByIndex } from "../dnd-api/api-equipment";
 
 // * Initialize Context
 const DNDApiContext = createContext();
@@ -16,11 +16,9 @@ export const DNDApiProvider = ({ children }) => {
 
     const [apiItems, setAPIItems] = useState(0)
 
-    useEffect(() => {
-        const item = getApiEquipmentByIndex("shortsword")
-        const items = getAllApiEquipment()
-        console.log(item, items);
-    }, [])
+    // useEffect(() => {
+    //     const item = getApiEquipmentByIndex("shortsword")
+    // }, [])
 
     const value = {
         apiItems
