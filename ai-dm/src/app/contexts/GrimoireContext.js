@@ -25,16 +25,14 @@ export const GrimoireProvider = ({ children }) => {
         const fetchItems = async () => {
             try {
                 const fetchedItems = await getAllItems();
-                console.log('fetchedItems: ', fetchedItems);
                 setAllItems(fetchedItems); // Set fetched items to allItems state
-                console.log('allItems: ', fetchedItems); // Display the same content as fetchedItems since it's now set
             } catch (error) {
                 // Handle error here
                 console.error('Error fetching items: ', error);
             }
         };
 
-        fetchItems();   
+        fetchItems();
     }, []);
 
     useEffect(() => {
