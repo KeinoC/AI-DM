@@ -5,7 +5,7 @@ import {
     getCurrentUnixTimestamp,
     convertUnixToTime,
 } from "../utils/helpers/timestamp";
-import { sendGlobalMessage } from "../firebase/firebase-chat";
+import { sendGlobalMessage, getChatHistoryByChannel } from "../firebase/firebase-chat";
 
 // TODO: 'window' is temporarily undefined when component is mounted and an errors out for a brief moment. Need make sure it's loaded before component runs. not sure how yet
 // TODO: chat history needs to auto scroll to bottom
@@ -50,12 +50,25 @@ export default function ChatWindow() {
         );
     });
 
-    useEffect(() => {
-        console.log(chatHistory)
-        if (scrollRef.current) {
-          scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-        }
-      }, [chatHistory]);
+
+        useEffect(() => {
+            async function fetchChatHistory() {
+                // Call the function to get chat history
+                const history = await getChatHistoryByChannel('global'); // Replace 'your-channel-name' with the desired channel name
+                console.log("history", history);
+                setChatHistory(history);
+            }
+
+            // Call the function on component mount
+            fetchChatHistory();
+        }, []);
+
+    // useEffect(() => {
+    //     console.log(chatHistory)
+    //     if (scrollRef.current) {
+    //       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    //     }
+    //   }, [chatHistory]);
 
     const newChatMessageWindow = () => {
         return (
