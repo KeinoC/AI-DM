@@ -17,9 +17,19 @@ export default function NavBar() {
 
 
         { !currentUser &&
-            <button>
-                <Link href="/routes/login">Login</Link>
-            </button>
+            <>
+                <div className=" flex gap-4">
+
+                    <button className=" uppercase font-thin transition ease-in-out hover:-translate-y-[2px]">
+                        <Link href="/routes/login">Login</Link>
+                    </button>
+
+                    <button className=" uppercase font-thin transition ease-in-out hover:-translate-y-[2px]">
+                        <Link href="/routes/sign-up">Sign Up</Link>
+                    </button>
+
+                </div>
+            </>
         }
 
         { currentUser &&
