@@ -28,26 +28,29 @@ const Grid = () => {
   return (
     <div className="flex justify-center items-center h-screen relative">
       
+      {/* Map Image */}
       <div className={gridClass}>
 
       <img src={mapImage} className="absolute top-0 left-0 z-10"/>
-
-
         {Array.from({ length: gridArea}, (_, index) => {
           const x = index % columnSize;
           const y = Math.floor(index / columnSize);
           const isPlayerHere = x === playerPosition.x && y === playerPosition.y;
 
           return (
+            // Grid Tile
             <div
               key={index}
               className={`w-12 h-12 border-[1px] border-white z-20 ${
+                // player style
                 isPlayerHere && 'grabbable draggable' 
               }`}
               
               onDragOver={handleDragOver}
               onDrop={(e) => handleDrop(e, x, y)}
-            >{isPlayerHere && <img src="https://i.imgur.com/0wWKQfp.png" />}
+            >
+              {/* Player Token */}
+              {isPlayerHere && <img src="https://i.imgur.com/0wWKQfp.png" />}
 
               {!isPlayerHere && (
                 <div
