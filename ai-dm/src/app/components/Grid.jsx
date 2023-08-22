@@ -38,6 +38,21 @@ const Grid = () => {
     setGridHeight(parseInt(e.target.value));
   };
 
+  let tokenArray = [
+    {
+      id: 1,
+      name: "Umnos",
+      img: "https://i.imgur.com/0wWKQfp.png",
+      position: ""
+    },
+    {
+      id: 2,
+      name: "Discord",
+      img: "https://i.imgur.com/zAljZQy.png",
+      position: ""
+    }
+  ]
+
   // Grid Tiles
   const renderGrid = () => {
     const grid = [];
@@ -53,7 +68,7 @@ const Grid = () => {
             onDrop={(e) => handleDrop(e, x, y)}
             >
 
-              {isPlayerHere && <img src="https://i.imgur.com/0wWKQfp.png" className="absolute z-30"/>}
+              {isPlayerHere && <img src={tokenArray[0].img} value={tokenArray[0].name} className="grabbable absolute z-30"/>}
 
               {!isPlayerHere && (
                 <div
@@ -70,9 +85,18 @@ const Grid = () => {
   };
 
   return (
-    <div className="flex flex-col items-center p-4">
-      <h2 className="text-2xl font-bold mb-4">Game Grid</h2>
-      <div className="flex mb-4">
+    <div className="flex flex-col items-center p-4 pb-8">
+      {/* <h2 className="text-2xl font-bold mb-4">Game Grid</h2> */}
+
+      <div className='grid relative' style={gridContainerStyle}>
+        
+        {/* Map Image */}
+        <img src={mapImage} className="absolute top-0 left-0 z-10"/>
+        {/* Grid Tiles */}
+        {renderGrid()}
+      </div>
+
+      <div className="flex my-4">
         <label className="mr-2">Width:</label>
         <input
           type="number"
@@ -87,13 +111,6 @@ const Grid = () => {
           onChange={handleHeightChange}
           className="border border-gray-300 p-1"
         />
-      </div>
-      <div className='grid relative' style={gridContainerStyle}>
-        
-        {/* Map Image */}
-        <img src={mapImage} className="absolute top-0 left-0 z-10"/>
-        {/* Grid Tiles */}
-        {renderGrid()}
       </div>
     </div>
   );

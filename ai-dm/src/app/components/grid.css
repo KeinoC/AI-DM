@@ -6,7 +6,8 @@
 }
 
 /* (Optional) Apply a "closed-hand" cursor during drag operation. */
-.grabbable:active {
+.grabbable:active,
+.grabbable:focus {
   cursor: grabbing;
   cursor: -moz-grabbing;
   cursor: -webkit-grabbing;
