@@ -43,6 +43,7 @@ export const UserProvider = ({ children }) => {
                     const userData = userDocSnapshot.data();
                     setCurrentUser(userData);
                 } else {
+                    console.log("user does not exist in firestore, creating a new document.")
                     // User does not exist in Firestore, create a new document
                     const user = {
                         uid: authUser.uid,
