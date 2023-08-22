@@ -84,7 +84,7 @@ export default function ChatWindow() {
 
         // Call the function on component mount
         fetchChatHistory();
-    }, [handleSubmit]);
+    }, []);
 
     // useEffect(() => {
     //     console.log(chatHistory)
