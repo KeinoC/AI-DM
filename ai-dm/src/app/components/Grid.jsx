@@ -7,11 +7,21 @@ const Grid = () => {
   const [playerPosition, setPlayerPosition] = useState({ x: 0, y: 0 });
   const [player2Position, setPlayer2Position] = useState({ x: 0, y: 0});
 
-  const [mapImage, setMapImage] = useState("https://i.imgur.com/GhlfoHH.png");
+  const [mapImage, setMapImage] = useState("https://i.imgur.com/ppIn5BV.jpg");
 
-  const [columnSize, setColumnSize] = useState(10);
+  const [columnSize, setColumnSize] = useState(15);
   const gridArea = columnSize*columnSize
   const gridClass = `grid grid-cols-${columnSize} relative`
+
+  const gridContainerStyle = {
+    display: 'grid',
+    gridTemplateColumns: `repeat(${columnSize}, 1fr)`,
+    display: 'relative'
+  };
+
+  const handleGridSize= (e) => {
+    setColumnSize(parseInt(e.target.value));
+  };
 
   const handleDragStart = (event, x, y) => {
     event.dataTransfer.setData('text/plain', JSON.stringify({ x, y }));
@@ -42,10 +52,10 @@ const Grid = () => {
   // ]
 
   return (
-    <div className="flex justify-center items-center h-screen relative">
+    <div className="flex flex-col justify-center items-center h-screen relative">
       
       {/* Grid Box */}
-      <div className={gridClass}>
+      <div className={gridClass} style={gridContainerStyle}>
 
       {/* Map Image */}
       <img src={mapImage} className="absolute top-0 left-0 z-10"/>
@@ -61,7 +71,7 @@ const Grid = () => {
             // Grid Tile
             <div
               key={index}
-              className={`w-12 h-12 border-[1px] border-white z-20 ${
+              className={`w-12 h-12  relative z-20 ${
                 // player style
                 isPlayerHere && 'grabbable draggable' 
                 
@@ -71,18 +81,29 @@ const Grid = () => {
               onDrop={(e) => handleDrop(e, x, y)}
             >
               {/* Player Token */}
-              {isPlayerHere && <img src="https://i.imgur.com/0wWKQfp.png"/>}
+              {isPlayerHere && <img src="https://i.imgur.com/0wWKQfp.png" className="absolute z-30"/>}
               {/* {isPlayer2Here && <img src="https://i.imgur.com/zAljZQy.png" />}  */}
 
               {!isPlayerHere && (
                 <div
-                  className="w-12 h-12"
+                  className="w-12 h-12 opacity-25 border-white border-[1px]"
                   onDragStart={(e) => handleDragStart(e, x, y)}
                 ></div>
               )}
             </div>
           );
         })}
+      </div>
+
+      <br />
+      <div>
+      <label className="mr-2">Grid Square:</label>
+        <input
+          type="number"
+          value={columnSize}
+          onChange={handleGridSize}
+          className="border border-gray-300 p-1"
+        />
       </div>
     </div>
   );

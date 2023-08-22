@@ -11,13 +11,6 @@ const GameGrid = () => {
     display: 'relative'
   };
 
-  const gridItemStyle = {
-      backgroundColor: '#3490dc', // Color for demonstration
-      padding: '16px',
-      borderRadius: '8px', // Rounded corners
-      color: 'white' // Text color
-  };
-
   const handleWidthChange = (e) => {
     setGridWidth(parseInt(e.target.value));
     setGridHeight(parseInt(e.target.value));
@@ -28,6 +21,7 @@ const GameGrid = () => {
     setGridHeight(parseInt(e.target.value));
   };
 
+  // Grid Tiles
   const renderGrid = () => {
     const grid = [];
     for (let y = 0; y < gridHeight; y++) {
@@ -35,7 +29,7 @@ const GameGrid = () => {
         grid.push(
           <div
             key={`${x}-${y}`}
-            className="border border-gray-300 w-10 h-10 flex items-center justify-center z-20 opacity-75">
+            className="border border-gray-300 w-10 h-10 flex items-center justify-center z-20 opacity-25">
           </div>
         );
       }

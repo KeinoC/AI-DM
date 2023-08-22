@@ -8,7 +8,7 @@ export default function LoginPage() {
     return (
       <>
         <br />Gameboard<br /><br />
-        <Grid2 />
+        <Grid />
       </>
     );
 }
