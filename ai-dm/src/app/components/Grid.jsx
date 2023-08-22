@@ -20,6 +20,8 @@ const Grid = () => {
   const handleDrop = (event, x, y) => {
     event.preventDefault();
     setPlayerPosition({ x: x, y: y });
+    console.log('handleDrop testing', event.target.name)
+    console.log('handleDrop testing-pos', event.target.value)
   };
 
   const gridContainerStyle = {
@@ -43,13 +45,14 @@ const Grid = () => {
       id: 1,
       name: "Umnos",
       img: "https://i.imgur.com/0wWKQfp.png",
-      position: ""
+      user: "Drewski",
+      position: {x: 0,y: 0}
     },
     {
       id: 2,
       name: "Discord",
       img: "https://i.imgur.com/zAljZQy.png",
-      position: ""
+      position: {x:0, y: 0},
     }
   ]
 
@@ -60,7 +63,10 @@ const Grid = () => {
       for (let x = 0; x < gridWidth; x++) {
         const isPlayerHere = x === playerPosition.x && y === playerPosition.y
         grid.push(
-          <div
+          // Grid Tiles
+          <div 
+            // name={tokenArray[0].user} 
+            // value={tokenArray[0].position}
             key={`${x}-${y}`}
             className={` w-10 h-10 flex items-center justify-center z-20 relative
             ${isPlayerHere && 'grabbable draggable'}`} 
@@ -68,8 +74,14 @@ const Grid = () => {
             onDrop={(e) => handleDrop(e, x, y)}
             >
 
-              {isPlayerHere && <img src={tokenArray[0].img} value={tokenArray[0].name} className="grabbable absolute z-30"/>}
+              {/* Player Token */}
+              {isPlayerHere && <img src={tokenArray[0].img} name={tokenArray[0].user} value={tokenArray[0].position} className="grabbable absolute z-30"
+                // onDragStart={(e) => handleDragStart(e, x, y)}
+                // onDragOver={handleDragOver}
+                // onDrop={(e) => handleDrop(e, x, y)}
+                />}
 
+              {/* Grid Lines + Drop */}
               {!isPlayerHere && (
                 <div
                   className="w-10 h-10 opacity-25 border-white border-[1px] absolute"
@@ -85,17 +97,19 @@ const Grid = () => {
   };
 
   return (
+    // Grid Box
     <div className="flex flex-col items-center p-4 pb-8">
-      {/* <h2 className="text-2xl font-bold mb-4">Game Grid</h2> */}
-
+      {/* Grid */}
       <div className='grid relative' style={gridContainerStyle}>
         
         {/* Map Image */}
         <img src={mapImage} className="absolute top-0 left-0 z-10"/>
-        {/* Grid Tiles */}
+
+        {/* Grid Tiles - See Above */}
         {renderGrid()}
       </div>
 
+      {/* Grid Size Inputs */}
       <div className="flex my-4">
         <label className="mr-2">Width:</label>
         <input
