@@ -6,6 +6,12 @@ import './grid.css'
 const Grid = () => {
   const [playerPosition, setPlayerPosition] = useState({ x: 0, y: 0 });
 
+  const [mapImage, setMapImage] = useState("https://i.imgur.com/GhlfoHH.png");
+
+  const [columnSize, setColumnSize] = useState(10);
+  const gridArea = columnSize*columnSize
+  const gridClass = `grid grid-cols-${columnSize} relative`
+
   const handleDragStart = (event, x, y) => {
     event.dataTransfer.setData('text/plain', JSON.stringify({ x, y }));
   };
@@ -18,6 +24,46 @@ const Grid = () => {
     event.preventDefault();
     setPlayerPosition({ x: x, y: y });
   };
+
+  return (
+    <div className="flex justify-center items-center h-screen relative">
+      
+      <div className={gridClass}>
+
+      <img src={mapImage} className="absolute top-0 left-0 z-10"/>
+
+
+        {Array.from({ length: gridArea}, (_, index) => {
+          const x = index % columnSize;
+          const y = Math.floor(index / columnSize);
+          const isPlayerHere = x === playerPosition.x && y === playerPosition.y;
+
+          return (
+            <div
+              key={index}
+              className={`w-12 h-12 border-[1px] border-white z-20 ${
+                isPlayerHere && 'grabbable draggable' 
+              }`}
+              
+              onDragOver={handleDragOver}
+              onDrop={(e) => handleDrop(e, x, y)}
+            >{isPlayerHere && <img src="https://i.imgur.com/0wWKQfp.png" />}
+
+              {!isPlayerHere && (
+                <div
+                  className="w-12 h-12"
+                  onDragStart={(e) => handleDragStart(e, x, y)}
+                ></div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+export default Grid;
 
 
   // const [playerPositions, setPlayerPositions] = useState(null); // Initialize playerPositions state
@@ -64,45 +110,3 @@ const Grid = () => {
   // },[])
   
   // ... Rest of your component code
-
-
-  
- 
-
-
-
-
-  return (
-    <div className="flex justify-center items-center h-screen">
-      <div className="grid grid-cols-5 gap-2">
-        {Array.from({ length: 50}, (_, index) => {
-          const x = index % 5;
-          const y = Math.floor(index / 5);
-          const isPlayerHere = x === playerPosition.x && y === playerPosition.y;
-
-          return (
-            <div
-              key={index}
-              className={`w-12 h-12 bg-gray-300 ${
-                isPlayerHere && 'grabbable' 
-              }`}
-              draggable
-              onDragOver={handleDragOver}
-              onDrop={(e) => handleDrop(e, x, y)}
-            >{isPlayerHere && <img src="https://i.imgur.com/0wWKQfp.png" />}
-              {!isPlayerHere && (
-                <div
-                  className="w-12 h-12 "
-                  draggable
-                  onDragStart={(e) => handleDragStart(e, x, y)}
-                ></div>
-              )}
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-};
-
-export default Grid;
