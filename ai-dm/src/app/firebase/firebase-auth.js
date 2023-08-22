@@ -1,5 +1,5 @@
 import { auth, db } from "./firebase-config";
-import { navToMapNamed } from "../utils/helpers/navigation";
+import { navToMapNamed, navToHome } from "../utils/helpers/navigation";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
 const {
@@ -52,6 +52,7 @@ export const signUp = async (email, password) => {
             await createFirestoreUser(id, email, createdAt);
         }
         console.log("Document written with ID:", user.uid);
+        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
         navToMapNamed(WATERDEEP);
         return user;
     } catch (error) {
@@ -63,6 +64,7 @@ export const signUp = async (email, password) => {
 
 export const signIn = async (email, password) => {
     try {
+        // await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
         const userCredential = await signInWithEmailAndPassword(
             auth,
             email,
@@ -99,7 +101,10 @@ export const signIn = async (email, password) => {
 
 
 // Sign Out
-export const signOut = () => auth.signOut();
+export const signOut = async () => {
+    await auth.signOut();
+    navToHome();
+}
 
 // // Password Reset
 // export const resetPassword = (email) => auth.sendPasswordResetEmail(email);
