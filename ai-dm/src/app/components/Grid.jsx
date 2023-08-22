@@ -5,6 +5,7 @@ import './grid.css'
 
 const Grid = () => {
   const [playerPosition, setPlayerPosition] = useState({ x: 0, y: 0 });
+  const [player2Position, setPlayer2Position] = useState({ x: 0, y: 0});
 
   const [mapImage, setMapImage] = useState("https://i.imgur.com/GhlfoHH.png");
 
@@ -25,17 +26,36 @@ const Grid = () => {
     setPlayerPosition({ x: x, y: y });
   };
 
+  // let tokenArray = [
+  //   {
+  //     id: 1,
+  //     name: "Umnos",
+  //     img: "https://i.imgur.com/GhlfoHH.png",
+  //     position: ""
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Discord",
+  //     img: "https://i.imgur.com/zAljZQy.png",
+  //     position: ""
+  //   }
+  // ]
+
   return (
     <div className="flex justify-center items-center h-screen relative">
       
-      {/* Map Image */}
+      {/* Grid Box */}
       <div className={gridClass}>
 
+      {/* Map Image */}
       <img src={mapImage} className="absolute top-0 left-0 z-10"/>
+
+        {/* Grid Squares */}
         {Array.from({ length: gridArea}, (_, index) => {
           const x = index % columnSize;
           const y = Math.floor(index / columnSize);
           const isPlayerHere = x === playerPosition.x && y === playerPosition.y;
+          // const isPlayer2Here = x === player2Position.x && y === player2Position.y;
 
           return (
             // Grid Tile
@@ -44,13 +64,15 @@ const Grid = () => {
               className={`w-12 h-12 border-[1px] border-white z-20 ${
                 // player style
                 isPlayerHere && 'grabbable draggable' 
+                
               }`}
               
               onDragOver={handleDragOver}
               onDrop={(e) => handleDrop(e, x, y)}
             >
               {/* Player Token */}
-              {isPlayerHere && <img src="https://i.imgur.com/0wWKQfp.png" />}
+              {isPlayerHere && <img src="https://i.imgur.com/0wWKQfp.png"/>}
+              {/* {isPlayer2Here && <img src="https://i.imgur.com/zAljZQy.png" />}  */}
 
               {!isPlayerHere && (
                 <div
