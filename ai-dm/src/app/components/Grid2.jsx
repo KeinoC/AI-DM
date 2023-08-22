@@ -3,28 +3,28 @@ import React, {useState } from 'react';
 const GameGrid = () => {
   const [gridWidth, setGridWidth] = useState(5);
   const [gridHeight, setGridHeight] = useState(5);
-
-  const gridClass = `grid relative`
+  const [mapImage, setMapImage] = useState("https://i.imgur.com/ppIn5BV.jpg");
 
   const gridContainerStyle = {
     display: 'grid',
-    gridTemplateColumns: `repeat(${gridWidth}, 1fr)`, // 3 columns, each taking up 1 fraction of the available space
-    gap: '16px', // 16px gap between rows & columns
-    padding: '16px'
+    gridTemplateColumns: `repeat(${gridWidth}, 1fr)`,
+    display: 'relative'
   };
 
   const gridItemStyle = {
-    backgroundColor: '#3490dc', // Color for demonstration
-    padding: '16px',
-    borderRadius: '8px', // Rounded corners
-    color: 'white' // Text color
+      backgroundColor: '#3490dc', // Color for demonstration
+      padding: '16px',
+      borderRadius: '8px', // Rounded corners
+      color: 'white' // Text color
   };
 
   const handleWidthChange = (e) => {
     setGridWidth(parseInt(e.target.value));
+    setGridHeight(parseInt(e.target.value));
   };
 
   const handleHeightChange = (e) => {
+    setGridWidth(parseInt(e.target.value));
     setGridHeight(parseInt(e.target.value));
   };
 
@@ -35,9 +35,7 @@ const GameGrid = () => {
         grid.push(
           <div
             key={`${x}-${y}`}
-            className="border border-gray-300 w-10 h-10 flex items-center justify-center"
-          >
-            {`${x},${y}`}
+            className="border border-gray-300 w-10 h-10 flex items-center justify-center z-20 opacity-75">
           </div>
         );
       }
@@ -64,7 +62,13 @@ const GameGrid = () => {
           className="border border-gray-300 p-1"
         />
       </div>
-      <div className={gridClass} style={gridContainerStyle}>{renderGrid()}</div>
+      <div className='grid relative' style={gridContainerStyle}>
+        
+        {/* Map Image */}
+        <img src={mapImage} className="absolute top-0 left-0 z-10"/>
+        {/* Grid Tiles */}
+        {renderGrid()}
+      </div>
     </div>
   );
 };
