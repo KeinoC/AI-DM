@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
-import NavBar from "./components/NavBar";
-import { motion, useAnimation, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import "./AnimatedLogo.css";
 import "react-tooltip/dist/react-tooltip.css";
 import { navToLogin } from "./utils/helpers/navigation";

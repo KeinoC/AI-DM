@@ -19,11 +19,12 @@ import { WATERDEEP } from "../utils/variables/map-vars";
 // Sign Up
 // check if profile / email already exist. and throw error / exception
 
-export const createFirestoreUser = async (id, email) => {
+export const createFirestoreUser = async (id, email, username) => {
     const createdAt = Timestamp.fromDate(new Date());
     try {
         const newUser = {
             id: id,
+            username: username,
             email: email,
             createdAt: createdAt,
         };
@@ -32,11 +33,12 @@ export const createFirestoreUser = async (id, email) => {
 
         console.log("User document created successfully");
     } catch (error) {
+        console.log(err.response.data.error);
         console.error("Error creating user document:", error);
     }
 };
 
-export const signUp = async (email, password) => {
+export const signUp = async (email, password, username) => {
     try {
         const userCredential = await createUserWithEmailAndPassword(
             auth,
@@ -48,16 +50,16 @@ export const signUp = async (email, password) => {
         if (user) {
             const id = user?.uid;
             const email = user?.email;
-            const createdAt = Timestamp.fromDate(new Date());
-            await createFirestoreUser(id, email, createdAt);
+            await createFirestoreUser(id, email, username);
         }
         console.log("Document written with ID:", user.uid);
-        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+        // firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
         navToMapNamed(WATERDEEP);
         return user;
     } catch (error) {
         const errorCode = error.code;
         const errorMessage = error.message;
+        console.log(err.response.data.error);
         console.error(errorCode, errorMessage);
     }
 };
