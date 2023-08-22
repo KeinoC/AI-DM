@@ -14,11 +14,7 @@ const SignUp = () => {
         setError("");
 
         try {
-            if (isLoginMode) {
-                await signIn(emailValue, passwordValue);
-            } else {
-                await signUp(emailValue, passwordValue);
-            }
+            await signUp(emailValue, passwordValue);
         } catch (err) {
             setError(err.message);
         }
