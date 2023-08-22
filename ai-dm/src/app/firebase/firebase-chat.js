@@ -1,17 +1,20 @@
-import { db } from "./firebase-config";
-import { ref, push } from "firebase/database";
+import { realtimeDB } from "./firebase-config";
+const { ref, set } = require("firebase/database");
 
-
-export async function sendGlobalMessage(channel, message, user) {
+export async function sendGlobalMessage(channel, message, currentUser) {
     try {
-        const senderName = user.firstName;
-        const chatRef = ref(db, `${channel}/chat-history`);
+
+        // Create a unique reference for the new message
+        const newMessageRef = ref(realtimeDB, `${channel}/global-chat/${Date.now()}`);
+
+        console.log(channel, message, currentUser)
         const newMessage = {
-            senderName,
-            message,
-            timestamp: Date.now()
+            sender: currentUser?.firstName,
+            message: message,
+            timestamp: Date.now(),
         };
-        await push(chatRef, newMessage);
+
+        await set(newMessageRef, newMessage);
     } catch (error) {
         console.error(error);
     }

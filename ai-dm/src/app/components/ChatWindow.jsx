@@ -5,6 +5,7 @@ import {
     getCurrentUnixTimestamp,
     convertUnixToTime,
 } from "../utils/helpers/timestamp";
+import { sendGlobalMessage } from "../firebase/firebase-chat";
 
 // TODO: 'window' is temporarily undefined when component is mounted and an errors out for a brief moment. Need make sure it's loaded before component runs. not sure how yet
 // TODO: chat history needs to auto scroll to bottom
@@ -24,7 +25,8 @@ export default function ChatWindow() {
             console.log(prefix);
 
             const updatedChatMessage = prefix + newChatMessage;
-            console.log(updatedChatMessage);
+
+            await sendGlobalMessage("global", newChatMessage, currentUser)
 
             setNewChatMessage(updatedChatMessage);
             setChatHistory([...chatHistory, updatedChatMessage]);
