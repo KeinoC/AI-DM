@@ -1,77 +1,79 @@
-'use client'
-import React, {useContext} from "react";
+"use client";
+import React, { useContext } from "react";
 import Link from "next/link"; // Import Link from next/link
 import { UserContext, useUser } from "../contexts/UserContext"; // Assuming this file is in the same directory
 import { signOut } from "../firebase/firebase-auth";
 
 export default function NavBar() {
-    // const { signOut } =  useContext(UserContext);
     const { currentUser } = useUser();
 
     return (
-    <div className="navbar bg-base-300">
+        <div className="flex gap-4 top-0 w-full z-10 bg-slate-500 backdrop-blur-sm bg-opacity-20 h-15 justify-between p-4">
+            <div className="flex items-center">
+                <a href="/" className="btn btn-ghost normal-case text-xl mr-4">
+                    AI D&D
+                </a>
 
-        <div className="flex-1">
-            <a href="/" className="btn btn-ghost normal-case text-xl">AI D&D</a>
-        </div>
+                {!currentUser && (
+                    <div className="flex gap-4">
+                        <button className="flex-right uppercase font-thin transition ease-in-out hover:-translate-y-[2px]">
+                            <Link href="/routes/login">Login</Link>
+                        </button>
 
-
-        { !currentUser &&
-            <>
-                <div className=" flex gap-4">
-
-                    <button className=" uppercase font-thin transition ease-in-out hover:-translate-y-[2px]">
-                        <Link href="/routes/login">Login</Link>
-                    </button>
-
-                    <button className=" uppercase font-thin transition ease-in-out hover:-translate-y-[2px]">
-                        <Link href="/routes/sign-up">Sign Up</Link>
-                    </button>
-
-                </div>
-            </>
-        }
-
-        { currentUser &&
-        <div className="dropdown dropdown-end">
-
-            <div className=" flex gap-2 items-center">
-                <h2>{currentUser.username}</h2>
-                <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-                    <div className="w-10 rounded-full">
-                        <img src="/Default_Profile_Picture.jpeg" />
+                        <button className="uppercase font-thin transition ease-in-out hover:-translate-y-[2px]">
+                            <Link href="/routes/sign-up">Sign Up</Link>
+                        </button>
                     </div>
-                </label>
+                )}
             </div>
- 
 
-            <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+            {currentUser && (
+                <div className="flex flex-row justify-around">
+                    <div className="dropdown dropdown-end">
+                        <div className="flex gap-2 items-center">
+                            <h2>{currentUser.username}</h2>
+                            <label
+                                tabIndex={0}
+                                className="btn btn-ghost btn-circle avatar"
+                            >
+                                <div className="w-10 h-10 shadow-lg  overflow-hidden rounded-full">
+                                    <img
+                                        src="/Default_Profile_Picture.jpeg"
+                                        alt="Profile"
+                                    />
+                                </div>
+                            </label>
+                        </div>
 
-              <li>
-                <button onClick={()=>signOut()}>
-                    Sign Out
-                </button>
-              </li>
+                        <ul
+                            tabIndex={0}
+                            className=" relative z-10 mt-3 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+                        >
+                            <li>
+                                <button onClick={() => signOut()}>
+                                    Sign Out
+                                </button>
+                            </li>
 
-            </ul>
+                            <li>
+                                <button >
+                                    <Link href="/routes/grimoire">
+                                        Grimoire
+                                    </Link>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button >
+                                    <Link href="/routes/maps/waterdeep">
+                                        Waterdeep
+                                    </Link>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            )}
         </div>
-        }
-    </div>
     );
 }
-
-
-// <div>
-// { !currentUser ?
-// <button>
-//     <Link href="/routes/login">Login</Link>
-// </button>
-// :
-// <>
-// <button onClick={()=>signOut()}>
-//     Sign Out
-// </button>
-// <h2>Hello {currentUser.username}</h2>
-// </>
-// }
-// </div>

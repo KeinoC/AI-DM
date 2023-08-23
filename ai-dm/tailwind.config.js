@@ -11,6 +11,7 @@ module.exports = {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+          'texture': "url('https://blog.stockvault.net/wp-content/uploads/2020/02/free_texture_friday_2355.jpg')",
       },
     },
   },
