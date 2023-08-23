@@ -11,11 +11,11 @@ export default function LandingPage() {
             <AnimatePresence>
                 <motion.div
                     key="logo"
-                    initial={{ opacity: 0, x: "-100vw" }}
+                    initial={{ opacity: .5, x: "-80vw" }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{
                         opacity: 1,
-                        duration: 2.5,
+                        duration: 2,
                         type: "spring",
                         bounce: 0.25,
                     }}
@@ -35,11 +35,11 @@ export default function LandingPage() {
                 <motion.div
                 key="tag"
                     className="tag"
-                    initial={{ opacity: 0, x: "100vw" }}
+                    initial={{ opacity: .5, x: "80vw" }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{
                         opacity: 1,
-                        duration: 2.5,
+                        duration: 2,
                         type: "spring",
                         bounce: 0.25,
                     }}
@@ -54,8 +54,8 @@ export default function LandingPage() {
                     initial={{ opacity: 0, y: 0, scale: 0.8 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{
-                        opacity: { duration: 3, delay: 2, ease: "easeInOut" },
-                        scale: { duration: 3, delay: 2, ease: "easeInOut" },
+                        opacity: { duration: 2.5, delay: 1.5, ease: "easeInOut" },
+                        scale: { duration: 2.5, delay: 1.5, ease: "easeInOut" },
                     }}
                     exit={{ opacity: 0, y: "100vh", delay: 0 }}
                 >

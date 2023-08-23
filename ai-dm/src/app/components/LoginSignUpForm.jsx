@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 const LoginSignUpForm = ( { setEmail, setPassword, handleSubmit, isLoginMode, error, emailValue, passwordValue, setUsername, usernameValue } ) => {
     return (
-        <div className="w-full max-w-xs p-7 bg-yellow-500 bg-opacity-80 rounded-lg  shadow-lg">
+        <div className="w-full max-w-xs p-7 bg-yellow-500 bg-opacity-80 rounded-lg  shadow-lg ">
 
             <h2 className="text-2xl mb-4 text-gray-800">
                 {isLoginMode ? "Login" : "Sign Up"}
@@ -49,7 +49,7 @@ const LoginSignUpForm = ( { setEmail, setPassword, handleSubmit, isLoginMode, er
                         />
                 </div>
 
-                <button className="w-full bg-gray-900 hover:bg-green-900 text-gray-300 hover:text-gray-900 py-2 my-4 rounded transition duration-300">
+                <button className="w-full bg-gray-900 hover:bg-green-900 shadow-xl text-gray-300 hover:text-gray-900 py-2 my-4 rounded transition duration-300">
                     {isLoginMode ? "Login" : "Sign Up"}
                 </button>
 
