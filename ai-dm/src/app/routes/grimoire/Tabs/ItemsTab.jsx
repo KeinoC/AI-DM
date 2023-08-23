@@ -14,9 +14,9 @@ export default function EquipmentTab() {
         setSelectedArray,
     } = useDNDApi();
 
-    // *** Equipment Category Workflow ***
+    // *** EQUIPMENT FILTER WORKFLOW ***
 
-    // 1. User selects a category from the dropdown
+    /** Drop down for selecting equipment categories */
     const EquipCatFilterOptions = () => (
         <select
             value={selectedCat}
@@ -30,7 +30,8 @@ export default function EquipmentTab() {
         </select>
     );
 
-    // 2. User selects a category from the dropdown
+    //  2. User scts a category from the dropdown
+
     useEffect(() => {
         if (selectedCat) {
             async function fetchEquipmentList() {
@@ -39,7 +40,7 @@ export default function EquipmentTab() {
                         selectedCat
                     );
                     console.log(categoryArray); // Corrected the variable name from 'selectedArray' to 'categoryArray'
-                    setSelectedArray(categoryArray);
+                    setSelectedArray(categoryArray.equipment);
                 } catch (error) {
                     console.error("Error fetching equipment list: ", error);
                 }
@@ -111,13 +112,20 @@ export default function EquipmentTab() {
         });
     }
 
-    function CategoryCardsDisplay() {}
+    function CategoryCardsDisplay() {
+        return (
+            <div className="flex flex-wrap justify-center gap-6">
+                {RenderEquipmentCards(selectedArray)};
+            </div>
+        );
+    }
 
     return (
         <div className="relative pt-40 flex flex-wrap justify-center gap-6 z-[-1]">
             <EquipCatFilterOptions />
-            {/* <RenderEquipmentCards equipmentArray={getEquipmentListByCategory(selectedCat)} /> */}
-            {/* <CategoryCards /> */}
+            <div>
+                <CategoryCardsDisplay />
+            </div>
         </div>
     );
 }
