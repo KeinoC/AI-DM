@@ -8,7 +8,7 @@ export default function NavBar() {
     const { currentUser } = useUser();
 
     return (
-        <div className="fixed top-0 w-full z-[50] bg-slate-500 backdrop-blur-sm bg-opacity-20 h-12 flex items-center justify-between p-4">
+        <div className="flex gap-4 top-0 w-full z-[50] bg-slate-500 backdrop-blur-sm bg-opacity-20 h-12 justify-between p-4">
             <div className="flex items-center">
                 <a href="/" className="btn btn-ghost normal-case text-xl mr-4">
                     AI D&D
@@ -16,7 +16,7 @@ export default function NavBar() {
 
                 {!currentUser && (
                     <div className="flex gap-4">
-                        <button className="uppercase font-thin transition ease-in-out hover:-translate-y-[2px]">
+                        <button className="flex-right uppercase font-thin transition ease-in-out hover:-translate-y-[2px]">
                             <Link href="/routes/login">Login</Link>
                         </button>
 

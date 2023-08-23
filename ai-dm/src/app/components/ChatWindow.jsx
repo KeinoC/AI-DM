@@ -24,7 +24,6 @@ export default function ChatWindow() {
                 await getCurrentUnixTimestamp()
             );
             const prefix = `[${currentTimeNormalized}] ${currentUser?.username}: `;
-            console.log(prefix);
 
             const updatedChatMessage = prefix + newChatMessage;
 
