@@ -115,7 +115,7 @@ export default function EquipmentTab() {
     function CategoryCardsDisplay() {
         return (
             <div className="flex flex-wrap justify-center gap-6">
-                {RenderEquipmentCards(selectedArray)};
+                {RenderEquipmentCards(selectedArray)}
             </div>
         );
     }
