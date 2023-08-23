@@ -12,8 +12,9 @@ export default function Grimoire() {
     // Create API function, pass in onSubmit
 
     return (
-        <>
-        <ItemsTab />
-        </>
+<div className="relative h-auto w-screen flex bg-slate-900 absolute z-[0]">
+    <div className="absolute inset-0 bg-texture bg-fixed bg-center bg-cover opacity-20 absolute z-[-5]"></div>
+    <ItemsTab />
+</div>
     );
 }

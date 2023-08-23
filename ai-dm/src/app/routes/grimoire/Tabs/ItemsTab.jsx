@@ -9,21 +9,27 @@ export default function ItemsTab() {
     console.log(apiItems)
 
 
+// *** Styles ***
+
+
+
     function CategoryCards() {
         return (apiItems || []).map((category, index) => {
             return (
-                <div key={index} className="card lg:card-side bg-base-100 shadow-xl">
+                <div key={index} className="border-2 z-0 border-transparent card w-1/5 min-h-40% bg-base-100 shadow-2xl shadow-xl bg-opacity-50 overflow-hidden transform hover:border-yellow-500 hover:bg-opacity-90 hover:scale-105 ease-in-out duration-300 ">
                     <figure>
                         <img
-                            src="/images/stock/photo-1494232410401-ad00d5433cfa.jpg"
-                            alt="Album"
+                            src="https://www.tribality.com/wp-content/uploads/2021/04/elle-shengxuan-shi-0061.jpg"
+                            alt={category.name}
                         />
                     </figure>
                     <div className="card-body">
                         <h2 className="card-title">{category.name}</h2>
-                        <p>Placeholder text</p>
-                        <div className="card-actions justify-end">
-                            <button className="btn btn-primary">Click me Zaddy</button>
+                        <p className="text-xs text-slate-400 overflow-y-scroll h-20">{category.desc || ""}</p>
+
+
+                        <div className={"card-actions justify-end"}>
+                            <button className="btn hover:bg-yellow-500 hover:text-slate-500">Click me Zaddy</button>
                         </div>
                     </div>
                 </div>
@@ -33,8 +39,8 @@ export default function ItemsTab() {
 
 
     return (
-    <>
+    <div className= 'relative pt-40 flex flex-wrap justify-center gap-6 z-[-1]'>
     <CategoryCards />
-    </>
+    </div>
     )
 }

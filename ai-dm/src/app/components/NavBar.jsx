@@ -8,7 +8,7 @@ export default function NavBar() {
     const { currentUser } = useUser();
 
     return (
-        <div className="flex gap-4 top-0 w-full z-[50] bg-slate-500 backdrop-blur-sm bg-opacity-20 h-12 justify-between p-4">
+        <div className="flex gap-4 top-0 w-full z-10 bg-slate-500 backdrop-blur-sm bg-opacity-20 h-15 justify-between p-4">
             <div className="flex items-center">
                 <a href="/" className="btn btn-ghost normal-case text-xl mr-4">
                     AI D&D
@@ -30,12 +30,6 @@ export default function NavBar() {
             {currentUser && (
                 <div className="flex flex-row justify-around">
                     <div className="dropdown dropdown-end">
-                        <button className="px-1 mx-1 uppercase font-thin transition ease-in-out hover:-translate-y-[2px] hover:font-bold justify-between">
-                            <Link href="/routes/grimoire">Grimoire</Link>
-                        </button>
-                        <button className="px-1 mx-1 uppercase font-thin transition ease-in-out hover:-translate-y-[2px] hover:font-bold justify-between">
-                            <Link href="/routes/maps/waterdeep">Waterdeep</Link>
-                        </button>
                         <div className="flex gap-2 items-center">
                             <h2>{currentUser.username}</h2>
                             <label
@@ -53,7 +47,7 @@ export default function NavBar() {
 
                         <ul
                             tabIndex={0}
-                            className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+                            className=" relative z-10 mt-3 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
                         >
                             <li>
                                 <button onClick={() => signOut()}>
