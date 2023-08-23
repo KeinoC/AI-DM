@@ -23,7 +23,7 @@ const LoginSignUpForm = ( { setEmail, setPassword, handleSubmit, isLoginMode, er
                             onChange={(e) => setUsername(e.target.value)}
                             required
                             />
-                        </div> 
+                        </div>
                     </>
                 }
 

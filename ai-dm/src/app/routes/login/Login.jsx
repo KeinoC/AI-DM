@@ -4,9 +4,9 @@ import LoginSignUpForm from "@/app/components/LoginSignUpForm";
 
 
 const Login = () => {
-    const [usernameValue, setUsername] = useState("KeinoC");
-    const [emailValue, setEmail] = useState("hello@keino.dev");
-    const [passwordValue, setPassword] = useState("abc123");
+    const [usernameValue, setUsername] = useState("");
+    const [emailValue, setEmail] = useState("");
+    const [passwordValue, setPassword] = useState("");
     const [error, setError] = useState("");
 
 

@@ -18,6 +18,8 @@ export default function EquipmentTab() {
 
     /** Drop down for selecting equipment categories */
     const EquipCatFilterOptions = () => (
+       <div>
+        <span>Select Equipment Category: </span>
         <select
             value={selectedCat}
             onChange={(e) => setSelectedCat(e.target.value)}
@@ -28,6 +30,7 @@ export default function EquipmentTab() {
                 </option>
             ))}
         </select>
+       </div>
     );
 
     //  2. User scts a category from the dropdown
