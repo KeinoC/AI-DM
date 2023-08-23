@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import ItemsTab from "./Tabs/ItemsTab";
+import ItemsTab from "./Tabs/items/ItemsTab";
 
 export default function Grimoire() {
     const [submitData, setSubmitData] = useState([]);
