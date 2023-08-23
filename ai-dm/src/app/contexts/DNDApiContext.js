@@ -33,41 +33,51 @@ export const DNDApiProvider = ({ children }) => {
                 // 1. Fetch the categories objects
                 const fetchedCategories = await getEquipmentCategories();
                 setEquipCatObjs(fetchedCategories?.results);
-    
+
                 // 2. Use the categories obj to get the urls
-                const catUrls = fetchedCategories.results.map(cat => cat?.url);
-    
-                // 3. Fetch data for each URL 
+                const catUrls = fetchedCategories.results.map(
+                    (cat) => cat?.url
+                );
+
+                // 3. Fetch data for each URL
                 const intermediateResults = await Promise.all(
-                    catUrls.map(url => fetch(`https://www.dnd5eapi.co${url}`).then(res => res.json()))
+                    catUrls.map((url) =>
+                        fetch(`https://www.dnd5eapi.co${url}`).then((res) =>
+                            res.json()
+                        )
+                    )
                 );
-    
-                // Extract nested URLs from the fetched data
-                const nestedUrls = intermediateResults.flatMap(result => result.url);
-    
-                // 4. Fetch the nested data using the nested URLs
-                const finalResults = await Promise.all(
-                    nestedUrls.map(url => fetch(`https://www.dnd5eapi.co${url}`).then(res => res.json()))
+
+                // 4. Extract equipment data from each intermediate result, then flatten into a single array
+                let fetchedItems = intermediateResults.flatMap(
+                    (result) => result.equipment || []
                 );
-    
-                // Extract equipment data from the final results
-                const fetchedItems = finalResults.flatMap(result => result.equipment);
-    
-                // Set the items to global state
-                setAPIItems(fetchedItems);
-    
+
+                // 5. Fetch detailed data for each equipment item using `getApiEquipmentByIndex`
+                const detailedItemsPromises = fetchedItems.map((item) => {
+                    return item?.index
+                        ? getApiEquipmentByIndex(item.index)
+                        : null;
+                });
+
+                const detailedItems = await Promise.all(detailedItemsPromises);
+                // Filter out any null or undefined values from detailedItems
+                const filteredItems = detailedItems.filter(
+                    (item) => item !== null && item !== undefined
+                );
+
+                // Set the detailed items to global state
+                setAPIItems(filteredItems);
             } catch (error) {
                 console.error("Error fetching categories: ", error);
             }
         };
-    
+
         // Call the function
         fetchCategories();
     }, []);
-    
-    
-    console.log(apiItems)
 
+    console.log(apiItems);
 
     // almost working code, trying different approach - delete if not needed
     // useEffect(() => {
@@ -103,7 +113,6 @@ export const DNDApiProvider = ({ children }) => {
     //             console.error("Error fetching categories: ", error);
     //         }
     //     };
-
 
     //     // call the function
     //     fetchCategories();
