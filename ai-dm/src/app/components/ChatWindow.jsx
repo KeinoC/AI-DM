@@ -77,7 +77,6 @@ export default function ChatWindow() {
         async function fetchChatHistory() {
             // Call the function to get chat history
             const history = await getChatHistoryByChannel("global"); // Replace 'your-channel-name' with the desired channel name
-            console.log("history", history);
             setChatHistory(history);
         }
 

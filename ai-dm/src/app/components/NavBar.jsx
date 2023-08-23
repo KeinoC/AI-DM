@@ -28,27 +28,56 @@ export default function NavBar() {
             </div>
 
             {currentUser && (
-                <div className="dropdown dropdown-end">
-                    <div className="flex gap-2 items-center">
-                        <h2>{currentUser.username}</h2>
-                        <label
-                            tabIndex={0}
-                            className="btn btn-ghost btn-circle avatar"
-                        >
-                            <div className="w-10 h-10 shadow-lg  overflow-hidden rounded-full">
-                                <img src="/Default_Profile_Picture.jpeg" alt="Profile" />
-                            </div>
-                        </label>
-                    </div>
+                <div className="flex flex-row justify-around">
+                    <div className="dropdown dropdown-end">
+                        <button className="px-1 mx-1 uppercase font-thin transition ease-in-out hover:-translate-y-[2px] hover:font-bold justify-between">
+                            <Link href="/routes/grimoire">Grimoire</Link>
+                        </button>
+                        <button className="px-1 mx-1 uppercase font-thin transition ease-in-out hover:-translate-y-[2px] hover:font-bold justify-between">
+                            <Link href="/routes/maps/waterdeep">Waterdeep</Link>
+                        </button>
+                        <div className="flex gap-2 items-center">
+                            <h2>{currentUser.username}</h2>
+                            <label
+                                tabIndex={0}
+                                className="btn btn-ghost btn-circle avatar"
+                            >
+                                <div className="w-10 h-10 shadow-lg  overflow-hidden rounded-full">
+                                    <img
+                                        src="/Default_Profile_Picture.jpeg"
+                                        alt="Profile"
+                                    />
+                                </div>
+                            </label>
+                        </div>
 
-                    <ul
-                        tabIndex={0}
-                        className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
-                    >
-                        <li>
-                            <button onClick={() => signOut()}>Sign Out</button>
-                        </li>
-                    </ul>
+                        <ul
+                            tabIndex={0}
+                            className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+                        >
+                            <li>
+                                <button onClick={() => signOut()}>
+                                    Sign Out
+                                </button>
+                            </li>
+
+                            <li>
+                                <button >
+                                    <Link href="/routes/grimoire">
+                                        Grimoire
+                                    </Link>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button >
+                                    <Link href="/routes/maps/waterdeep">
+                                        Waterdeep
+                                    </Link>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             )}
         </div>
