@@ -1,16 +1,52 @@
-import React, {useState } from 'react';
+import React, {useState, useEffect } from 'react';
 
 import './grid.css'
 
 const Grid = () => {
+
+  let tokenArray = [
+    {
+      id: "id-1",
+      name: "Umnos",
+      img: "https://i.imgur.com/0wWKQfp.png",
+      user: "Drewski",
+      position: {x: 0,y: 0}
+    },
+    {
+      id: "id-2",
+      name: "Discord",
+      img: "https://i.imgur.com/zAljZQy.png",
+      position: {x:0, y: 0},
+    }
+  ]
+
   const [gridWidth, setGridWidth] = useState(15);
   const [gridHeight, setGridHeight] = useState(15);
   const [mapImage, setMapImage] = useState("https://i.imgur.com/ppIn5BV.jpg");
+  // player id/token id of selectedToken
+  const [selectedToken, setSelectedToken] = useState("")
+  const [tokens, setTokens] = useState(tokenArray)
+  // ^^^tokens
+
+  // const updateTokens = () => {
+  //   const updatedTokens = tokens.map((tokens) => {
+
+  //     setTokens(...prev, )
+  //   })
+  // }
+
+  // tokens[selectedToken].postion = {x: x, y: y}
+
+
 
   const [playerPosition, setPlayerPosition] = useState({ x: 0, y: 0 });
 
   const handleDragStart = (event, x, y) => {
+    // collect starting tile location (x, y coordinates)
     event.dataTransfer.setData('text/plain', JSON.stringify({ x, y }));
+    // check user id to see if player has access to token
+    event.target.position({x, y})
+    // record x,y coordinates from token object
   };
 
   const handleDragOver = (event) => {
@@ -19,16 +55,50 @@ const Grid = () => {
 
   const handleDrop = (event, x, y) => {
     event.preventDefault();
-    setPlayerPosition({ x: x, y: y });
-    console.log('handleDrop testing', event.target.name)
-    console.log('handleDrop testing-pos', event.target.value)
+    // tokens[selectedToken].position=({ x: x, y: y });
+    // event.target.value = {x: x, y: y}
+    // selectedToken.positions=({ x: x, y: y})
+    // selectedToken.positions.x = x
+    // selectedToken.postitions.y = y
+
+    if (selectedToken) {
+      const updatedTokens = tokens.map(token => {
+        if (token.id === selectedToken.id) {
+          return {
+            ...token,
+            position: { x: x, y: y }
+          };
+        }
+        return token;
+      });
+
+
+      setTokens(updatedTokens);
+      setSelectedToken(updatedTokens.find(token => token.id === selectedToken.id));
+
+      console.log(tokens[0].position)
+    }
+
+    // console.log('handleDrop testing', event.target.name)
+    // console.log('handleDrop testing-pos', event.target.value)
+    // console.log('handleDrop-position', event.target.position)
+
+    // console.log(playerPosition)
+
+    // update token object key/value position with tile position for character targeted from handleDragStart::
+    // -record tile destination coordinates
+    // -target token from handleDragStart
+    // -update tokenObject position from tile destination coordinates
   };
+
 
   const gridContainerStyle = {
     display: 'grid',
     gridTemplateColumns: `repeat(${gridWidth}, 1fr)`,
     display: 'relative'
   };
+
+  // Input Functions
 
   const handleWidthChange = (e) => {
     setGridWidth(parseInt(e.target.value));
@@ -40,21 +110,15 @@ const Grid = () => {
     setGridHeight(parseInt(e.target.value));
   };
 
-  let tokenArray = [
-    {
-      id: 1,
-      name: "Umnos",
-      img: "https://i.imgur.com/0wWKQfp.png",
-      user: "Drewski",
-      position: {x: 0,y: 0}
-    },
-    {
-      id: 2,
-      name: "Discord",
-      img: "https://i.imgur.com/zAljZQy.png",
-      position: {x:0, y: 0},
-    }
-  ]
+
+
+  useEffect(() => {
+    // console.log(selectedToken, playerPosition)
+    // selectedToken.length && console.log(tokens[selectedToken]?.position)
+    // console.log(selectedToken)
+    // console.log(tokens)
+  }, [selectedToken, playerPosition])
+
 
   // Grid Tiles
   const renderGrid = () => {
@@ -74,8 +138,24 @@ const Grid = () => {
             onDrop={(e) => handleDrop(e, x, y)}
             >
 
+              {isPlayerHere && tokens.map((tokensObj) => {
+                return (
+                  <img 
+                    key={tokensObj.id} 
+                    onDragStart={() => setSelectedToken(tokensObj)}
+                    id={tokensObj.id} src={tokensObj.img} name={tokensObj.user} position={tokensObj.position} className="grabbable draggable absolute z-30"
+                    // onDragStart={(e) => handleDragStart(e, x, y)}
+                    // onDragOver={handleDragOver}
+                    // onDrop={(e) => handleDrop(e, x, y)}
+                    />)}
+                )
+              }
+
+
               {/* Player Token */}
-              {isPlayerHere && <img src={tokenArray[0].img} name={tokenArray[0].user} value={tokenArray[0].position} className="grabbable absolute z-30"
+              {isPlayerHere && <img 
+                onDragStart={() => setSelectedToken(tokens[0].id)}
+                id={tokens[0].id} src={tokens[0].img} name={tokens[0].user} position={tokens[0].position} className="grabbable draggable absolute z-30"
                 // onDragStart={(e) => handleDragStart(e, x, y)}
                 // onDragOver={handleDragOver}
                 // onDrop={(e) => handleDrop(e, x, y)}
