@@ -60,7 +60,7 @@ let hubData = [
       },
       {
         id: 2,
-        name: "Magical Items",
+        name: "Magic Items",
         link: "#",
         img: "https://i.imgur.com/ewaDfo6.png"
       },
