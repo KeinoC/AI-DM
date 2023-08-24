@@ -1,51 +1,115 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 import './circle-menu.css'
+// import { useUser } from '../contexts/UserContext'
 
-export default function CircleMenu() {
+export default function CircleMenu(linksData) {
+  // const [links, setLinks] = useState([])
+  // const { links, setLinks } = useUser()
 
-  let grimoireLinks = [
+
+  // useEffect(() => {
+  //   setLinks(linksData.links)
+  //   console.log('log from useEffect')
+  // }, [])
+
+
+  // console.log('import for circle component', linksData)
+
+  // // const links = linksData.links
+
+  // console.log('data for circle map', links)
+  // console.log('type ', typeof links)
+
+  
+
+  let hubData = [
+
     {
       id: 1,
-      name: "Weapons",
-      link: "#",
-      img: "https://i.imgur.com/4bcksON.png"
+      name: "adventures",
+      position: "",
+      links: [
+        {
+          id: 1,
+          name: "Weapons",
+          link: "#",
+          img: "https://i.imgur.com/4bcksON.png"
+        },
+        {
+          id: 2,
+          name: "Magical Items",
+          link: "#",
+          img: "https://i.imgur.com/ewaDfo6.png"
+        },
+        {
+          id: 3,
+          name: "Armor",
+          link: "#",
+          img: "https://i.imgur.com/b3piMtY.png"
+        },
+        {
+          id: 4,
+          name: "Trinkets",
+          link: "#",
+          img: "https://i.imgur.com/hOBddrP.png"
+        },
+        {
+          id: 5,
+          name: "All Items",
+          link: "#",
+          img: "https://i.imgur.com/wIqJvSr.png"
+        }
+      ]
     },
     {
       id: 2,
-      name: "Magical Items",
-      link: "#",
-      img: "https://i.imgur.com/ewaDfo6.png"
-    },
-    {
-      id: 3,
-      name: "Armor",
-      link: "#",
-      img: "https://i.imgur.com/b3piMtY.png"
-    },
-    {
-      id: 4,
-      name: "Trinkets",
-      link: "#",
-      img: "https://i.imgur.com/hOBddrP.png"
-    },
-    {
-      id: 5,
-      name: "All Items",
-      link: "#",
-      img: "https://i.imgur.com/wIqJvSr.png"
+      name: "grimoire",
+      position: "",
+      links: [
+        {
+          id: 1,
+          name: "Weapons",
+          link: "#",
+          img: "https://i.imgur.com/4bcksON.png"
+        },
+        {
+          id: 2,
+          name: "Magical Items",
+          link: "#",
+          img: "https://i.imgur.com/ewaDfo6.png"
+        },
+        {
+          id: 3,
+          name: "Armor",
+          link: "#",
+          img: "https://i.imgur.com/b3piMtY.png"
+        },
+        {
+          id: 4,
+          name: "Trinkets",
+          link: "#",
+          img: "https://i.imgur.com/hOBddrP.png"
+        },
+        {
+          id: 5,
+          name: "All Items",
+          link: "#",
+          img: "https://i.imgur.com/wIqJvSr.png"
+        }
+      ]
     }
+  
   ]
+
+
   return (
     <div className="circle">
 
       <span className="circle__span">
         <span className="circle__span">Grimoire</span>
-        
       </span>
-
       <div className="circle__wrap">
-
         {/* 
 
           Link Order
@@ -59,7 +123,7 @@ export default function CircleMenu() {
 
         */}
 
-        {grimoireLinks.map((linkObj) => {
+        {hubData[0].links.map((linkObj) => {
           return (
             <a 
               key={linkObj.id}

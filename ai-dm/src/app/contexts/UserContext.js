@@ -26,6 +26,8 @@ export const useUser = () => {
 export const UserProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null);
 
+    // const [links, setLinks] = useState([])
+
     const signUp = async (email, password) => {
         const user = await signUpWithFirebase(email, password);
         // TODO: create firestore instance and set currentUser to it
@@ -128,6 +130,8 @@ export const UserProvider = ({ children }) => {
         currentUser,
         signUp,
         signOut,
+        // links,
+        // setLinks
         // ... Add other CRUD operations as needed
     };
 

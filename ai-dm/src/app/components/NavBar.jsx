@@ -70,6 +70,14 @@ export default function NavBar() {
                                     </Link>
                                 </button>
                             </li>
+
+                            <li>
+                                <button >
+                                    <Link href="/routes/gameboard">
+                                        Game
+                                    </Link>
+                                </button>
+                            </li>
                         </ul>
                     </div>
                 </div>
