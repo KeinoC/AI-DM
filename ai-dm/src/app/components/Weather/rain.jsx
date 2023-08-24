@@ -7,7 +7,7 @@ function RainParticleOverlay() {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext("2d");
         canvas.width = window.innerWidth * 2;
-        canvas.height = window.innerHeight;
+        canvas.height = window.innerHeight ;
 
         let raindrops = [];
 
@@ -69,7 +69,7 @@ function RainParticleOverlay() {
         }
 
         function handleResize() {
-            canvas.width = window.innerWidth * 2;
+            canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             raindrops = [];
             init();
@@ -88,7 +88,8 @@ function RainParticleOverlay() {
     return (
         <canvas
             ref={canvasRef}
-            className="absolute top-0 left-0 w-full h-full"
+            className="absolute top-0 left-0 w-full h-full z-50"
+            style={{ pointerEvents: 'none'}}
         ></canvas>
     );
 }
