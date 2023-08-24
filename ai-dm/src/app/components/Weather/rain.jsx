@@ -6,8 +6,8 @@ function RainParticleOverlay() {
     useEffect(() => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext("2d");
-        canvas.width = window.innerWidth * 2; // testing twice width to avid rain not falling on bottom right
-        canvas.height = window.innerHeight;
+        canvas.width = window.innerWidth * 4; // testing twice width to avid rain not falling on bottom right
+        canvas.height = window.innerHeight * 4;
 
         let raindrops = [];
 
