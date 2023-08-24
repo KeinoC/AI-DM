@@ -14,16 +14,18 @@
   width: 30rem; height: 30rem;
 }
 
-/* Menu 1. Adventures */
+/* Menu 1. Adventures - Position */
 .circle--1 {
   position: absolute;
   top: 5%;
+  left: 0%;
 }
 
+/* Menu 2. Grimoire - Position */
 .circle--2 {
   position: absolute;
-  right: 40%;
-  bottom: 0%;
+  top: 30%;
+  left: 20%;
 }
 
 .circle__wrap {

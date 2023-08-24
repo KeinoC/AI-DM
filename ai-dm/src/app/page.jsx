@@ -7,6 +7,7 @@ import LandingPage from "./components/LandingPage";
 import WaterdeepMap from "./routes/maps/waterdeep/page";
 import Hub from "./components/Hub/Hub";
 import { useUser } from "./contexts/UserContext";
+import RainParticleOverlay from "./components/Weather/rain";
 
 export default function Home() {
 
@@ -16,7 +17,10 @@ export default function Home() {
         <layout>
             <div>
                 {!!currentUser ?
-                <Hub />
+                <div>
+<RainParticleOverlay />
+                    <Hub />
+                </div>
                 :
                 <LandingPage />
                 }
