@@ -9,23 +9,24 @@ export default function NavBar() {
 
     return (
         <div className="flex gap-4 top-0 w-full relative z-[100] bg-slate-500 backdrop-blur-sm bg-opacity-20 h-15 justify-between p-4">
-            <div className="flex items-center">
+            
+            <div className="flex">
                 <a href="/" className="btn btn-ghost normal-case text-xl mr-4">
                     AI D&D
                 </a>
-
-                {!currentUser && (
-                    <div className="flex gap-4">
-                        <button className="flex-right uppercase font-thin transition ease-in-out hover:-translate-y-[2px]">
-                            <Link href="/routes/login">Login</Link>
-                        </button>
-
-                        <button className="uppercase font-thin transition ease-in-out hover:-translate-y-[2px]">
-                            <Link href="/routes/sign-up">Sign Up</Link>
-                        </button>
-                    </div>
-                )}
             </div>
+
+            {!currentUser && (
+                <div className="flex ml-auto gap-4">
+                    <button className="uppercase font-thin transition ease-in-out hover:-translate-y-[2px]">
+                        <Link href="/routes/login">Login</Link>
+                    </button>
+
+                    <button className="uppercase font-thin transition ease-in-out hover:-translate-y-[2px]">
+                        <Link href="/routes/sign-up">Sign Up</Link>
+                    </button>
+                </div>
+            )}
 
             {currentUser && (
                 <div className="flex flex-row justify-around">
@@ -47,7 +48,7 @@ export default function NavBar() {
 
                         <ul
                             tabIndex={0}
-                            className=" relative z-10 mt-3 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+                            className="relative z-10 mt-3 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
                         >
                             <li>
                                 <button onClick={() => signOut()}>
