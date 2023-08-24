@@ -32,7 +32,7 @@ export default function AdvCharCards() {
 
     const CharCards = () => {
         return (
-            <div className="flex flex-row hover:shadow-md">
+            <div className="flex flex-row hover:shadow-md z-20">
                 {advChars.map((char) => (
                     <div
                         key={char.id}
