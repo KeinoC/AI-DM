@@ -48,7 +48,7 @@ export default function ChatWindow() {
         return (
             <div
                 key={index}
-                className="bg-slate-100 bg-opacity-10 text-slate-400 p-1 m-1 h-auto rounded-lg shadow-md flex items-start"
+                className="bg-slate-100 bg-opacity-10 text-slate-400 p-1 m-1 h-auto rounded-lg shadow-md flex "
             >
                 <img
                     src="/Default_Profile_Picture.jpeg"
@@ -113,7 +113,7 @@ export default function ChatWindow() {
     };
 
     return (
-        <div className="z-20 bg-opacity-10 fixed bottom-0 left-0 sm:w-[400px] sm:h-[400px] bg-slate-800 p-6 rounded-lg text-salmon">
+        <div className="z-20 bg-opacity-10  sm:w-[400px] sm:h-[400px] bg-slate-800 p-6 rounded-lg text-salmon flex-end">
             <div ref={scrollRef} className="overflow-y-scroll sm:h-[300px]">
                 {chatHistoryWindow}
             </div>
