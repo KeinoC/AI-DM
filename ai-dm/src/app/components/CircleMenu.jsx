@@ -14,18 +14,6 @@ export default function CircleMenu() {
           <span className="circle__span">Adventures</span>
         </span>
         <div className="circle__wrap">
-          {/* 
-
-            Link Order
-            1. Top Left
-            2. Top Right
-            3. Bottom Left
-            4. Bottom Right
-            5. Center 
-
-            Images used should be perfect square shape for best result
-
-          */}
 
           {hubData[0].links.map((linkObj) => {
             return (
@@ -33,6 +21,7 @@ export default function CircleMenu() {
                 key={linkObj.id}
                 className="circle__link" 
                 href={linkObj.link}>
+                  <span>{linkObj.name}</span>
               <div>
                 <img src={linkObj.img} />
               </div></a>
@@ -40,9 +29,6 @@ export default function CircleMenu() {
           })}
 
         </div>
-
-        
-
       </div>
 
       {/* Menu 2. Grimoire */}
@@ -53,18 +39,6 @@ export default function CircleMenu() {
           <span className="circle__span">Grimoire</span>
         </span>
         <div className="circle__wrap">
-          {/* 
-
-            Link Order
-            1. Top Left
-            2. Top Right
-            3. Bottom Left
-            4. Bottom Right
-            5. Center 
-
-            Images used should be perfect square shape for best result
-
-          */}
 
           {hubData[1].links.map((linkObj) => {
             return (
@@ -79,10 +53,8 @@ export default function CircleMenu() {
           })}
 
         </div>
+      </div>
 
-
-
-        </div>
     </div>
   )
 }

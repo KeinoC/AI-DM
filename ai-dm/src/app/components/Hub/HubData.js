@@ -25,7 +25,7 @@ let hubData = [
         id: 2,
         name: "My Games",
         link: "#",
-        img: "https://i.imgur.com/LqHXueq.png"
+        img: "https://i.imgur.com/zhHQBI0.png"
       },
       {
         id: 3,

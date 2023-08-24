@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Yatra+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rowdies&display=swap');
+
 /* .circle {background:#E3DFD2;box-shadow: inset 0 0 20vmin 0 #585247;} */
 
 .circle {
@@ -22,10 +25,11 @@
   position:absolute;
   left:0; top:0;
   width:40%; height:40%;
-  overflow:hidden;
+  /* overflow:hidden; */
   transform:scale(.5) translateZ(0px);
   background:#585247;
 }
+
 .circle__link div{
   height:100%;
   background-size:cover;
@@ -33,6 +37,16 @@
   transition:opacity .5s;
   border-radius:inherit;
   overflow: hidden;
+}
+
+/* Link Label */
+.circle__link span {
+  position: absolute;
+  /* z-index: 20; */
+  opacity: 0;
+  font-size: 3rem;
+  font-family: 'Yatra One', cursive;
+  font-family: 'Rowdies', cursive;
 }
 
 /* Top Left */
@@ -46,6 +60,11 @@
   border: 2px solid white;
 }
 
+.circle__link:nth-child(1) span {
+  left: 100%;
+  bottom: 0%;
+}
+
 /* Top Right */
 .circle__link:nth-child(2){
   border: 2px solid white;
@@ -56,6 +75,8 @@
   transform-origin: -10% 110%;
   transition:transform .4s .2s;
 }
+
+/* .circle__link:nth-child() */
 
 /* Bottom Left */
 .circle__link:nth-child(3){
@@ -86,6 +107,11 @@
   border-radius:50vmin;
   box-shadow:0 0 0 1vmin #E3DFD2;
   transform:scale(1);
+}
+
+.circle__link:nth-child(5) span{
+  left: 27.5%;
+  top: 35%;
 }
 
 /* Button before Transform */
@@ -119,6 +145,11 @@
 .circle__link:hover div{
   opacity:1;
   transform:translatez(0px);
+}
+
+.circle__link:hover span {
+  opacity: 1;
+  z-index: 2000;
 }
 
 /* Hamburger Lines - Not in Use */
