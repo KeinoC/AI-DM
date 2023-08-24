@@ -30,7 +30,12 @@ export default function ChatWindow() {
             await sendGlobalMessage("global", newChatMessage, currentUser);
 
             setNewChatMessage(updatedChatMessage);
-            setChatHistory([...chatHistory, updatedChatMessage]);
+            async function fetchChatHistory() {
+                // Call the function to get chat history
+                const history = await getChatHistoryByChannel("global"); // Replace 'your-channel-name' with the desired channel name
+                setChatHistory(history);
+            }
+            await fetchChatHistory();
             setNewChatMessage("");
         }
     };
@@ -43,6 +48,8 @@ export default function ChatWindow() {
         );
     };
 
+
+    // ***** CHAT HISTORY WINDOW ********************************
     const chatHistoryWindow = chatHistory.map((message, index) => {
         const timeStamp = convertUnixToTime(message.timestamp);
         return (
@@ -84,12 +91,12 @@ export default function ChatWindow() {
         fetchChatHistory();
     }, []);
 
-    // useEffect(() => {
-    //     console.log(chatHistory)
-    //     if (scrollRef.current) {
-    //       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    //     }
-    //   }, [chatHistory]);
+    useEffect(() => {
+        console.log(chatHistory)
+        if (scrollRef.current) {
+          scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+        }
+      }, [chatHistory]);
 
     const newChatMessageWindow = () => {
         return (
