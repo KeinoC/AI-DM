@@ -14,6 +14,17 @@ export async function getEquipmentCategories() {
     return data;
 }
 
+export async function getEquipmentListByCategory(category) {
+    const res = await fetch(
+        `https://www.dnd5eapi.co/api/equipment-categories/${category}`
+    );
+    const data = await res.json();
+    if(data.length > 0) {
+    console.log('Equipment List by Category fetched');
+    }
+    return data;
+}
+
 
 
 

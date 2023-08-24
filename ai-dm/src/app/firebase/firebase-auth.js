@@ -54,7 +54,7 @@ export const signUp = async (email, password, username) => {
         }
         console.log("Document written with ID:", user.uid);
         // firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
-        navToMapNamed(WATERDEEP);
+        navToHome();
         return user;
     } catch (error) {
         const errorCode = error.code;
@@ -77,7 +77,7 @@ export const signIn = async (email, password) => {
         // Successful sign-in logic
         if (user) {
             console.log("User signed in successfully:", user.uid);
-            navToMapNamed(WATERDEEP);
+            navToHome();
             return user;
         }
     } catch (error) {

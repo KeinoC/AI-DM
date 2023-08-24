@@ -10,18 +10,26 @@ const {
     deleteDoc,
     getFirestore,
 } = require("firebase/firestore");
+
 import { auth, db } from "./firebase-config";
 import { ITEMS, ADVENTURES, CHARACTERS } from "../utils/variables/database-vars";
-
-
-
 
 // * items collection basic CRUD Methods * ----------------
 
 // create item
+
 export async function createItem(ItemData) {
     try {
-        const itemsCollection = collection(db, ITEMS)
+        const itemsCollection = collection(db, ITEMS);
+
+        // Query the database to find any items with the same index
+        const q = query(itemsCollection, where("index", "==", ItemData.index));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+            console.error('Item with the same index already exists.');
+            throw new Error('Item with the same index already exists.');
+        }
 
         const newItemRef = await addDoc(itemsCollection, {
             ...ItemData,
@@ -36,6 +44,7 @@ export async function createItem(ItemData) {
         throw error;
     }
 }
+
 
 
 // get All items from db

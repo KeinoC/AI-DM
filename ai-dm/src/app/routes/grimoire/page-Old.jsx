@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Form from "../../components/Form";
 import { createItem } from "@/app/firebase/firebase-db-items";
 import formData from "./forms/FormData";
-import ItemsTab from "./Tabs/ItemsTab";
+import ItemsTab from "./Tabs/items/ItemsTab";
 
 export default function Grimoire() {
     const [submitData, setSubmitData] = useState([]);

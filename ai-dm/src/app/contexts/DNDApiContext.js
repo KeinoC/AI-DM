@@ -19,15 +19,38 @@ export const useDNDApi = () => {
 };
 
 export const DNDApiProvider = ({ children }) => {
-    const [apiItems, setAPIItems] = useState(0);
-    const [selectedCat, setSelectedCat] = useState("");
+    const { currentUser } = useUser();
+    const [apiEquipment, setAPIEquipment] = useState(0);
     const [equipCatIndexes, setEquipCatIndexes] = useState([]);
     const [equipCatObjs, setEquipCatObjs] = useState([]);
+    const [selectedCat, setSelectedCat] = useState("");
+    const [selectedArray, setSelectedArray] = useState([]);
+
+    //
     const [equipCatNames, setEquipCatNames] = useState([]);
 
-    // equipment categories >> use categories url to get all items
+    // equipment categories >> use categories url to get all Equipment
 
     // ******** Categories Data **********
+
+    // -- get equipment categories
+    useEffect(() => {
+        if (equipCatObjs.length !== 0) {
+            return;
+        } else {
+            const fetchCategories = async () => {
+                try {
+                    // 1. Fetch the categories objects
+                    const fetchedCategories = await getEquipmentCategories();
+                    setEquipCatObjs(fetchedCategories.results);
+                    console.log("equipment categories fetched");
+                } catch (error) {
+                    console.error("Error fetching categories: ", error);
+                }
+            };
+            fetchCategories();
+        }
+    }, [equipCatObjs]);
 
     // Get all equipment
     // useEffect(() => {
@@ -52,25 +75,25 @@ export const DNDApiProvider = ({ children }) => {
     //                     );
 
     //             // 4. Extract equipment data from each intermediate result, then flatten into a single array
-    //             let fetchedItems = intermediateResults.flatMap(
+    //             let fetchedEquipment = intermediateResults.flatMap(
     //                 (result) => result.equipment || []
     //             );
 
     //             // 5. Fetch detailed data for each equipment item using `getApiEquipmentByIndex`
-    //             const detailedItemsPromises = fetchedItems.map((item) => {
+    //             const detailedEquipmentPromises = fetchedEquipment.map((item) => {
     //                 return item?.index
     //                     ? getApiEquipmentByIndex(item.index)
     //                     : null;
     //             });
 
-    //             const detailedItems = await Promise.all(detailedItemsPromises);
-    //             // Filter out any null or undefined values from detailedItems
-    //             const filteredItems = detailedItems.filter(
+    //             const detailedEquipment = await Promise.all(detailedEquipmentPromises);
+    //             // Filter out any null or undefined values from detailedEquipment
+    //             const filteredEquipment = detailedEquipment.filter(
     //                 (item) => item !== null && item !== undefined
     //             );
 
-    //             // Set the detailed items to global state
-    //             setAPIItems(filteredItems);
+    //             // Set the detailed Equipment to global state
+    //             setAPIEquipment(filteredEquipment);
     //         } catch (error) {
     //             console.error("Error fetching categories: ", error);
     //         }
@@ -80,21 +103,23 @@ export const DNDApiProvider = ({ children }) => {
     //     fetchCategories();
     // }, []);
 
-// console.log(apiItems)
+    // console.log(apiEquipment)
 
+    // ******** Locally / client Stored Equipment Data **********
 
-// ******** Locally / client Stored Equipment Data **********
-
-const { currentUser } = useUser();
-useEffect(() => {
-    if (currentUser) {
-        setAPIItems(DND_API_DB)
-    }
-},[currentUser])
-
+    useEffect(() => {
+        if (currentUser) {
+            setAPIEquipment(DND_API_DB);
+        }
+    }, [currentUser]);
 
     const value = {
-        apiItems,
+        apiEquipment,
+        equipCatObjs,
+        selectedCat,
+        setSelectedCat,
+        selectedArray,
+        setSelectedArray,
     };
 
     return (

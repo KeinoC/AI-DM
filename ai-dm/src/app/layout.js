@@ -8,7 +8,8 @@ import { DNDApiProvider } from "./contexts/DNDApiContext";
 import NavBar from "./components/NavBar";
 // import { Main } from 'next/document'
 
-const inter = Inter({ subsets: ["latin"] });
+const otherTailwindClasses = "h-full min-h-screen items-center bg-gradient-to-r from-gray-900 to-black-900"
+const inter = Inter({ subsets: ["latin"] } );
 
 export default function RootLayout({ children }) {
     return (
@@ -17,7 +18,7 @@ export default function RootLayout({ children }) {
                 <GrimoireProvider>
                     <DNDApiProvider>
                 <html>
-                    <body className={inter.className}>
+                    <body className={inter.className + otherTailwindClasses}>
                         <NavBar />
                         {children}
                     </body>
