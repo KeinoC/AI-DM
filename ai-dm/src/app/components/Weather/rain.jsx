@@ -6,38 +6,35 @@ function RainParticleOverlay() {
     useEffect(() => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext("2d");
-        canvas.width = window.innerWidth * 4; // testing twice width to avid rain not falling on bottom right
-        canvas.height = window.innerHeight * 4;
+        canvas.width = window.innerWidth * 2;
+        canvas.height = window.innerHeight;
 
         let raindrops = [];
 
         class Raindrop {
             constructor() {
-                this.speed = Math.random() * 5 + 1;
+                this.speed = Math.random() * 8 + 15;
 
                 // Define angle in radians.
                 this.angle = (Math.PI/5);
                 this.speedX = this.speed * Math.sin(this.angle);
                 this.speedY = this.speed * Math.cos(this.angle);
-                
+
                 const extendedWidth = canvas.width + canvas.height * Math.tan(this.angle);
                 this.x = Math.random() * extendedWidth - canvas.height * Math.tan(this.angle);
                 this.y = Math.random() * canvas.height;
 
-                this.length = Math.random() * 20;
+                this.length = Math.random() * 30;
             }
 
             update() {
                 this.y += this.speedY;
                 this.x += this.speedX;
 
-                if (this.y > canvas.height || this.x > canvas.width + this.length * Math.sin(this.angle) || this.x < 0 - this.length * Math.sin(this.angle)) {
-                    this.y = 0 - this.length;
+                if (this.y > canvas.height) {
                     const extendedWidth = canvas.width + canvas.height * Math.tan(this.angle);
                     this.x = Math.random() * extendedWidth - canvas.height * Math.tan(this.angle);
-                    this.speed = Math.random() * 10 + 5;
-                    this.speedX = this.speed * Math.sin(this.angle);
-                    this.speedY = this.speed * Math.cos(this.angle);
+                    this.y = 0 - this.length;
                 }
             }
 
@@ -49,12 +46,13 @@ function RainParticleOverlay() {
                     this.y + this.length * Math.cos(this.angle)
                 );
                 ctx.strokeStyle = "skyblue";
+                ctx.lineWidth = 2;
                 ctx.stroke();
             }
         }
 
         function init() {
-            for (let i = 0; i < 100; i++) {
+            for (let i = 1; i < 300; i++) {
                 raindrops.push(new Raindrop());
             }
         }
@@ -71,7 +69,7 @@ function RainParticleOverlay() {
         }
 
         function handleResize() {
-            canvas.width = window.innerWidth;
+            canvas.width = window.innerWidth * 2;
             canvas.height = window.innerHeight;
             raindrops = [];
             init();

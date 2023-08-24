@@ -35,6 +35,7 @@ export async function createAdventure(adventureData) {
     }
 }
 
+
 // Get All Adventures from DB
 export async function getAllAdventures() {
     try {

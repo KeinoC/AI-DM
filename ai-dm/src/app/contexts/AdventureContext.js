@@ -15,6 +15,8 @@ export const AdventureProvider = ({ children }) => {
 
     const [newAdventureMessage, setNewAdventureMessage] = useState([])
 
+    
+
     const value = {
         adventureHistory,
         setAdventureHistory,
