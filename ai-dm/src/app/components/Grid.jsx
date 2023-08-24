@@ -16,7 +16,8 @@ const Grid = () => {
       id: "id-2",
       name: "Discord",
       img: "https://i.imgur.com/zAljZQy.png",
-      position: {x:0, y: 0},
+      user: "Not Drewski",
+      position: {x:1, y: 1},
     }
   ]
 
@@ -150,7 +151,6 @@ const Grid = () => {
                     />)}
                 )
               }
-
 
               {/* Player Token */}
               {isPlayerHere && <img 

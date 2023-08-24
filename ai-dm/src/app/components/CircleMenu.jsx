@@ -21,7 +21,7 @@ export default function CircleMenu() {
                 key={linkObj.id}
                 className="circle__link" 
                 href={linkObj.link}>
-                  {/* <span>{linkObj.name}</span> */}
+                  <span>{linkObj.name}</span>
               <div>
                 <img src={linkObj.img} />
               </div></a>

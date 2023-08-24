@@ -25,7 +25,7 @@
 .circle--2 {
   position: absolute;
   top: 30%;
-  left: 20%;
+  left: 30%;
 }
 
 .circle__wrap {
@@ -48,6 +48,7 @@
   /* overflow:hidden; */
   transform:scale(.5) translateZ(0px);
   background:#585247;
+  text-align: center;
 }
 
 .circle__link div{
@@ -66,7 +67,11 @@
   opacity: 0;
   font-size: 3rem;
   font-family: 'Yatra One', cursive;
-  font-family: 'Rowdies', cursive;
+  /* font-family: 'Rowdies', cursive; */
+  z-index: 2000;
+  display: inline-block;
+  width: 20rem; height: 7rem;
+  /* border: 3px solid red; */
 }
 
 /* Top Left */
@@ -81,8 +86,11 @@
 }
 
 .circle__link:nth-child(1) span {
-  left: 100%;
-  bottom: 0%;
+  /* left: 100%;
+  bottom: 0%; */
+  transform: rotate(-45deg);
+  left: -15%;
+  top: 35%;
 }
 
 /* Top Right */
@@ -127,10 +135,12 @@
   border-radius:50vmin;
   box-shadow:0 0 0 1vmin #E3DFD2;
   transform:scale(1);
+  /* position: relative; */
+  z-index: 40;
 }
 
 .circle__link:nth-child(5) span{
-  left: 27.5%;
+  left: 0;
   top: 35%;
 }
 
