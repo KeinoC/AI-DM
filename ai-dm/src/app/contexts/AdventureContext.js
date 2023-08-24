@@ -1,30 +1,45 @@
-'use client'
-import React, { createContext, useContext, useState } from "react";
+"use client";
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { getAllAdventures } from "../firebase/firebase-db-adventures";
 
 // * Initialize Context
 const AdventureContext = createContext();
 export const useAdventure = () => {
     const context = useContext(AdventureContext);
     if (context === undefined) {
-        throw new Error("ussAdventure must be used within a AdventureProvider");
+        throw new Error("useAdventure must be used within a AdventureProvider");
     }
     return context;
 };
 
 export const AdventureProvider = ({ children }) => {
+    const [newAdventure, setNewAdventure] = useState([]);
+    const [allAdventures, setAllAdventures] = useState([]);
 
-    const [newAdventureMessage, setNewAdventureMessage] = useState([])
+    useEffect(() => {
+        const fetchAdventures = async () => {
+            try {
+                const fetchedAdventures = await getAllAdventures();
+                setAllAdventures(fetchedAdventures);
+                console.log(fetchedAdventures);
+            } catch (error) {
+                console.error("Failed to fetch adventures:", error);
+            }
+        };
 
-    
+        fetchAdventures();
+    }, []);
 
     const value = {
-        adventureHistory,
-        setAdventureHistory,
-        newAdventureMessage,
-        setNewAdventureMessage,
+        allAdventures,
+        setAllAdventures,
+        newAdventure,
+        setNewAdventure,
     };
 
     return (
-        <AdventureContext.Provider value={value}>{children}</AdventureContext.Provider>
+        <AdventureContext.Provider value={value}>
+            {children}
+        </AdventureContext.Provider>
     );
-}
+};
