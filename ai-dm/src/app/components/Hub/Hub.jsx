@@ -11,16 +11,7 @@ export default function Hub() {
   return (
     <>
 
-      {linksData.map((linkObj) => {
-        return(
-          <div 
-            key={linkObj.id}
-            className="hub__link-box"
-            >
-              <CircleMenu linksData={linksData[linkObj.id]}/>
-          </div>
-        )
-      })}
+      <CircleMenu />
 
 
     </>
