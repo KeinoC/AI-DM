@@ -8,9 +8,9 @@ export default function CircleMenu() {
     <div className="circle__page">
 
       {/* Menu 1. Adventures */}
-      <div className="circle">
+      <div className="circle circle--1">
 
-        <span className="circle__span">
+        <span className="circle__span circle__span--1">
           <span className="circle__span">Adventures</span>
         </span>
         <div className="circle__wrap">
@@ -21,7 +21,7 @@ export default function CircleMenu() {
                 key={linkObj.id}
                 className="circle__link" 
                 href={linkObj.link}>
-                  <span>{linkObj.name}</span>
+                  {/* <span>{linkObj.name}</span> */}
               <div>
                 <img src={linkObj.img} />
               </div></a>
@@ -33,9 +33,9 @@ export default function CircleMenu() {
 
       {/* Menu 2. Grimoire */}
 
-      <div className="circle">
+      <div className="circle circle--2">
 
-        <span className="circle__span">
+        <span className="circle__span circle__span--2">
           <span className="circle__span">Grimoire</span>
         </span>
         <div className="circle__wrap">
