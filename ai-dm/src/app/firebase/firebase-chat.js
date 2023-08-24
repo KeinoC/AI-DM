@@ -9,7 +9,7 @@ export async function sendGlobalMessage(channel, message, currentUser) {
 
         console.log(channel, message, currentUser)
         const newMessage = {
-            sender: currentUser?.firstName,
+            sender: currentUser?.username,
             message: message,
             timestamp: Date.now(),
         };
