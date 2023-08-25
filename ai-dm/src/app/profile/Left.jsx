@@ -1,10 +1,11 @@
 import React from 'react';
+import { CenterTW } from './profile.utils';
 
 
 
 export default function Left() {
     return (
-        <div>
+        <div className={`${CenterTW}`}>
             Profile Page
         </div>
     )

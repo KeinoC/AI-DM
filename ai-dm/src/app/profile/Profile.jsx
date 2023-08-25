@@ -3,7 +3,7 @@ import React from 'react';
 
 import Top from './Top';
 import Left from './Left';
-import Mid from './mid';
+import Mid from './Mid';
 import Right from './right';
 import Bottom from './Bottom';
 
