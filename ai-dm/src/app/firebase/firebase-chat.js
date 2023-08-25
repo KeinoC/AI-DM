@@ -1,11 +1,12 @@
 import { realtimeDB } from "./firebase-config";
 const { ref, set, orderByChild, limitToLast, query, get } = require("firebase/database");
 
-export async function sendGlobalMessage(channel, message, currentUser) {
+
+export async function sendGlobalMessage(channel, message, currentUser, roomId) {
     try {
 
         // Create a unique reference for the new message
-        const newMessageRef = ref(realtimeDB, `${channel}/global-chat/${Date.now()}`);
+        const newMessageRef = ref(realtimeDB, `${channel}/${roomId}/${Date.now()}`);
 
         console.log(channel, message, currentUser)
         const newMessage = {
@@ -20,19 +21,37 @@ export async function sendGlobalMessage(channel, message, currentUser) {
     }
 }
 
-export async function getChatHistoryByChannel(channel) {
+
+
+async function testDataRetrieval() {
     try {
-        // Reference to the global chat
-        const globalChatRef = ref(realtimeDB, `${channel}/global-chat`);
+      // Reference to the specific path "global/shenanigans"
+      const specificPathRef = ref(realtimeDB, 'global/shenanigans');
+  
+      // Fetch the value at the specific path
+      const snapshot = await get(specificPathRef);
+  
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        console.log('Fetched data:', data);
+      } else {
+        console.log('No data found at the specified path');
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
+  
+  // Call the function to test data retrieval
+  testDataRetrieval();
 
-        // Create a query to get the last 100 messages ordered by timestamp
-        const messagesQuery = query(globalChatRef, orderByChild('timestamp'), limitToLast(100));
 
-        const snapshot = await get(messagesQuery);
+export async function getChatHistoryByChannel(channel, roomId) {
+    try {
+        const chatPathRef = ref(realtimeDB, (channel+"/"+roomId));
+        const snapshot = await get(chatPathRef);
 
         if (snapshot.exists()) {
-            // Return the messages as an array of objects.
-            // The messages will be ordered from the oldest to the newest
             return Object.values(snapshot.val()).sort((a, b) => a.timestamp - b.timestamp);
         } else {
             console.log('No messages found');
@@ -44,27 +63,30 @@ export async function getChatHistoryByChannel(channel) {
     }
 }
 
-export async function deleteMessage(channel, messageId) {
+
+export async function deleteMessage(channel, messageId, roomId) {
     try {
-        const messageRef = ref(realtimeDB, `${channel}/global-chat/${messageId}`);
+        const messageRef = ref(realtimeDB, `${channel}/${roomId}/${messageId}`);
         await remove(messageRef);
     } catch (error) {
         console.error(error);
     }
 }
 
-export async function editMessage(channel, messageId, newContent) {
+
+export async function editMessage(channel, messageId, newContent, roomId) {
     try {
-        const messageRef = ref(realtimeDB, `${channel}/global-chat/${messageId}`);
+        const messageRef = ref(realtimeDB, `${channel}/${roomId}/${messageId}`);
         await update(messageRef, { message: newContent });
     } catch (error) {
         console.error(error);
     }
 }
 
-export async function getMessageById(channel, messageId) {
+
+export async function getMessageById(channel, messageId, roomId) {
     try {
-        const messageRef = ref(realtimeDB, `${channel}/global-chat/${messageId}`);
+        const messageRef = ref(realtimeDB, `${channel}/${roomId}/${messageId}`);
         const snapshot = await get(messageRef);
         return snapshot.exists() ? snapshot.val() : null;
     } catch (error) {
@@ -73,8 +95,9 @@ export async function getMessageById(channel, messageId) {
     }
 }
 
-export async function getOlderMessages(channel, earliestTimestamp, limit=100) {
-    const globalChatRef = ref(realtimeDB, `${channel}/global-chat`);
+
+export async function getOlderMessages(channel, earliestTimestamp, limit=100, roomId) {
+    const globalChatRef = ref(realtimeDB, `${channel}/${roomId}`);
     const messagesQuery = query(globalChatRef, orderByChild('timestamp'), endAt(earliestTimestamp - 1), limitToLast(limit));
     
     const snapshot = await get(messagesQuery);
