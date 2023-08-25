@@ -11,6 +11,10 @@ export default function Hub() {
 
   return (
     <div className="hub">
+{/* 
+      <div className="hub__header font-circle">
+        Smart Tabletop
+      </div> */}
 
         <CircleMenu />
 

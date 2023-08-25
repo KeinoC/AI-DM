@@ -1,12 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Yatra+One&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Rowdies&display=swap');
-
-/* .circle {background:#E3DFD2;box-shadow: inset 0 0 20vmin 0 #585247;} */
-
 .circle__page {
   display: flex;
   width: 100%; height: 100vh;
   position: relative;
+}
+
+/* Header */
+.hub__header {
+  font-size: 6rem;
+  background-color: #373524;
+  width: 70rem;
+  text-align: center;
+  margin: 0 auto;
+  /* margin-top: 1rem; */
+  padding: .5rem 3rem;
+  opacity: .8;
+  clip-path: polygon(0 0, 100% 0, 90% 50%, 100% 100%, 0 100%, 10% 50%);
 }
 
 .circle {
@@ -45,33 +53,30 @@
   position:absolute;
   left:0; top:0;
   width:40%; height:40%;
-  /* overflow:hidden; */
   transform:scale(.5) translateZ(0px);
-  background:#585247;
   text-align: center;
+
 }
 
 .circle__link div{
   height:100%;
   background-size:cover;
-  opacity:.5;
+  opacity: .5;
   transition:opacity .5s;
   border-radius:inherit;
   overflow: hidden;
+
 }
 
 /* Link Label */
 .circle__link span {
   position: absolute;
-  /* z-index: 20; */
   opacity: 0;
   font-size: 3rem;
-  font-family: 'Yatra One', cursive;
-  /* font-family: 'Rowdies', cursive; */
   z-index: 2000;
   display: inline-block;
   width: 20rem; height: 7rem;
-  /* border: 3px solid red; */
+  transition: all .2s ease-out;
 }
 
 /* Top Left */
@@ -123,8 +128,8 @@
 
 .circle__link:nth-child(3) span {
   transform: rotate(45deg);
-  left: -15%;
-  top: 35%;
+  left: -20%;
+  top: 40%;
 }
 
 /* Bottom Right */
@@ -140,8 +145,8 @@
 
 .circle__link:nth-child(4) span {
   transform: rotate(-45deg);
-  left: -10%;
-  top: 35%;
+  left: -7.5%;
+  top: 38%;
 }
 
 /* Center Circle */
@@ -150,14 +155,15 @@
   left:25.5%; top:25.5%;
   border-radius:50vmin;
   box-shadow:0 0 0 1vmin #E3DFD2;
+  box-shadow:0 0 0 1vmin #3b4547;
   transform:scale(1);
-  /* position: relative; */
+  background:#585247;
   z-index: 40;
 }
 
 .circle__link:nth-child(5) span{
   left: 0;
-  top: 35%;
+  top: 40%;
 }
 
 /* Button before Transform */
@@ -192,14 +198,16 @@
 }
 
 /* Hover Effects */
-.circle__span:hover + .circle__wrap, .circle__wrap:hover{
+.circle__span:hover + .circle__wrap, 
+.circle__wrap:hover {
   transform:scale(.8) translateZ(0px);
   opacity:1;
 }
-.circle__span:hover + .circle__wrap a, .circle__wrap:hover a{
+.circle__span:hover + .circle__wrap a, 
+.circle__wrap:hover a{
   transform:scale(1) translatez(0px);
 }
-.circle__link:hover div{
+.circle__link:hover div {
   opacity:1;
   transform:translatez(0px);
 }
