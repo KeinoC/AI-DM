@@ -25,13 +25,13 @@ let hubData = [
         id: 2,
         name: "My Games",
         link: "#",
-        img: "https://i.imgur.com/zhHQBI0.png"
+        img: "https://i.imgur.com/3PDDiTY.png"
       },
       {
         id: 3,
         name: "Placeholder",
         link: "#",
-        img: "https://i.imgur.com/xRgfiSS.png"
+        img: "https://i.imgur.com/7dJEj0N.png"
       },
       {
         id: 4,
@@ -43,7 +43,7 @@ let hubData = [
         id: 5,
         name: "Games",
         link: "#",
-        img: "https://i.imgur.com/XJQD6yH.png"
+        img: "https://i.imgur.com/aL1rCOn.png"
       }
     ]
   },
@@ -62,7 +62,7 @@ let hubData = [
         id: 2,
         name: "Magic Items",
         link: "#",
-        img: "https://i.imgur.com/ewaDfo6.png"
+        img: "https://i.imgur.com/6ydpB1J.png"
       },
       {
         id: 3,

@@ -14,6 +14,9 @@ module.exports = {
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
         'texture': "url('https://blog.stockvault.net/wp-content/uploads/2020/02/free_texture_friday_2355.jpg')",
       },
+      fontFamily: {
+        circle: ['Yatra One', 'serif'],
+      },
     },
   },
   plugins: [require("daisyui")],
