@@ -5,6 +5,7 @@ import { UserProvider } from "./contexts/UserContext";
 import { ChatProvider } from "./contexts/ChatContext";
 import { GrimoireProvider } from "./contexts/GrimoireContext";
 import { DNDApiProvider } from "./contexts/DNDApiContext";
+import { AdventureProvider } from "./contexts/AdventureContext";
 import NavBar from "./components/NavBar";
 // import { Main } from 'next/document'
 
@@ -17,12 +18,14 @@ export default function RootLayout({ children }) {
             <ChatProvider>
                 <GrimoireProvider>
                     <DNDApiProvider>
+                        <AdventureProvider>
                 <html>
                     <body className={inter.className + otherTailwindClasses}>
                         <NavBar />
                         {children}
                     </body>
                 </html>
+                </AdventureProvider>
                 </DNDApiProvider>
                 </GrimoireProvider>
             </ChatProvider>

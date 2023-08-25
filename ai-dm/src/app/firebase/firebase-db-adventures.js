@@ -35,23 +35,23 @@ export async function createAdventure(adventureData) {
     }
 }
 
+
 // Get All Adventures from DB
 export async function getAllAdventures() {
     try {
         const adventuresCollection = collection(db, "adventures");
         const querySnapshot = await getDocs(adventuresCollection);
 
-        const allAdventures = [];
-        querySnapshot.forEach((adventure) => {
-            allAdventures.push({ id: adventure.id, ...adventure.data() });
-        });
-
-        return allAdventures;
+        return querySnapshot.docs.map(adventure => ({
+            id: adventure.id,
+            ...adventure.data()
+        }));
     } catch (error) {
         console.error('Error getting adventures: ', error);
         throw error;
     }
 }
+
 
 // Get Adventure by ID
 export async function getAdventureById(adventureId) {
