@@ -7,11 +7,13 @@ export default function CircleMenu() {
   return (
     <div className="circle__page">
 
+
+
       {/* Menu 1. Adventures */}
       <div className="circle circle--1">
 
         <span className="circle__span circle__span--1">
-          <span className="circle__span">Adventures</span>
+          <span className="circle__span font-circle">Adventures</span>
         </span>
         <div className="circle__wrap">
 
@@ -36,7 +38,7 @@ export default function CircleMenu() {
       <div className="circle circle--2">
 
         <span className="circle__span circle__span--2">
-          <span className="circle__span">Grimoire</span>
+          <span className="circle__span font-circle">Grimoire</span>
         </span>
         <div className="circle__wrap">
 
@@ -48,7 +50,7 @@ export default function CircleMenu() {
                 href={linkObj.link}>
                   <span className="font-circle">{linkObj.name}</span>
               <div>
-                <img src={linkObj.img} />
+                <img className="circle__link-img" src={linkObj.img} />
               </div></a>
             )
           })}

@@ -4,6 +4,19 @@
   position: relative;
 }
 
+/* Header */
+.hub__header {
+  font-size: 6rem;
+  background-color: #373524;
+  width: 70rem;
+  text-align: center;
+  margin: 0 auto;
+  /* margin-top: 1rem; */
+  padding: .5rem 3rem;
+  opacity: .8;
+  clip-path: polygon(0 0, 100% 0, 90% 50%, 100% 100%, 0 100%, 10% 50%);
+}
+
 .circle {
   position: relative;
   width: 30rem; height: 30rem;
@@ -142,6 +155,7 @@
   left:25.5%; top:25.5%;
   border-radius:50vmin;
   box-shadow:0 0 0 1vmin #E3DFD2;
+  box-shadow:0 0 0 1vmin #3b4547;
   transform:scale(1);
   background:#585247;
   z-index: 40;
@@ -184,14 +198,16 @@
 }
 
 /* Hover Effects */
-.circle__span:hover + .circle__wrap, .circle__wrap:hover{
+.circle__span:hover + .circle__wrap, 
+.circle__wrap:hover {
   transform:scale(.8) translateZ(0px);
   opacity:1;
 }
-.circle__span:hover + .circle__wrap a, .circle__wrap:hover a{
+.circle__span:hover + .circle__wrap a, 
+.circle__wrap:hover a{
   transform:scale(1) translatez(0px);
 }
-.circle__link:hover div{
+.circle__link:hover div {
   opacity:1;
   transform:translatez(0px);
 }

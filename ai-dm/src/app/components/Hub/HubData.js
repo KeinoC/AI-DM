@@ -29,7 +29,7 @@ let hubData = [
       },
       {
         id: 3,
-        name: "Placeholder",
+        name: "Latest",
         link: "#",
         img: "https://i.imgur.com/7dJEj0N.png"
       },
