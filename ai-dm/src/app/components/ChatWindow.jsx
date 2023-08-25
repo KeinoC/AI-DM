@@ -9,10 +9,11 @@ import {
     sendGlobalMessage,
     getChatHistoryByChannel,
 } from "../firebase/firebase-chat";
+import { ref, onChildAdded } from 'firebase/database';
+import { realtimeDB } from "../firebase/firebase-config";
 
-// TODO: Chat History needs to scroll to the bottom - again
 
-export default function ChatWindow() {
+export default function ChatWindow( { roomId } ) {
     const scrollRef = useRef(null);
     const { chatHistory, setChatHistory, newChatMessage, setNewChatMessage } =
         useChat();
@@ -24,29 +25,29 @@ export default function ChatWindow() {
                 await getCurrentUnixTimestamp()
             );
             const prefix = `[${currentTimeNormalized}] ${currentUser?.username}: `;
-
             const updatedChatMessage = prefix + newChatMessage;
-
-            await sendGlobalMessage("global", newChatMessage, currentUser);
-
+            await sendGlobalMessage("global", newChatMessage, currentUser, roomId);
             setNewChatMessage(updatedChatMessage);
-            async function fetchChatHistory() {
-                // Call the function to get chat history
-                const history = await getChatHistoryByChannel("global"); // Replace 'your-channel-name' with the desired channel name
-                setChatHistory(history);
-            }
-            await fetchChatHistory();
             setNewChatMessage("");
         }
     };
 
-    const handleInputChange = (e) => {
-        const currentTimeNormalized = convertUnixToTime(currentUnixTime);
-        const newMessage = e.target.value;
-        setNewChatMessage(
-            `[${currentTimeNormalized}] ${currentUser?.username}: ${newMessage}`
-        );
-    };
+
+    useEffect(() => {
+        const chatRef = ref(realtimeDB, `global/${roomId}`);
+        const handleNewMessage = (snapshot) => {
+            const newMessage = snapshot.val();
+            setChatHistory((prevChatHistory) => [...prevChatHistory, newMessage]);
+            // Scroll to the bottom of the chat window to show the new message
+            scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
+        };
+        // Set up the real-time listener
+        const unsubscribe = onChildAdded(chatRef, handleNewMessage);
+        return () => {
+            // Clean up the listener when the component unmounts
+            unsubscribe();
+        };
+    }, [roomId, setChatHistory]);
 
 
     // ***** CHAT HISTORY WINDOW ********************************
@@ -83,20 +84,18 @@ export default function ChatWindow() {
     useEffect(() => {
         async function fetchChatHistory() {
             // Call the function to get chat history
-            const history = await getChatHistoryByChannel("global"); // Replace 'your-channel-name' with the desired channel name
+            const history = await getChatHistoryByChannel("global", roomId)
             setChatHistory(history);
         }
-
-        // Call the function on component mount
         fetchChatHistory();
     }, []);
 
     useEffect(() => {
-        console.log(chatHistory)
         if (scrollRef.current) {
           scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         }
       }, [chatHistory]);
+
 
     const newChatMessageWindow = () => {
         return (
