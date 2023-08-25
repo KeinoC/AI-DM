@@ -19,3 +19,7 @@ export function navToDashboard() {
 export function navToMapNamed(mapName) {
     window.location.href = `/routes/maps/${mapName}`
 }
+
+export function navToFullRoute(route) {
+    window.location.href = `/${route}`
+}

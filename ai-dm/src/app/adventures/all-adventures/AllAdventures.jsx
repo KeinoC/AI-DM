@@ -14,7 +14,6 @@ export default function AllAdventures() {
 
     return (
         <div>
-            All Adventures
             <RenderAdventureCards />
         </div>
     );

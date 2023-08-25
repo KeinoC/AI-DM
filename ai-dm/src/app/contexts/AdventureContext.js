@@ -13,9 +13,12 @@ export const useAdventure = () => {
 };
 
 export const AdventureProvider = ({ children }) => {
-    const [newAdventure, setNewAdventure] = useState([]);
+    const [newAdventureData, setNewAdventureData] = useState([]);
     const [allAdventures, setAllAdventures] = useState([]);
+    const [createAdventureMode, setCreateAdventureMode] = useState(false);
 
+
+// *** Fetch Adventure Functionality ***
     useEffect(() => {
         const fetchAdventures = async () => {
             try {
@@ -33,8 +36,10 @@ export const AdventureProvider = ({ children }) => {
     const value = {
         allAdventures,
         setAllAdventures,
-        newAdventure,
-        setNewAdventure,
+        newAdventureData,
+        setNewAdventureData,
+        createAdventureMode,
+        setCreateAdventureMode,
     };
 
     return (
