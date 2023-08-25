@@ -18,7 +18,8 @@ export default function Home() {
             <div>
                 {!!currentUser ?
                 <div>
-{/* <RainParticleOverlay /> */}
+                    {/* moved Rain to Circle Menu to cover entire component -Drew */}
+{/* <RainParticleOverlay />  */}
                     <Hub />
                 </div>
                 :
