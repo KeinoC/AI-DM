@@ -9,7 +9,7 @@ import { AdventureProvider } from "./contexts/AdventureContext";
 import NavBar from "./components/NavBar";
 // import { Main } from 'next/document'
 
-const otherTailwindClasses = "bg-gray-900 h-full min-h-screen items-center bg-gradient-to-r from-gray-900 to-black-900"
+const otherTailwindClasses = " h-full min-h-screen items-center bg-gradient-to-r from-gray-900 to-slate-900"
 const inter = Inter({ subsets: ["latin"] } );
 
 export default function RootLayout({ children }) {

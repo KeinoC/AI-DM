@@ -50,9 +50,12 @@ export default function NavBar() {
                             tabIndex={0}
                             className="relative z-10 mt-3 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
                         >
-                            <li>
-                                <button onClick={() => signOut()}>
-                                    Sign Out
+    
+    <li>
+                                <button >
+                                    <Link href="/profile">
+                                        Profile
+                                    </Link>
                                 </button>
                             </li>
 
@@ -87,6 +90,14 @@ export default function NavBar() {
                                     </Link>
                                 </button>
                             </li>
+
+                            <li>
+                                <button className="text-red-300 hover:font-bold hover:text-red-400" onClick={() => signOut()}>
+                                    Sign Out
+                                </button>
+                            </li>
+
+
                         </ul>
                     </div>
                 </div>
