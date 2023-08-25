@@ -13,8 +13,13 @@ export default function AllAdventures() {
 
 
     return (
-        <div>
-            <RenderAdventureCards />
+        <div className="flex justify-center">
+            <div className="flex flex-wrap gap-10 pt-10 max-w-screen-xl">
+                <RenderAdventureCards />
+            </div>
         </div>
     );
+    
+    
+    
 }

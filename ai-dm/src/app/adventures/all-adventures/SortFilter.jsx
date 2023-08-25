@@ -11,7 +11,7 @@ export default function SortFilter() {
     const [publicAdventure, setPublicAdventure] = useState(false);
 
     return (
-        <div className="bg-slate-800 p-3 flex flex-col md:flex-row items-start md:items-center md:justify-around">
+        <div className="bg-slate-800 p-3 flex flex-col md:flex-row items-start md:items-center md:justify-around ">
             <h2 className="text-yellow-500 font-bold text-xl mb-4 md:mb-0 md:mr-6">
                 Find Adventures to Join
             </h2>
@@ -21,7 +21,7 @@ export default function SortFilter() {
                     Advanced Search Options »
                 </a>
 
-                <div>
+                <div className=" px-2 h-full">
                     <label className="mr-2 text-slate-200 font-semibold">
                         Sort By:
                     </label>
@@ -35,7 +35,7 @@ export default function SortFilter() {
                     </select>
                 </div>
 
-                <div className="mt-4 md:mt-0">
+                <div className=" md:mt-0 ">
                     <label className="mr-2 text-slate-200 font-semibold">
                         Search:
                     </label>
@@ -49,28 +49,43 @@ export default function SortFilter() {
                 </div>
             </div>
 
-            <div className="flex flex-wrap items-center mt-4 md:mt-0 space-x-4">
+            <div className="flex flex-wrap items-center mt-4 md:mt-0 space-x-4 border-x border-1 border-slate-600">
                 <div className="flex items-center">
                     <input
                         type="checkbox"
                         id="newPlayers"
+                        className="mx-2"
                         checked={newPlayers}
                         onChange={() => setNewPlayers(!newPlayers)}
                     />
-                    <label htmlFor="newPlayers" className="ml-2 text-slate-200">
+                    <label htmlFor="newPlayers" className=" text-slate-200">
                         New Players
                     </label>
                 </div>
 
-                <div className="flex items-center">
+                <div className="flex items-center border-x border-1 border-slate-600 ">
                     <input
                         type="checkbox"
                         id="matureContent"
+                        className="mx-2"
                         checked={matureContent}
                         onChange={() => setMatureContent(!matureContent)}
                     />
-                    <label htmlFor="matureContent" className="ml-2 text-slate-200">
+                    <label htmlFor="matureContent" className="pr-2 text-slate-200">
                         18+ Content
+                    </label>
+                </div>
+
+
+                <div className="flex items-center ml-4">
+                    <input
+                        type="checkbox"
+                        id="publicAdventure"
+                        checked={publicAdventure}
+                        onChange={() => setPublicAdventure(!publicAdventure)}
+                    />
+                    <label htmlFor="publicAdventure" className="ml-2 text-slate-200">
+                        Public
                     </label>
                 </div>
 
@@ -89,17 +104,7 @@ export default function SortFilter() {
                     </select>
                 </div>
 
-                <div className="flex items-center ml-4">
-                    <input
-                        type="checkbox"
-                        id="publicAdventure"
-                        checked={publicAdventure}
-                        onChange={() => setPublicAdventure(!publicAdventure)}
-                    />
-                    <label htmlFor="publicAdventure" className="ml-2 text-slate-200">
-                        Public
-                    </label>
-                </div>
+
             </div>
         </div>
     );

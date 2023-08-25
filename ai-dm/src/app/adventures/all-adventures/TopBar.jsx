@@ -29,7 +29,7 @@ export default function TopBar() {
     }
 
     return (
-        <div className="flex flex row bg-slate-800 ">
+        <div className="flex flex justify-center row bg-slate-800 w-full">
             {
                 createAdventureMode ?
                     null
@@ -37,10 +37,10 @@ export default function TopBar() {
                     conditionalRenderButton()
             }
 
-            <div>
+            <div >
 
             {createAdventureMode ? (
-                <div>
+                <div className="w-full">
                     <CreateAdventureForm />
                 </div>
             ) : (
