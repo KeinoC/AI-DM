@@ -3,9 +3,13 @@ import React, { useState, useEffect } from 'react'
 import './circle-menu.css'
 import hubData from './Hub/HubData'
 
+import RainParticleOverlay from './Weather/rain'
+
 export default function CircleMenu() {
   return (
     <div className="circle__page">
+
+<RainParticleOverlay />
 
 
 

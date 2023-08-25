@@ -18,7 +18,7 @@ export default function Home() {
             <div>
                 {!!currentUser ?
                 <div>
-<RainParticleOverlay />
+{/* <RainParticleOverlay /> */}
                     <Hub />
                 </div>
                 :
