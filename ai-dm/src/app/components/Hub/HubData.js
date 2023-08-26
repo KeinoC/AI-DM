@@ -18,31 +18,31 @@ let hubData = [
       {
         id: 1,
         name: "Find Game",
-        link: "#",
+        link: "/adventures",
         img: "https://i.imgur.com/TDsfXEb.png"
       },
       {
         id: 2,
         name: "My Games",
-        link: "#",
+        link: "/adventures",
         img: "https://i.imgur.com/3PDDiTY.png"
       },
       {
         id: 3,
         name: "Latest",
-        link: "#",
+        link: "/adventures",
         img: "https://i.imgur.com/7dJEj0N.png"
       },
       {
         id: 4,
         name: "New Game",
-        link: "#",
+        link: "/adventures",
         img: "https://i.imgur.com/tSF1wg0.png"
       },
       {
         id: 5,
         name: "Games",
-        link: "#",
+        link: "/adventures",
         img: "https://i.imgur.com/aL1rCOn.png"
       }
     ]
@@ -55,31 +55,31 @@ let hubData = [
       {
         id: 1,
         name: "Weapons",
-        link: "#",
+        link: "/routes/grimoire",
         img: "https://i.imgur.com/4bcksON.png"
       },
       {
         id: 2,
         name: "Magic Items",
-        link: "#",
+        link: "/routes/grimoire",
         img: "https://i.imgur.com/6ydpB1J.png"
       },
       {
         id: 3,
         name: "Armor",
-        link: "#",
+        link: "/routes/grimoire",
         img: "https://i.imgur.com/b3piMtY.png"
       },
       {
         id: 4,
         name: "Trinkets",
-        link: "#",
+        link: "/routes/grimoire",
         img: "https://i.imgur.com/hOBddrP.png"
       },
       {
         id: 5,
         name: "All Items",
-        link: "#",
+        link: "/routes/grimoire",
         img: "https://i.imgur.com/wIqJvSr.png"
       }
     ]
