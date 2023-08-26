@@ -24,7 +24,7 @@ export const createFirestoreUser = async (id, email, username) => {
     try {
         const newUser = {
             id: id,
-            username: username,
+            username: username.toLowerCase(),
             email: email,
             createdAt: createdAt,
         };
@@ -99,7 +99,21 @@ export const signIn = async (email, password) => {
     }
 };
 
+export async function getUserIdByUsername(username) {
+    try {
+        const usersQuery = query(collection(db, "users"), where("username", "==", username));
+        const querySnapshot = await getDocs(usersQuery);
 
+        if (!querySnapshot.empty) {
+            return querySnapshot.docs[0].id;
+        } else {
+            throw new Error("User not found");
+        }
+    } catch (error) {
+        console.error('Error fetching user by username: ', error);
+        throw error;
+    }
+}
 
 
 // Sign Out
