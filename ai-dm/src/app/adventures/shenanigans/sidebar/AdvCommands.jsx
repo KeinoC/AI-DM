@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { addPlayerToAdventure } from '@/app/firebase/firebase-db-adventures';
+import { addPlayerToAdventure, removePlayerFromAdventure } from '@/app/firebase/firebase-db-adventures';
 
 export default function AdvCommands() {
     const [isModalOpen, setModalOpen] = useState(false);
