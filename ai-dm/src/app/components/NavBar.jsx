@@ -67,18 +67,26 @@ export default function NavBar() {
                                 </button>
                             </li>
 
-                            <li>
+                            {/* <li>
                                 <button >
                                     <Link href="/routes/maps/waterdeep">
                                         Waterdeep
                                     </Link>
                                 </button>
-                            </li>
+                            </li> */}
 
-                            <li>
+                            {/* <li>
                                 <button >
                                     <Link href="/routes/gameboard">
                                         Gameboard Testing
+                                    </Link>
+                                </button>
+                            </li> */}
+                            
+                            <li>
+                                <button >
+                                    <Link href="/adventures">
+                                        Explore Adventures
                                     </Link>
                                 </button>
                             </li>

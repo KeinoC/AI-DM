@@ -76,7 +76,7 @@ export default function EquipmentTab() {
 
                         <div className={"card-actions justify-end"}>
                             <button className="btn hover:bg-yellow-500 hover:text-slate-500">
-                                Click me Zaddy
+                                SAVE
                             </button>
                         </div>
                     </div>
@@ -106,7 +106,7 @@ export default function EquipmentTab() {
 
                         <div className={"card-actions justify-end"}>
                             <button className="btn hover:bg-yellow-500 hover:text-slate-500">
-                                Click me Zaddy
+                                SAVE
                             </button>
                         </div>
                     </div>

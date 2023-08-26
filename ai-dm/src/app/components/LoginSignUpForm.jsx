@@ -55,12 +55,12 @@ const LoginSignUpForm = ( { setEmail, setPassword, handleSubmit, isLoginMode, er
 
             </form>
 
-            <button
+            {/* <button
                 onClick={() => setLoginMode(!isLoginMode)}
                 className="text-gray-900 flex justify-center mt-2 hover:text-green-700"
             >
                 {isLoginMode ? "Switch to Sign Up" : "Switch to Login"}
-            </button>
+            </button> */}
 
         </div>
     );
