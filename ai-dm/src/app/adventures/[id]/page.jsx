@@ -1,20 +1,31 @@
 'use client'
 import Adventure from '../shenanigans/Adventure'
-import { useAdventure } from '@/app/contexts/AdventureContext'
+import { useState, useEffect } from 'react'
+import { getAdventureById } from '@/app/firebase/firebase-db-adventures'
 
 export default function GamePage({params}) {
-  const {allAdventures} = useAdventure()
+  const [selectedAdventure, setSelectedAdventure] = useState({})
+
   const id = params.id
+  
+  useEffect(() => {
 
-  const keyToFind = 'id';
-  const valueToFind = id;
+    const adventure = async() => {
+      const response = await getAdventureById(id)
 
-  const foundIndex = allAdventures.find(item => item[keyToFind] === valueToFind)
-  console.log('found index: ', foundIndex)
+      setSelectedAdventure(response)
+      console.log('response ', response)
+    }
+
+    adventure()
+
+    window.scrollTo({top: 0, left: 0})
+  }, [])
 
   return (
     <div>
-      <Adventure foundIndex={foundIndex}/>
+      {selectedAdventure?.name && <>
+        <Adventure selectedAdventure={selectedAdventure}/></>}
     </div>
   )
 }
