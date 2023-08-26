@@ -1,10 +1,12 @@
 import { ADVENTURES } from '@/app/utils/variables/database-vars';
 import React from 'react';
-import Link from 'next/link'
+
+export const cardDesign = "bg-slate-900 border border-transparent border-2 hover:border-yellow-500 hover:border-2 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 max-w-sm mx-auto my-4"
+
 
 export function createAdventureCard(adventure) {
     return (
-        <Link href={`/adventures/${adventure.id}`} key={adventure.id} className=" shadow-xl bg-slate-900 border border-transparent border-2  hover:border-yellow-500 hover:border-2 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 max-w-sm mx-auto my-4">
+        <div key={adventure.id} className={cardDesign} >
             <div className="overflow-hidden transform transition-transform duration-300 hover:scale-110">
                 <img src={adventure.profileImg} alt="Adventure Image" className="z-1 w-full h-48 object-cover" />
             </div>

@@ -45,7 +45,7 @@ export default function LandingPage() {
                     }}
                     exit={{ opacity: 0, x: "100vw", delay: 0 }}
                 >
-                    A Big DCK Energy Production
+                    A Big AI.Table Energy Production
                 </motion.div>
 
                 <motion.div
