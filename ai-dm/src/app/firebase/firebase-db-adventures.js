@@ -9,6 +9,9 @@ const {
     updateDoc,
     deleteDoc,
     getFirestore,
+    query,
+    where,
+    arrayUnion,
 } = require("firebase/firestore");
 import { auth, db } from "./firebase-config";
 import { ITEMS } from "../utils/variables/database-vars";
@@ -127,7 +130,7 @@ export async function removePlayerFromAdventure(adventureId, identifier) {
 
         // If the identifier is not in the format of a typical Firestore ID, assume it's a username
         if (!/^[a-zA-Z0-9]{20}$/.test(identifier)) {
-            userId = await getUserIdByUsername(identifier);
+            userId = await getUserIdByUsername(identifier.toLowerCase());
         }
 
         const adventureDocRef = doc(db, "adventures", adventureId);

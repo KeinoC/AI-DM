@@ -11,6 +11,9 @@ const {
     addDoc,
     updateDoc,
     getFirestore,
+    query,
+    where,
+
 } = require("firebase/firestore");
 import { USERS } from "../utils/variables/database-vars";
 import { WATERDEEP } from "../utils/variables/map-vars";
