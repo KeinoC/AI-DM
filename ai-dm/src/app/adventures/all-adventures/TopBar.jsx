@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import SortFilter from "./SortFilter";
-import { CreateAdventureForm } from "./CreateAdventureForm";
+import { CreateAdventureForm } from "../create/CreateAdventureForm";
 import { useAdventure } from "@/app/contexts/AdventureContext";
 
 export default function TopBar() {
