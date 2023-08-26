@@ -1,26 +1,20 @@
 'use client'
-import React from 'react'
-import { useRouter } from 'next/navigation'
 import Adventure from '../shenanigans/Adventure'
-// import { adventureContext } from '@/app/contexts/AdventureContext'
+import { useAdventure } from '@/app/contexts/AdventureContext'
 
-// const { allAdventures, setAllAdventures } = useContext(adventureContext)
+export default function GamePage({params}) {
+  const {allAdventures} = useAdventure()
+  const id = params.id
 
-// export const getStaticPaths = async () => {
-//   // const response = await fetch('')
-//   // const data = await res.json()
- 
-  
-//   console.log('testing dynamic routes', allAdventures)
-// }
+  const keyToFind = 'id';
+  const valueToFind = id;
 
-export default function GamePage() {
-  // const router = useRouter()
-  // const adventureId = router.query.id
+  const foundIndex = allAdventures.find(item => item[keyToFind] === valueToFind)
+  console.log('found index: ', foundIndex)
+
   return (
     <div>
-      {/* {adventureId} */}
-      <Adventure />
+      <Adventure foundIndex={foundIndex}/>
     </div>
   )
 }
