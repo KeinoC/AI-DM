@@ -9,11 +9,9 @@ export default function GridToolbar({gridWidth, setGridWidth, gridHeight, setGri
 
   const handleWidthChange = (e) => {
     setGridWidth(parseInt(e.target.value));
-    // setGridHeight(parseInt(e.target.value));
   };
 
   const handleHeightChange = (e) => {
-    // setGridWidth(parseInt(e.target.value));
     setGridHeight(parseInt(e.target.value));
   };
 
