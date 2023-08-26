@@ -18,6 +18,10 @@ const {
 import { auth, db } from "./firebase-config";
 import { ITEMS } from "../utils/variables/database-vars";
 import { getUserIdByUsername } from "./firebase-auth";
+import { navToFullRoute } from "../utils/helpers/navigation";
+// import { useUser } from "../contexts/UserContext";
+
+// const {currentUser} = useUser();
 
 // * adventures collection CRUD Methods * ----------------
 
@@ -30,8 +34,10 @@ export async function createAdventure(adventureData) {
             ...adventureData,
             createdAt: Timestamp.fromDate(new Date()),
             createdBy: auth.currentUser.uid,
+            players: []
         });
 
+        navToFullRoute(`./adventures/${newAdventureRef.id}`)
         console.log("Adventure created with ID: ", newAdventureRef.id);
         return newAdventureRef.id;
     } catch (error) {

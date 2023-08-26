@@ -33,14 +33,19 @@ export function CreateAdventureForm() {
         setUrlOption(prevUrlOption => !prevUrlOption);
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
     
-        if (window.confirm("Are you sure you want to create this adventure?")) {
-            createAdventure(formData);
-        } else {
-            setUrlOption(true);
-            console.log("User canceled the action.");
+        try {
+            if (window.confirm("Are you sure you want to create this adventure?")) {
+                const newAdventureId = await createAdventure(formData);
+                await addPlayerToAdventure(newAdventureId, auth.currentUser.uid);
+            } else {
+                setUrlOption(true);
+                console.log("User canceled the action.");
+            }
+        } catch (error) {
+            console.error("Error handling submit: ", error);
         }
     };
     
