@@ -1,9 +1,9 @@
 const {
+    collection,
     doc,
+    getDocs,
     setDoc,
     Timestamp,
-    collection,
-    getDocs,
     getDoc,
     addDoc,
     updateDoc,
@@ -12,6 +12,7 @@ const {
     query,
     where,
     arrayUnion,
+    arrayRemove,
     runTransaction,
 } = require("firebase/firestore");
 import { auth, db } from "./firebase-config";

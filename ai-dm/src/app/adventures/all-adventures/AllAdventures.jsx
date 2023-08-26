@@ -14,7 +14,7 @@ export default function AllAdventures() {
 
     return (
         <div className="flex justify-center">
-            <div className="flex flex-wrap gap-10 pt-10 max-w-screen-xl">
+            <div className="flex flex-wrap gap-7 pt-10 max-w-screen-xl">
                 <RenderAdventureCards />
             </div>
         </div>
