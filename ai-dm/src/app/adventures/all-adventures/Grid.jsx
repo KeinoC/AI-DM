@@ -1,6 +1,9 @@
 import React, {useState, useEffect } from 'react';
 
+import { BiMapAlt } from 'react-icons/bi'
+
 import './grid.css'
+import { set } from 'firebase/database';
 
 const Grid = () => {
 
@@ -29,6 +32,9 @@ const Grid = () => {
   const [tokens, setTokens] = useState(tokenArray)
   // ^^^tokens
 
+  const [showTools, setShowTools] = useState(false)
+  const [toolsClass, setToolsClass] = useState("hidden")
+
   // const updateTokens = () => {
   //   const updatedTokens = tokens.map((tokens) => {
 
@@ -42,6 +48,7 @@ const Grid = () => {
 
   const [playerPosition, setPlayerPosition] = useState({ x: 0, y: 0 });
 
+  // Character Token Functions
   const handleDragStart = (event, x, y) => {
     // collect starting tile location (x, y coordinates)
     event.dataTransfer.setData('text/plain', JSON.stringify({ x, y }));
@@ -80,6 +87,14 @@ const Grid = () => {
       console.log(tokens[0].position)
     }
 
+    useEffect(() => {
+      // console.log(selectedToken, playerPosition)
+      // selectedToken.length && console.log(tokens[selectedToken]?.position)
+      // console.log(selectedToken)
+      // console.log(tokens)
+    }, [selectedToken, playerPosition])
+  
+
     // console.log('handleDrop testing', event.target.name)
     // console.log('handleDrop testing-pos', event.target.value)
     // console.log('handleDrop-position', event.target.position)
@@ -92,33 +107,36 @@ const Grid = () => {
     // -update tokenObject position from tile destination coordinates
   };
 
-
+  // Grid Functions
   const gridContainerStyle = {
     display: 'grid',
     gridTemplateColumns: `repeat(${gridWidth}, 1fr)`,
     display: 'relative'
   };
 
-  // Input Functions
-
   const handleWidthChange = (e) => {
     setGridWidth(parseInt(e.target.value));
-    setGridHeight(parseInt(e.target.value));
+    // setGridHeight(parseInt(e.target.value));
   };
 
   const handleHeightChange = (e) => {
-    setGridWidth(parseInt(e.target.value));
+    // setGridWidth(parseInt(e.target.value));
     setGridHeight(parseInt(e.target.value));
   };
 
+  const handleMapChange = (e) => {
+    setMapImage(e.target.value)
+    console.log(mapImage)
+  }
 
-
-  useEffect(() => {
-    // console.log(selectedToken, playerPosition)
-    // selectedToken.length && console.log(tokens[selectedToken]?.position)
-    // console.log(selectedToken)
-    // console.log(tokens)
-  }, [selectedToken, playerPosition])
+  const handleShowTools = () => {
+    setShowTools(!showTools)
+    if (showTools) {
+      setToolsClass("")
+    } else {
+      setToolsClass("hidden")
+    }
+  }
 
 
   // Grid Tiles
@@ -180,7 +198,7 @@ const Grid = () => {
     // Grid Box
     <div className="flex flex-col items-center p-4 pb-8">
       {/* Grid */}
-      <div className='grid relative' style={gridContainerStyle}>
+      <div className='grid relative overflow-hidden' style={gridContainerStyle}>
         
         {/* Map Image */}
         <img src={mapImage} className="absolute top-0 left-0 z-10"/>
@@ -189,23 +207,50 @@ const Grid = () => {
         {renderGrid()}
       </div>
 
-      {/* Grid Size Inputs */}
-      <div className="flex my-4">
-        <label className="mr-2">Width:</label>
-        <input
-          type="number"
-          value={gridWidth}
-          onChange={handleWidthChange}
-          className="border border-gray-300 p-1"
-        />
-        <label className="ml-4 mr-2">Height:</label>
-        <input
-          type="number"
-          value={gridHeight}
-          onChange={handleHeightChange}
-          className="border border-gray-300 p-1"
-        />
+    {/* Map ToolBar */}
+      <div className="absolute z-[2000] left-6">
+        <span onClick={handleShowTools} className="block bg-[#eab308] rounded-[50%]  cursor-pointer">
+          <BiMapAlt className="w-[5rem] h-[5rem] p-[1rem]"/>
+        </span>
       </div>
+
+      {/* Map Menu */}
+      <div className={`${toolsClass} absolute z-[2000] bg-[#111827] border-4 border-[#eab308] p-4 rounded-md`}>
+        <div className="flex justify-between">
+          <span>Adjust Map</span>
+          <span onClick={handleShowTools} className="cursor-pointer">X</span>
+        </div>
+
+        {/* Grid Size Inputs */}
+        <div className="flex my-4">
+          <label className="mr-2">Width:</label>
+          <input
+            type="number"
+            value={gridWidth}
+            onChange={handleWidthChange}
+            className="border border-gray-300 p-1"
+          />
+          <label className="ml-4 mr-2">Height:</label>
+          <input
+            type="number"
+            value={gridHeight}
+            onChange={handleHeightChange}
+            className="border border-gray-300 p-1"
+          />
+        </div>
+        
+        {/* Grid Image Input */}
+        <div className="m-4">
+          <label className="mr-2">Map Image:</label>
+          <input className="w-[20rem] mr-2" type="text" value={mapImage}placeholder={mapImage} 
+            // temporary until mapImage is passed into adventure, then use submit maybe?
+            onChange={handleMapChange}
+          />
+          {/* <button type="submit" className="bg-blue-500 rounded-md p-1">Submit</button> */}
+        </div>
+      </div>
+
+
     </div>
   );
 };
