@@ -82,12 +82,12 @@ const Grid = () => {
       console.log(tokens[0].position)
     }
 
-    useEffect(() => {
-      // console.log(selectedToken, playerPosition)
-      // selectedToken.length && console.log(tokens[selectedToken]?.position)
-      // console.log(selectedToken)
-      // console.log(tokens)
-    }, [selectedToken, playerPosition])
+    // useEffect(() => {
+    //   // console.log(selectedToken, playerPosition)
+    //   // selectedToken.length && console.log(tokens[selectedToken]?.position)
+    //   // console.log(selectedToken)
+    //   // console.log(tokens)
+    // }, [selectedToken, playerPosition])
   
 
     // console.log('handleDrop testing', event.target.name)
