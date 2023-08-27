@@ -14,7 +14,7 @@ export default function SideBarContainer({selectedAdventure}) {
                 <AdvCommands />
 
                 {/* {console.log('testing for Game ID in SideBarContainer', )} */}
-                <ChatWindow roomId={roomId} />
+                {/* <ChatWindow roomId={roomId} /> */}
         </div>
     );
 }
