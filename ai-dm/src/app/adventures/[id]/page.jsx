@@ -2,12 +2,13 @@
 import Adventure from '../shenanigans/Adventure'
 import { useState, useEffect } from 'react'
 import { getAdventureById } from '@/app/firebase/firebase-db-adventures'
+import { useAdventure } from '@/app/contexts/AdventureContext'
 
 export default function GamePage({params}) {
-  const [selectedAdventure, setSelectedAdventure] = useState({})
+  const {selectedAdventure, setSelectedAdventure} = useAdventure()
 
   const id = params.id
-  
+
   useEffect(() => {
 
     const adventure = async() => {
