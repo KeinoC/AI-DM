@@ -8,26 +8,26 @@ const {
     get,
 } = require("firebase/database");
 
-export async function sendGlobalMessage(channel, message, currentUser, roomId) {
-    try {
-        // Create a unique reference for the new message
-        const newMessageRef = ref(
-            realtimeDB,
-            `${channel}/${roomId}/${Date.now()}`
-        );
+// export async function sendGlobalMessage(channel, message, currentUser, roomId) {
+//     try {
+//         // Create a unique reference for the new message
+//         const newMessageRef = ref(
+//             realtimeDB,
+//             `${channel}/${roomId}/${Date.now()}`
+//         );
 
-        console.log(channel, message, currentUser);
-        const newMessage = {
-            sender: currentUser?.username,
-            message: message,
-            timestamp: Date.now(),
-        };
+//         console.log(channel, message, currentUser);
+//         const newMessage = {
+//             sender: currentUser?.username,
+//             message: message,
+//             timestamp: Date.now(),
+//         };
 
-        await set(newMessageRef, newMessage);
-    } catch (error) {
-        console.error(error);
-    }
-}
+//         await set(newMessageRef, newMessage);
+//     } catch (error) {
+//         console.error(error);
+//     }
+// }
 
 export async function sendAdvMessage(adventure, currentUser, message) {
     try {
@@ -47,6 +47,38 @@ export async function sendAdvMessage(adventure, currentUser, message) {
         const newMessageRef = ref(
             realtimeDB,
             `chat/adventure-chat/${adventure?.id}/${Date.now()}`
+            )
+
+            if (!newMessageRef) {
+                throw new Error("Invalid Message Ref")
+            }
+            const newMessage = {
+                sender: sender,
+                message: message,
+                timestamp: Date.now(),
+            };
+
+        await set(newMessageRef, newMessage);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export async function sendGlobalMessage(currentUser, message) {
+    try {
+
+        if (!currentUser) {
+            throw new Error("Invalid User as Sender");
+        }
+
+        if (message.length < 1) {
+            throw new Error("Invalid Message");
+        }
+
+        const sender = currentUser?.username.toLowerCase();
+        const newMessageRef = ref(
+            realtimeDB,
+            `chat/global-chat/${currentUser.username}/${Date.now()}`
             )
 
             if (!newMessageRef) {
@@ -84,7 +116,7 @@ async function testDataRetrieval() {
 }
 
 // Call the function to test data retrieval
-testDataRetrieval();
+// testDataRetrieval();
 
 export async function getChatHistoryByChannel(channel, roomId) {
     try {

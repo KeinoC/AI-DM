@@ -8,6 +8,8 @@ import LandingPage from "./components/LandingPage";
 import Hub from "./components/Hub/Hub";
 import { useUser } from "./contexts/UserContext";
 import RainParticleOverlay from "./components/Weather/rain";
+import HubChatComponent from "./components/Hub/components/HubChat";
+
 
 export default function Home() {
 
@@ -19,6 +21,7 @@ export default function Home() {
                 {!!currentUser ?
                 <div>
                     <Hub />
+                    <HubChatComponent />
                 </div>
                 :
                 <LandingPage />

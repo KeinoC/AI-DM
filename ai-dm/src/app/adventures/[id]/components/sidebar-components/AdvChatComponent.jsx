@@ -34,8 +34,8 @@ export default function AdvChatComponent() {
         try {
             await sendAdvMessage(
                 selectedAdventure.id,
-                newChatMessage,
-                currentUser
+                currentUser,
+                newChatMessage
             );
             setNewChatMessage("");
             console.log(
@@ -51,12 +51,12 @@ export default function AdvChatComponent() {
     const ChatInputBox = () => {
         return(
     <div className="flex mt-4">
-        <form type="submit">
+
 
         <input
             type="text"
             value={newChatMessage}
-            onChange={(e) => handleNewChatMessage(e)}
+            onChange={handleNewChatMessage}
             onKeyUp={handleSendAdvMessage} // Handle Enter key press
             className="flex-grow border-none outline-none rounded-l p-2 text-white"
             />
@@ -67,7 +67,7 @@ export default function AdvChatComponent() {
             >
             Send
         </button>
-            </form>
+
     </div>
         )
     }
