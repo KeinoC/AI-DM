@@ -4,24 +4,22 @@ import { useChat } from "@/app/contexts/ChatContext";
 import { sendGlobalMessage } from "@/app/firebase/firebase-chat";
 
 export default function HubChatComponent() {
-    
     // STATES & VARIABLES
     const { currentUser } = useUser();
     const { newChatMessage, setNewChatMessage } = useChat();
-    
+
     // HANDLERS
     const handleNewChatMessage = async (e) => {
-        e.preventDefault();
-        try{
-            await setNewChatMessage(e.target.value)
-        } catch(error) {
-            console.error(error)
+        try {
+            await setNewChatMessage(e.target.value);
+        } catch (error) {
+            console.error(error);
         }
-    }
+    };
 
-    const handleSendAdvMessage = async (e) => {
-        if (e.key !== 'Enter') return;
-        
+    const handleSendAdvMessage = async (e, source) => {
+        if (source === 'keyboard' && e.key !== 'Enter') return;
+
         try {
             await sendGlobalMessage(currentUser, newChatMessage);
             setNewChatMessage("");
@@ -32,28 +30,26 @@ export default function HubChatComponent() {
     };
 
     // CHAT INPUT BOX COMPONENT
-    const ChatInputBox = () => {
-        return (
-            <div className="flex mt-4">
-                <label htmlfor="smh">Message</label>
-                <input
-                    id="smh"
-                    name="smh"
-                    type="text"
-                    value={newChatMessage}
-                    onChange={handleNewChatMessage}
-                    onKeyUp={handleSendAdvMessage}
-                    placeholder="Type a message..."
-                    className="flex-grow border-none outline-none rounded-l p-2"
-                />
-                <button onClick={handleSendAdvMessage} className="bg-green-700 text-white px-4 py-2 rounded-r">
-                    Send
-                </button>
-            </div>
-        )
-        }   
-        
-        return (
-            <ChatInputBox />
-        )
-    }
+    return (
+        <div className="flex mt-4">
+            <label htmlFor="smh">Message</label>
+            <input
+                id="smh"
+                name="smh"
+                type="text"
+                value={newChatMessage}
+                onChange={handleNewChatMessage}
+                onKeyUp={(e) => handleSendAdvMessage(e, "keyboard")}
+                placeholder="Type a message..."
+                className="flex-grow border-none outline-none rounded-l p-2"
+            />
+
+            <button
+                onClick={(e) => handleSendAdvMessage(e, "button")}
+                className="bg-green-700 text-white px-4 py-2 rounded-r"
+            >
+                Send
+            </button>
+        </div>
+    );
+}

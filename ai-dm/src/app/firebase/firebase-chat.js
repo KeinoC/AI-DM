@@ -8,27 +8,6 @@ const {
     get,
 } = require("firebase/database");
 
-// export async function sendGlobalMessage(channel, message, currentUser, roomId) {
-//     try {
-//         // Create a unique reference for the new message
-//         const newMessageRef = ref(
-//             realtimeDB,
-//             `${channel}/${roomId}/${Date.now()}`
-//         );
-
-//         console.log(channel, message, currentUser);
-//         const newMessage = {
-//             sender: currentUser?.username,
-//             message: message,
-//             timestamp: Date.now(),
-//         };
-
-//         await set(newMessageRef, newMessage);
-//     } catch (error) {
-//         console.error(error);
-//     }
-// }
-
 export async function sendAdvMessage(adventure, currentUser, message) {
     try {
         if (!adventure) {
@@ -78,7 +57,7 @@ export async function sendGlobalMessage(currentUser, message) {
         const sender = currentUser?.username.toLowerCase();
         const newMessageRef = ref(
             realtimeDB,
-            `chat/global-chat/${currentUser.username}/${Date.now()}`
+            `chat/global-chat/${Date.now()}}`
             )
 
             if (!newMessageRef) {
