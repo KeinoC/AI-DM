@@ -119,6 +119,9 @@ export async function getUserIdByUsername(username) {
 }
 
 
+
+
+
 // Sign Out
 export const signOut = async () => {
     await auth.signOut();

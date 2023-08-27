@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { addPlayerToAdventure, removePlayerFromAdventure } from '@/app/firebase/firebase-db-adventures';
+import { useAdventure } from '@/app/contexts/AdventureContext';
 
 export default function AdvCommands() {
     const [isModalOpen, setModalOpen] = useState(false);
     const [modalType, setModalType] = useState("");  // "add" or "remove"
     const [username, setUsername] = useState("");
+
+    const { selectedAdventure } = useAdventure();
 
     const showModal = (type) => {
         setModalType(type);
@@ -19,8 +22,8 @@ export default function AdvCommands() {
     async function handleAdd(event) {
         event.preventDefault();
         try {
-            await addPlayerToAdventure("BZTLOi63fHB9nYC43T5u", username);
-            console.log("player successfully added to game");
+            await addPlayerToAdventure(selectedAdventure.id, username);
+            console.log("player successfully added to adventure");
             closeModal();
         } catch (error) {
             console.error("Error adding player to game:", error);
@@ -30,7 +33,7 @@ export default function AdvCommands() {
     async function handleRemove(event) {
         event.preventDefault();
         try {
-            await removePlayerFromAdventure("BZTLOi63fHB9nYC43T5u", username);
+            await removePlayerFromAdventure(selectedAdventure.id, username);
             console.log("player successfully removed from game");
             closeModal();
         } catch (error) {

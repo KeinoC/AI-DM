@@ -29,6 +29,41 @@ export async function sendGlobalMessage(channel, message, currentUser, roomId) {
     }
 }
 
+export async function sendAdvMessage(adventure, currentUser, message) {
+    try {
+        if (!adventure) {
+            throw new Error("Invalid Adventure");
+        }
+
+        if (!currentUser) {
+            throw new Error("Invalid User as Sender");
+        }
+
+        if (message.length < 1) {
+            throw new Error("Invalid Message");
+        }
+
+        const sender = currentUser?.username.toLowerCase();
+        const newMessageRef = ref(
+            realtimeDB,
+            `chat/adventure-chat/${adventure?.id}/${Date.now()}`
+            )
+
+            if (!newMessageRef) {
+                throw new Error("Invalid Message Ref")
+            }
+            const newMessage = {
+                sender: sender,
+                message: message,
+                timestamp: Date.now(),
+            };
+
+        await set(newMessageRef, newMessage);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 async function testDataRetrieval() {
     try {
         // Reference to the specific path "global/shenanigans"

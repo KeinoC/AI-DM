@@ -3,17 +3,26 @@ import React from 'react';
 import Link from 'next/link'
 import { addPlayerToAdventure } from '@/app/firebase/firebase-db-adventures';
 import { useUser } from '@/app/contexts/UserContext';
+import { useAdventure } from '@/app/contexts/AdventureContext';
 
 export const cardDesign = "bg-slate-900 border border-transparent border-2 hover:border-yellow-500 hover:border-2 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 max-w-sm mx-2 my-2"
 
 
 export function createAdventureCard(adventure) {
     
-    const { currentUser } = useUser();
+// ****** STATES AND VARIABLES ****** ------------------------->
 
-    const handleJoinAdventure = () => {
-        addPlayerToAdventure(adventure.id, currentUser.id)
-        console.log("Joining adventure");
+    const { currentUser } = useUser();
+    const { setSelectedAdventure } = useAdventure();
+
+    const handleJoinAdventure = async () => {
+        try {
+            await setSelectedAdventure(adventure);
+            await addPlayerToAdventure(adventure.id, currentUser.username)
+            console.log(`${currentUser.username} Has Joined Joining: ${adventure.name} adventure`);
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     return (
@@ -32,7 +41,7 @@ export function createAdventureCard(adventure) {
                     <button className=" shadow-lg bg-slate-700 hover:bg-yellow-500 hover:text-slate-700 text-slate-300 font-semibold py-2 px-4 rounded-full">
                         Add to favorite
                     </button>
-                    <button 
+                    <button
                     value={adventure.id}
                     onClick={handleJoinAdventure}
                     className=" shadow-lg bg-green-900 hover:bg-green-500 hover:text-slate-700 text-slate-300 font-semibold py-2 px-4 ml-1 rounded-full">
