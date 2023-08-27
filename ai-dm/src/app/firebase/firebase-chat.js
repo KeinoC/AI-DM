@@ -75,6 +75,52 @@ export async function sendGlobalMessage(currentUser, message) {
     }
 }
 
+export async function getChatHistoryByChannel(channel, limit = 100) { // limit can be passed in as the 2nd argument
+    try {
+        const ref = db.ref(channel).limitToLast(limit);
+        const snapshot = await ref.once('value');
+        
+        if (!snapshot.exists()) {
+            return []; // Return an empty array if there's no data
+        }
+
+        const data = snapshot.val();
+        return Object.values(data);
+
+    } catch (error) {
+        console.error("Error fetching chat history:", error);
+        throw error; // Propagate the error so it can be handled by the caller
+    }
+}
+
+
+export const subscribeToChatUpdates = (channel, callback, limit = 1) => {
+    const ref = db.ref(channel).limitToLast(limit);
+
+    const handleNewMessage = snapshot => {
+        const newMessage = snapshot.val();
+        callback(newMessage);
+    }
+
+    // Subscribe to child_added event
+    try {
+        ref.on('child_added', handleNewMessage);
+    } catch (error) {
+        console.error("Error subscribing to chat updates:", error);
+        throw error; // Propagate the error for further handling
+    }
+
+    // Return an unsubscribe function for cleanup
+    return () => {
+        try {
+            ref.off('child_added', handleNewMessage);
+        } catch (error) {
+            console.error("Error unsubscribing from chat updates:", error);
+        }
+    };
+}
+
+
 async function testDataRetrieval() {
     try {
         // Reference to the specific path "global/shenanigans"
@@ -97,33 +143,33 @@ async function testDataRetrieval() {
 // Call the function to test data retrieval
 // testDataRetrieval();
 
-export async function getChatHistoryByChannel(channel, roomId) {
-    try {
-        const chatPathRef = ref(realtimeDB, channel + "/" + roomId);
-        const snapshot = await get(chatPathRef);
+// export async function getChatHistoryByChannel(channel, roomId) {
+//     try {
+//         const chatPathRef = ref(realtimeDB, channel + "/" + roomId);
+//         const snapshot = await get(chatPathRef);
 
-        if (snapshot.exists()) {
-            return Object.values(snapshot.val()).sort(
-                (a, b) => a.timestamp - b.timestamp
-            );
-        } else {
-            console.log("No messages found");
-            return [];
-        }
-    } catch (error) {
-        console.error(error);
-        return [];
-    }
-}
+//         if (snapshot.exists()) {
+//             return Object.values(snapshot.val()).sort(
+//                 (a, b) => a.timestamp - b.timestamp
+//             );
+//         } else {
+//             console.log("No messages found");
+//             return [];
+//         }
+//     } catch (error) {
+//         console.error(error);
+//         return [];
+//     }
+// }
 
-export async function deleteMessage(channel, messageId, roomId) {
-    try {
-        const messageRef = ref(realtimeDB, `${channel}/${roomId}/${messageId}`);
-        await remove(messageRef);
-    } catch (error) {
-        console.error(error);
-    }
-}
+// export async function deleteMessage(channel, messageId, roomId) {
+//     try {
+//         const messageRef = ref(realtimeDB, `${channel}/${roomId}/${messageId}`);
+//         await remove(messageRef);
+//     } catch (error) {
+//         console.error(error);
+//     }
+// }
 
 export async function editMessage(channel, messageId, newContent, roomId) {
     try {
