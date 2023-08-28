@@ -5,7 +5,7 @@ import Grid from "../all-adventures/Grid";
 export default function Adventure({selectedAdventure}) {
     return (
         <div className='flex h-screen'>
-            <div className='w-full h-full border-2 m-2 p-2 inline-flex flex-col border-2 border-slate-800 rounded-lg overflow-scroll'>
+            <div className='w-full h-full m-2 p-2 inline-flex flex-col border-2 border-slate-800 rounded-lg overflow-scroll'>
                 <h1 className='text-yellow-500 text-8xl '>{selectedAdventure.name}</h1>
                 <Grid selectedMap={""} />
             </div>
