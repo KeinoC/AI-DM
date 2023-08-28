@@ -10,13 +10,13 @@ import Bottom from './Bottom';
 export default function Profile() {
     return (
         <div>
-            <Top />
+            {/* <Top />
             <div>
                 <Left />
                 <Mid />
                 <Right />
             </div>
-            <Bottom />
+            <Bottom /> */}
         </div>
     )
 }
