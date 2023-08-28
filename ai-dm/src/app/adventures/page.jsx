@@ -6,8 +6,8 @@ import TopBar from './all-adventures/TopBar';
 export default function AdventureRoute() {
     return (
         <div>
-            {/* <TopBar />
-            <AllAdventures /> */}
+            <TopBar />
+            <AllAdventures />
         </div>
     );
 }
