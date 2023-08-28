@@ -75,22 +75,22 @@ export default function HubChatComponent() {
         initializeChat();
 
         // Set up a listener for new messages
-        let unsubscribe;
-        try {
-            unsubscribe = subscribeToChatUpdates(channel, (newGlobalMessage) => {
-                setGlobalChatHistory((prevChats) => [...prevChats, newGlobalMessage]);
-            });
-        } catch (error) {
-            console.error("Failed to subscribe to chat updates: ", error);
-        }
-        console.log(globalChatHistory);
+        // let unsubscribe;
+        // try {
+        //     unsubscribe = subscribeToChatUpdates(channel, (newGlobalMessage) => {
+        //         setGlobalChatHistory((prevChats) => [...prevChats, newGlobalMessage]);
+        //     });
+        // } catch (error) {
+        //     console.error("Failed to subscribe to chat updates: ", error);
+        // }
+        // console.log(globalChatHistory);
 
-        // Clean up the listener when the component unmounts
-        return () => {
-            if (unsubscribe) {
-                unsubscribe();
-            }
-        };
+        // // Clean up the listener when the component unmounts
+        // return () => {
+        //     if (unsubscribe) {
+        //         unsubscribe();
+        //     }
+        // };
     }, []);
 
     // CHAT INPUT BOX COMPONENT
