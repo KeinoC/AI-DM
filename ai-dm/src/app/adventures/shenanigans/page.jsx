@@ -5,7 +5,7 @@ import Adventure from './Adventure'
 export default function AdventurePage() {
     return (
         <div>
-            <Adventure />
+            {/* <Adventure /> */}
         </div>
     );
 }

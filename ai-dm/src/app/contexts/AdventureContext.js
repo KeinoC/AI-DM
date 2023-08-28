@@ -25,7 +25,6 @@ export const AdventureProvider = ({ children }) => {
             try {
                 const fetchedAdventures = await getAllAdventures();
                 setAllAdventures(fetchedAdventures);
-                console.log(fetchedAdventures);
             } catch (error) {
                 console.error("Failed to fetch adventures:", error);
             }

@@ -1,4 +1,4 @@
-import { realtimeDB } from "./firebase-config";
+const { realtimeDB } = require("./firebase-config") ;
 const {
     ref,
     set,
@@ -6,6 +6,8 @@ const {
     limitToLast,
     query,
     get,
+    on,
+    off,
 } = require("firebase/database");
 
 export async function sendAdvMessage(adventure, currentUser, message) {
@@ -27,6 +29,7 @@ export async function sendAdvMessage(adventure, currentUser, message) {
             realtimeDB,
             `chat/adventure-chat/${adventure?.id}/${Date.now()}`
             )
+            const profileImage = currentUser?.profileImage ? currentUser?.profileImage : "https://tinyurl.com/aidmprofileimg"
 
             if (!newMessageRef) {
                 throw new Error("Invalid Message Ref")
@@ -35,6 +38,7 @@ export async function sendAdvMessage(adventure, currentUser, message) {
                 sender: sender,
                 message: message,
                 timestamp: Date.now(),
+                profileImage: profileImage
             };
 
         await set(newMessageRef, newMessage);
@@ -57,9 +61,10 @@ export async function sendGlobalMessage(currentUser, message) {
         const sender = currentUser?.username.toLowerCase();
         const newMessageRef = ref(
             realtimeDB,
-            `chat/global-chat/${Date.now()}}`
+            `chat/global-chat/${Date.now()}`
             )
-
+        
+        const profileImage = currentUser.profileImage ? currentUser.profileImage : "https://tinyurl.com/aidmprofileimg"
             if (!newMessageRef) {
                 throw new Error("Invalid Message Ref")
             }
@@ -67,6 +72,8 @@ export async function sendGlobalMessage(currentUser, message) {
                 sender: sender,
                 message: message,
                 timestamp: Date.now(),
+                profileImage: profileImage
+
             };
 
         await set(newMessageRef, newMessage);
@@ -75,28 +82,32 @@ export async function sendGlobalMessage(currentUser, message) {
     }
 }
 
-export async function getChatHistoryByChannel(channel, limit = 100) { // limit can be passed in as the 2nd argument
+export async function getChatHistoryByChannel(channel, limit = 100) {
     try {
-        const ref = db.ref(channel).limitToLast(limit);
-        const snapshot = await ref.once('value');
-        
+        const dbRef = ref(realtimeDB, channel);
+        const dbQuery = query(dbRef, limitToLast(limit));
+        const snapshot = await get(dbQuery);
+
         if (!snapshot.exists()) {
-            return []; // Return an empty array if there's no data
+            return [];
         }
+        
 
         const data = snapshot.val();
         return Object.values(data);
 
     } catch (error) {
         console.error("Error fetching chat history:", error);
-        throw error; // Propagate the error so it can be handled by the caller
+        throw error;
     }
 }
 
 
-export const subscribeToChatUpdates = (channel, callback, limit = 1) => {
-    const ref = db.ref(channel).limitToLast(limit);
 
+export const subscribeToChatUpdates = (channel, callback, limit = 1) => {
+    const dbRef = ref(realtimeDB, channel);
+    const dbQuery = query(dbRef, limitToLast(limit)); // Create a query with limit
+    
     const handleNewMessage = snapshot => {
         const newMessage = snapshot.val();
         callback(newMessage);
@@ -104,7 +115,9 @@ export const subscribeToChatUpdates = (channel, callback, limit = 1) => {
 
     // Subscribe to child_added event
     try {
-        ref.on('child_added', handleNewMessage);
+        on(dbQuery, 'child_added', handleNewMessage);  // Using `on` method on the Query object
+        console.log("dbQuery:"+ dbQuery)
+        console.log("on", on)
     } catch (error) {
         console.error("Error subscribing to chat updates:", error);
         throw error; // Propagate the error for further handling
@@ -113,7 +126,8 @@ export const subscribeToChatUpdates = (channel, callback, limit = 1) => {
     // Return an unsubscribe function for cleanup
     return () => {
         try {
-            ref.off('child_added', handleNewMessage);
+            off(dbQuery, 'child_added', handleNewMessage); // Use `off` method on the Query object
+            console.log("off", off)
         } catch (error) {
             console.error("Error unsubscribing from chat updates:", error);
         }
@@ -121,10 +135,13 @@ export const subscribeToChatUpdates = (channel, callback, limit = 1) => {
 }
 
 
+
+
+
 async function testDataRetrieval() {
     try {
-        // Reference to the specific path "global/shenanigans"
-        const specificPathRef = ref(realtimeDB, "global/shenanigans");
+        // Reference to the specific path "chat/global-chat"
+        const specificPathRef = ref(realtimeDB, "chat/global-chat/");
 
         // Fetch the value at the specific path
         const snapshot = await get(specificPathRef);
@@ -141,7 +158,7 @@ async function testDataRetrieval() {
 }
 
 // Call the function to test data retrieval
-// testDataRetrieval();
+testDataRetrieval();
 
 // export async function getChatHistoryByChannel(channel, roomId) {
 //     try {
