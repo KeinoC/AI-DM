@@ -17,11 +17,10 @@ export function renderChatHistoryWindow(chatHistoryArray) {
 
     const chatHistory = () => {
         return chatHistoryArray.map((message) => {
-            console.log(message);
             return (
                 <div
                     key={parseInt(message?.timestamp)}
-                    className="bg-slate-100 bg-opacity-10 text-slate-400 p-1 m-1 h-auto rounded-lg shadow-md flex "
+                    className="bg-slate-800 bg-opacity-80 text-slate-white p-1 m-1 h-auto rounded-lg shadow-md flex "
                 >
                     <img
                         src={

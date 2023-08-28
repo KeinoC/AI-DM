@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useUser } from "@/app/contexts/UserContext";
 import { useChat } from "@/app/contexts/ChatContext";
 import {
@@ -7,10 +7,13 @@ import {
     sendGlobalMessage,
 } from "@/app/firebase/firebase-chat";
 import { renderChatHistoryWindow } from "../../ChatHistoryTemplate";
+import { realtimeDB } from "../../../firebase/firebase-config";
+import { ref, onChildAdded, off } from "firebase/database";
+
 
 export default function HubChatComponent() {
-    // ******* STATES & VARIABLES ******* ---------------------------------------------->
-
+    const scrollRef = useRef(null);
+    const channel = "chat/global-chat/";
     const { currentUser } = useUser();
     const {
         newGlobalMessage,
@@ -19,88 +22,78 @@ export default function HubChatComponent() {
         setGlobalChatHistory,
     } = useChat();
 
-    // ******* HANDLERS ******* -------------------------------------------------------->
-
-    const handleNewGlobalMessage = async (e) => {
-        try {
-            await setNewGlobalMessage(e.target.value);
-        } catch (error) {
-            console.error(error);
-        }
+    // Handler for setting new message
+    const handleNewGlobalMessage = (e) => {
+        setNewGlobalMessage(e.target.value);
     };
 
+    // Handler for sending a new message
     const handleSendGlobalMessage = async (e, source) => {
         if (source === "keyboard" && e.key !== "Enter") return;
 
         try {
             await sendGlobalMessage(currentUser, newGlobalMessage);
             setNewGlobalMessage("");
-            console.log("message sent successfully");
+            console.log("Message sent successfully");
         } catch (error) {
-            console.error(error);
+            console.error("Failed to send message: ", error);
         }
     };
 
-    // ******* RENDER ******* ---------------------------------------------------------->
-
-    const RenderChatHistoryWindow = () => {
-        console.log("chat history display reached"); // Moved console.log() before return
-        const globalChatHistoryDisplay =
-            renderChatHistoryWindow(globalChatHistory);
-        console.log(
-            "Output from renderChatHistoryWindow:",
-            globalChatHistory
-        );
-        return globalChatHistoryDisplay;
-    };
-
-    // const RenderChatHistoryWindow = () => renderChatHistoryWindow(globalChatHistory)
-
-    // ******* USE EFFECT ******* ------------------------------------------------------>
-
+    // Effect to scroll to the bottom when new messages are added
     useEffect(() => {
-        const channel = "chat/global-chat/"; // Or use dynamic channel based on props or context
+        if (scrollRef.current) {
+            scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+        }
+    }, [globalChatHistory]);
 
-        // Fetch initial chat history
+    
+    // Effect to fetch initial chat history when the component mounts
+    useEffect(() => {
         const initializeChat = async () => {
             try {
                 const initialHistory = await getChatHistoryByChannel(channel);
                 setGlobalChatHistory(initialHistory);
-                console.log("initial chat history fetched successfully:",globalChatHistory)
+                console.log("Initial chat history fetched successfully:", initialHistory);
             } catch (error) {
-                console.error("Failed to fetch initial chat history: ", error); 
+                console.error("Failed to fetch initial chat history: ", error);
             }
         };
 
         initializeChat();
 
-        // Set up a listener for new messages
-        // let unsubscribe;
-        // try {
-        //     unsubscribe = subscribeToChatUpdates(channel, (newGlobalMessage) => {
-        //         setGlobalChatHistory((prevChats) => [...prevChats, newGlobalMessage]);
-        //     });
-        // } catch (error) {
-        //     console.error("Failed to subscribe to chat updates: ", error);
-        // }
-        // console.log(globalChatHistory);
+        const chatRef = ref(realtimeDB, channel);
 
-        // // Clean up the listener when the component unmounts
-        // return () => {
-        //     if (unsubscribe) {
-        //         unsubscribe();
-        //     }
-        // };
+        const handleNewMessage = (snapshot) => {
+            const newMessage = snapshot.val();
+            setGlobalChatHistory((prevChatHistory) => [...prevChatHistory, newMessage]);
+        };
+        
+        const unsubscribe = onChildAdded(chatRef, handleNewMessage);
+        
+        return () => {
+            off(unsubscribe);
+        };
+
+        
     }, []);
+
+    // Render the chat history window
+    const RenderChatHistoryWindow = () => {
+        console.log("Rendering chat history window");
+        const globalChatHistoryDisplay = renderChatHistoryWindow(globalChatHistory);
+        console.log("Output from renderChatHistoryWindow:", globalChatHistory);
+        return globalChatHistoryDisplay;
+    };
+
 
     // CHAT INPUT BOX COMPONENT
     return (
-        <div>
-            <div>
-            <RenderChatHistoryWindow />
+        <div className=" w-[400px] h-auto z-20 bg-slate-800 p-5 round-md bg-opacity-80">
+            <div ref={scrollRef} className=" flex flex-col z-20 gap-2 overflow-y-scroll overflow-x-hidden scrollbar-thin scrollbar-track-slate-800 scrollbar-thumb-slate-600">
+                <RenderChatHistoryWindow />
             </div>
             <div className="flex mt-4">
-                <label htmlFor="smh">Message</label>
                 <input
                     id="smh"
                     name="smh"
