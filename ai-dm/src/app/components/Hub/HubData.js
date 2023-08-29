@@ -7,6 +7,7 @@
 
 // Images used should be perfect square shape for best result
 // longer than wider, but almost square anyway
+// Still figuring out perfect shape and resolution actually
 
 let hubData = [
 
