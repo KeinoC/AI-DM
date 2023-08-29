@@ -88,4 +88,11 @@ let hubData = [
 
 ]
 
+// possible PROFILE section
+// -my profile
+// -character vault
+// -friends
+// -discover new people
+// -settings
+
 export default hubData
