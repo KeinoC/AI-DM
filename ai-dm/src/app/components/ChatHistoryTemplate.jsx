@@ -16,7 +16,7 @@ export function renderChatHistoryWindow(chatHistoryArray) {
     const { setSelectedAdventure } = useAdventure();
 
     const chatHistory = () => {
-        return chatHistoryArray.map((message) => {
+        return chatHistoryArray?.map((message) => {
             return (
                 <div
                     key={parseInt(message?.timestamp)}

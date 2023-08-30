@@ -16,7 +16,7 @@ export const AdventureProvider = ({ children }) => {
     const [newAdventureData, setNewAdventureData] = useState([]);
     const [allAdventures, setAllAdventures] = useState([]);
     const [createAdventureMode, setCreateAdventureMode] = useState(false);
-    const [selectedAdventure, setSelectedAdventure] = useState(null);
+    const [selectedAdventure, setSelectedAdventure] = useState({});
 
 
 // *** Fetch Adventure Functionality ***
