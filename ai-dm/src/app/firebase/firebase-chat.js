@@ -158,7 +158,7 @@ async function testDataRetrieval() {
 }
 
 // Call the function to test data retrieval
-testDataRetrieval();
+// testDataRetrieval();
 
 // export async function getChatHistoryByChannel(channel, roomId) {
 //     try {

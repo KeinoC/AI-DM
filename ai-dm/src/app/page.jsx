@@ -21,15 +21,15 @@ export default function Home() {
                 {currentUser ?
                 <div>
                     <Hub />
+            <div className=" fixed right-0 bottom-0 z-[50]">
+                <HubChatComponent />
+            </div>
                 </div>
                 :
                 <LandingPage />
                 }
             </div>
 
-            <div className=" fixed right-0 bottom-0 z-[50]">
-                <HubChatComponent />
-            </div>
 
         </layout>
     );
