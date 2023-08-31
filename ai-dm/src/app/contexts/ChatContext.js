@@ -17,6 +17,8 @@ export const ChatProvider = ({ children }) => {
     const [newChatMessage, setNewChatMessage] = useState([])
     const [globalChatHistory, setGlobalChatHistory] = useState([])
     const [newGlobalMessage, setNewGlobalMessage] = useState("")
+    const [newAdvMessage, setNewAdvMessage] = useState("")
+    const [advChatHistory, setAdvChatHistory] = useState([])
 
     const value = {
         chatHistory,
@@ -27,6 +29,10 @@ export const ChatProvider = ({ children }) => {
         setGlobalChatHistory,
         newGlobalMessage,
         setNewGlobalMessage,
+        newAdvMessage,
+        setNewAdvMessage,
+        advChatHistory,
+        setAdvChatHistory,
     };
 
     return (

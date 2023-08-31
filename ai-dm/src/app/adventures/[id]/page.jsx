@@ -15,7 +15,7 @@ export default function GamePage({params}) {
       const response = await getAdventureById(id)
 
       setSelectedAdventure(response)
-      console.log('response ', response)
+      // console.log('response ', response)
     }
 
     adventure()

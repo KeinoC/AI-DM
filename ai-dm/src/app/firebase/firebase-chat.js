@@ -10,9 +10,9 @@ const {
     off,
 } = require("firebase/database");
 
-export async function sendAdvMessage(adventure, currentUser, message) {
+export async function sendAdvMessage(adventureId, currentUser, message) {
     try {
-        if (!adventure) {
+        if (!adventureId) {
             throw new Error("Invalid Adventure");
         }
 
@@ -27,7 +27,7 @@ export async function sendAdvMessage(adventure, currentUser, message) {
         const sender = currentUser?.username.toLowerCase();
         const newMessageRef = ref(
             realtimeDB,
-            `chat/adventure-chat/${adventure?.id}/${Date.now()}`
+            `chat/adventure-chat/${adventureId}/${Date.now()}`
             )
             const profileImage = currentUser?.profileImage ? currentUser?.profileImage : "https://tinyurl.com/aidmprofileimg"
 
@@ -140,8 +140,8 @@ export const subscribeToChatUpdates = (channel, callback, limit = 1) => {
 
 async function testDataRetrieval() {
     try {
-        // Reference to the specific path "chat/global-chat"
-        const specificPathRef = ref(realtimeDB, "chat/global-chat/");
+        // Reference to the specific path "chat/adventure-chat"
+        const specificPathRef = ref(realtimeDB, "chat/adventure-chat/");
 
         // Fetch the value at the specific path
         const snapshot = await get(specificPathRef);
@@ -158,7 +158,7 @@ async function testDataRetrieval() {
 }
 
 // Call the function to test data retrieval
-testDataRetrieval();
+// testDataRetrieval();
 
 // export async function getChatHistoryByChannel(channel, roomId) {
 //     try {
