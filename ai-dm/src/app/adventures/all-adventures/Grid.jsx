@@ -8,23 +8,23 @@ import { set } from 'firebase/database';
 const Grid = () => {
   // TO--DO: 
   // 1.1 Move Array up one level and connect to Game ID
-  // 1. all tokens NOT on grid rendered somewhere to match tokenArray keys
-  // 2. x, y = null
-  // 3. onDrop = add to tokenArray, set x & y
+  // 2.1. all tokens NOT on grid rendered somewhere to match tokenArray keys
+  // 2.2. x, y = null
+  // 2.3. onDrop = add to tokenArray, set x & y
 
   let tokenArray = [
     {
       id: "id-1",
       name: "Umnos",
       img: "https://i.imgur.com/0wWKQfp.png",
-      user: "Drewski",
+      user: "Damani",
       position: {x: 0,y: 0}
     },
     {
       id: "id-2",
-      name: "Discord",
-      img: "https://i.imgur.com/zAljZQy.png",
-      user: "Not Drewski",
+      name: "Safzira",
+      img: "https://i.imgur.com/tP9YWqe.png",
+      user: "Tessa",
       position: {x:1, y: 1},
     }
   ]
