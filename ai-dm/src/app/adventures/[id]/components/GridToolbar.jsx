@@ -21,8 +21,10 @@ export default function GridToolbar({gridWidth, setGridWidth, gridHeight, setGri
   }
 
   const handleShowTools = () => {
-    setShowTools(!showTools)
-    if (showTools) {
+    // state lags in React, so use new Value to control
+    const newValue = !showTools
+    setShowTools(newValue)
+    if (newValue) {
       setToolsClass("")
     } else {
       setToolsClass("hidden")
