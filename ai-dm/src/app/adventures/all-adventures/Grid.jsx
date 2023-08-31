@@ -5,36 +5,37 @@ import GridToolbar from '../[id]/components/GridToolbar';
 import './grid.css'
 import { set } from 'firebase/database';
 
-const Grid = () => {
+const Grid = (selectedAdventure) => {
   // TO--DO: 
   // 1.1 Move Array up one level and connect to Game ID
   // 2.1. all tokens NOT on grid rendered somewhere to match tokenArray keys
   // 2.2. x, y = null
   // 2.3. onDrop = add to tokenArray, set x & y
 
-  let tokenArray = [
-    {
-      id: "id-1",
-      name: "Umnos",
-      img: "https://i.imgur.com/0wWKQfp.png",
-      user: "Damani",
-      position: {x: 0,y: 0}
-    },
-    {
-      id: "id-2",
-      name: "Safzira",
-      img: "https://i.imgur.com/tP9YWqe.png",
-      user: "Tessa",
-      position: {x:1, y: 1},
-    }
-  ]
+    // replaced with selectedAdventure.tokens || selectedAdventure.selectedAdventure.tokens
+  // let tokenArray = [
+  //   {
+  //     id: "id-1",
+  //     name: "Umnos",
+  //     img: "https://i.imgur.com/0wWKQfp.png",
+  //     user: "Damani",
+  //     position: {x: 0,y: 0}
+  //   },
+  //   {
+  //     id: "id-2",
+  //     name: "Safzira",
+  //     img: "https://i.imgur.com/tP9YWqe.png",
+  //     user: "Tessa",
+  //     position: {x:1, y: 1},
+  //   }
+  // ]
 
   const [gridWidth, setGridWidth] = useState(15);
   const [gridHeight, setGridHeight] = useState(15);
   const [mapImage, setMapImage] = useState("https://i.imgur.com/ppIn5BV.jpg");
 
   const [selectedToken, setSelectedToken] = useState("")
-  const [tokens, setTokens] = useState(tokenArray)
+  const [tokens, setTokens] = useState(selectedAdventure.selectedAdventure.tokens)
 
   // Character Token Functions
   const getPlayersAtPosition = (x,y, players) => {
@@ -83,7 +84,6 @@ const Grid = () => {
     for (let y = 0; y < gridHeight; y++) {
       for (let x = 0; x < gridWidth; x++) {
         const playersHere = getPlayersAtPosition(x, y, tokens)
-        console.log('test with Matt', playersHere)
 
         grid.push(
           // Grid Tiles

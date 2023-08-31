@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 
 import { BiMapAlt } from 'react-icons/bi'
+import { GiEvilMinion } from 'react-icons/gi'
+import { LuSettings2 } from 'react-icons/lu'
 
 export default function GridToolbar({gridWidth, setGridWidth, gridHeight, setGridHeight, mapImage, setMapImage}) {
 
@@ -35,18 +37,27 @@ export default function GridToolbar({gridWidth, setGridWidth, gridHeight, setGri
     <>
       {/* Toolbar */}
       <div className="absolute z-[2000] left-6">
-          {/* Map Menu Toggle */}
-          <span onClick={handleShowTools} className="block bg-[#eab308] rounded-[50%]  cursor-pointer">
-            <BiMapAlt className="w-[5rem] h-[5rem] p-[1rem]"/>
+
+          {/* All Settings Toggle */}
+          <span onClick={handleShowTools} className="block bg-[#eab308] rounded-[50%]  cursor-pointer mb-6">
+            {/* <GrGamepad className="w-[5rem] h-[5rem] p-[1rem]"/> */}
+            <LuSettings2 className="w-[5rem] h-[5rem] p-[1rem]"/>
+            {/* <BiMapAlt className="w-[5rem] h-[5rem] p-[1rem]"/> */}
           </span>
+
         </div>
 
         {/* Map Modal */}
         <div className={`${toolsClass} absolute z-[2000] bg-[#111827] border-4 border-[#eab308] p-4 rounded-md`}>
+          {/* Map Header & Close Button */}
           <div className="flex justify-between">
-            <span>Adjust Map</span>
+            <span className="text-xl">Settings</span>
             <span onClick={handleShowTools} className="cursor-pointer">X</span>
           </div>
+
+          {/* Map Icon */}
+          <div className="flex justify-center"><BiMapAlt className="w-[3rem] h-[3rem] color-white"/></div>
+          Adjust Map Size & Image
 
           {/* Grid Size Inputs */}
           <div className="flex my-4">
@@ -74,6 +85,10 @@ export default function GridToolbar({gridWidth, setGridWidth, gridHeight, setGri
               onChange={handleMapChange}
             />
             {/* <button type="submit" className="bg-blue-500 rounded-md p-1">Submit</button> */}
+
+            {/* Token Icon */}
+            <div className="flex justify-center mt-6"><GiEvilMinion className="w-[3rem] h-[3rem] color-white"/></div>
+            Manage Tokens
           </div>
         </div>
     </>

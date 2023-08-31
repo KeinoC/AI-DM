@@ -1,6 +1,6 @@
 'use client'
 import React from 'react';
-import Adventure from './Adventure'
+import Adventure from '../[id]/Adventure'
 
 export default function AdventurePage() {
     return (
