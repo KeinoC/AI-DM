@@ -34,7 +34,8 @@ export async function createAdventure(adventureData) {
             ...adventureData,
             createdAt: Timestamp.fromDate(new Date()),
             createdBy: auth.currentUser.uid,
-            players: []
+            players: [],
+            tokens: []
         });
 
         navToFullRoute(`./adventures/${newAdventureRef.id}`)
