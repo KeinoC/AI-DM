@@ -230,4 +230,18 @@ export async function removePlayerFromAdventure(adventureId, identifier) {
 
 // Update Token By Id (User edits token)
 
-// Update Token Position (Take in updatedTokens array and replace all?)
+
+// Update Token Positions (All at Once)
+export async function updateTokens(adventureId, updatedTokenData) 
+{
+    try {
+        const adventureDocRef = doc(db, "adventures", adventureId)
+        const updateData = {
+            tokens: updatedTokenData, // Replace tokens with your field name
+        };
+        await updateDoc(adventureDocRef, updateData);
+        console.log(`Token Positions Reassigned`);
+    } catch (error) {
+        console.error("Error updating token positions:", error);
+    }
+}

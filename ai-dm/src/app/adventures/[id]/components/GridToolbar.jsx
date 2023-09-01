@@ -119,7 +119,7 @@ export default function GridToolbar({gridWidth, setGridWidth, gridHeight, setGri
                 <option value="null">Host Only</option>
                   {players.map((playersObj) => {
                     return (
-                      <option value={playersObj._key.path.segments[6]}> 
+                      <option key={playersObj._key.path.segments[6]}> 
                         {playersObj._key.path.segments[6]}
                         </option>
                     )

@@ -2,6 +2,8 @@ import React, {useState, useEffect } from 'react';
 
 import GridToolbar from './GridToolbar';
 
+import { updateTokens } from '@/app/firebase/firebase-db-adventures';
+
 import './grid.css'
 // import { set } from 'firebase/database';
 
@@ -43,10 +45,7 @@ const Grid = (selectedAdventure) => {
       });
 
       setTokens(updatedTokens);
-      // -----------------------------------------------
-      // TO DO: Call "Update Token Position" DB Function
-      //    using updatedTokens as an argument  :)
-      // -----------------------------------------------
+      updateTokens(selectedAdventure.selectedAdventure.id, updatedTokens)
       setSelectedToken(updatedTokens.find(token => token.id === selectedToken.id));
     }
   };
