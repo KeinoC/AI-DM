@@ -9,8 +9,8 @@ export default function GridToolbar({gridWidth, setGridWidth, gridHeight, setGri
   const [showTools, setShowTools] = useState(false)
   const [toolsClass, setToolsClass] = useState("hidden")
 
-  const [players, _] = useState(selectedAdventure.selectedAdventure)
-  console.log('late night test', players)
+  const [players, _] = useState(selectedAdventure.selectedAdventure?.players)
+  console.log('late night testing', players)
 
   const handleWidthChange = (e) => {
     setGridWidth(parseInt(e.target.value));
@@ -109,24 +109,27 @@ export default function GridToolbar({gridWidth, setGridWidth, gridHeight, setGri
             <button className="bg-red-500 px-2 border-2 mb-8 border-white rounded-md">Add New Token </button><br />
             
             {/* New Token Form */}
-            <span>Character Name </span>
-            <input type="text" placeholder="Charcter Name" />
+            <div className="border-2 border-white rounded-md p-4">
+              <span>Character Name </span>
+              <input type="text" className="mb-4" placeholder=" Charcter Name" /><br />
 
-            <span>Token Image URL </span>
-            <input type="text" placeholder="Charcter Name" />
+              <span>Token Image URL </span>
+              <input type="text" className="mb-4" placeholder=" image.png" /><br />
 
-            <span>User</span>
-            <input type="text" placeholder="Charcter Name" />
+              <span>User </span>
+              <select name="dog-names" id="dog-names"> 
+                <option value="null">Host Only</option>
+                  {players.map((playersObj) => {
+                    return (
+                      <option value={playersObj._key.path.segments[6]}> 
+                        {playersObj._key.path.segments[6]}
+                        </option>
+                    )
+                  })}
+              </select>
 
-            {/* <label for="dog-names">Choose a dog name:</label> 
-            {}
-            <select name="dog-names" id="dog-names"> 
-                <option value="rigatoni">Rigatoni</option> 
-                <option value="dave">Dave</option> 
-                <option value="pumpernickel">Pumpernickel</option> 
-                <option value="reeses">Reeses</option> 
-            </select>
-             */}
+            </div>
+            
           </div>
         </div>
     </>
