@@ -3,33 +3,9 @@ import React, {useState, useEffect } from 'react';
 import GridToolbar from './GridToolbar';
 
 import './grid.css'
-import { set } from 'firebase/database';
+// import { set } from 'firebase/database';
 
 const Grid = (selectedAdventure) => {
-  // TO--DO: 
-  // 1.1 Move Array up one level and connect to Game ID
-  // 2.1. all tokens NOT on grid rendered somewhere to match tokenArray keys
-  // 2.2. x, y = null
-  // 2.3. onDrop = add to tokenArray, set x & y
-
-    // replaced with selectedAdventure.tokens || selectedAdventure.selectedAdventure.tokens
-  // let tokenArray = [
-  //   {
-  //     id: "id-1",
-  //     name: "Umnos",
-  //     img: "https://i.imgur.com/0wWKQfp.png",
-  //     user: "Damani",
-  //     position: {x: 0,y: 0}
-  //   },
-  //   {
-  //     id: "id-2",
-  //     name: "Safzira",
-  //     img: "https://i.imgur.com/tP9YWqe.png",
-  //     user: "Tessa",
-  //     position: {x:1, y: 1},
-  //   }
-  // ]
-
   const [gridWidth, setGridWidth] = useState(15);
   const [gridHeight, setGridHeight] = useState(15);
   const [mapImage, setMapImage] = useState("https://i.imgur.com/ppIn5BV.jpg");
@@ -67,6 +43,9 @@ const Grid = (selectedAdventure) => {
       });
 
       setTokens(updatedTokens);
+      // -----------------------------------------------
+      // TO DO: Call "Update Token Position" DB Function
+      // -----------------------------------------------
       setSelectedToken(updatedTokens.find(token => token.id === selectedToken.id));
     }
   };

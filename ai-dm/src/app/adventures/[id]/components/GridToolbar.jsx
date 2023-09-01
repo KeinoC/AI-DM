@@ -10,7 +10,6 @@ export default function GridToolbar({gridWidth, setGridWidth, gridHeight, setGri
   const [toolsClass, setToolsClass] = useState("hidden")
 
   const [players, _] = useState(selectedAdventure.selectedAdventure?.players)
-  console.log('late night testing', players)
 
   const handleWidthChange = (e) => {
     setGridWidth(parseInt(e.target.value));
@@ -22,7 +21,6 @@ export default function GridToolbar({gridWidth, setGridWidth, gridHeight, setGri
 
   const handleMapChange = (e) => {
     setMapImage(e.target.value)
-    console.log(mapImage)
   }
 
   const handleShowTools = () => {
