@@ -52,7 +52,7 @@ export function CreateAdventureForm() {
 
 
     return (
-        <div className=" w-screen shadow-xl bg-slate-900 border border-transparent border-2 hover:border-yellow-500 hover:border-2 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 max-w-sm mx-auto my-4 p-4">
+        <div className=" w-screen bg-slate-900 border-transparent border-2 hover:border-yellow-500 hover:border-2 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 max-w-sm mx-auto my-4 p-4">
 
 
         <form
