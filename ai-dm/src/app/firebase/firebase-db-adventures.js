@@ -202,3 +202,32 @@ export async function removePlayerFromAdventure(adventureId, identifier) {
     }
 }
 
+// * Adventure, Token CRUD Methods * ----------------
+
+// Create Token
+// export async function addTokenToAdventure(adventureId, tokenData) {
+//     try {
+
+//         // Reference to the adventure document
+//         const adventureDocRef = doc(db, "adventures", adventureId);
+
+//         await runTransaction(db, async (transaction) => {
+//             // Update adventure document to add token
+//             transaction.update(adventureDocRef, {
+//                 tokens: arrayUnion()
+//             })
+//         })
+
+
+//     } catch (error) {
+//         console.log(
+//             "Error creating token: ",
+//             error
+//         );
+//         throw error;
+//     }
+// }
+
+// Update Token By Id (User edits token)
+
+// Update Token Position (Take in updatedTokens array and replace all?)
