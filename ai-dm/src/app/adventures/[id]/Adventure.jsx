@@ -1,5 +1,5 @@
 import SidebarContainer from "../shenanigans/sidebar/SideBarContainer";
-import Grid from "../all-adventures/Grid";
+import Grid from "./components/Grid";
 
 
 export default function Adventure({selectedAdventure}) {

@@ -1,6 +1,6 @@
 import React, {useState, useEffect } from 'react';
 
-import GridToolbar from '../[id]/components/GridToolbar';
+import GridToolbar from './GridToolbar';
 
 import './grid.css'
 import { set } from 'firebase/database';
@@ -137,7 +137,9 @@ const Grid = (selectedAdventure) => {
       <GridToolbar 
         gridWidth={gridWidth} setGridWidth={setGridWidth} 
         gridHeight={gridHeight} setGridHeight={setGridHeight} 
-        mapImage={mapImage} setMapImage={setMapImage}/>
+        mapImage={mapImage} setMapImage={setMapImage}
+        tokens={tokens} setTokens={setTokens} 
+        selectedAdventure={selectedAdventure}/>
 
     </div>
   );

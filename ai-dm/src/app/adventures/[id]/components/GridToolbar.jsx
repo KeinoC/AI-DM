@@ -4,10 +4,13 @@ import { BiMapAlt } from 'react-icons/bi'
 import { GiEvilMinion } from 'react-icons/gi'
 import { LuSettings2 } from 'react-icons/lu'
 
-export default function GridToolbar({gridWidth, setGridWidth, gridHeight, setGridHeight, mapImage, setMapImage}) {
+export default function GridToolbar({gridWidth, setGridWidth, gridHeight, setGridHeight, mapImage, setMapImage, tokens, setTokens, selectedAdventure}) {
 
   const [showTools, setShowTools] = useState(false)
   const [toolsClass, setToolsClass] = useState("hidden")
+
+  const [players, _] = useState(selectedAdventure.selectedAdventure)
+  console.log('late night test', players)
 
   const handleWidthChange = (e) => {
     setGridWidth(parseInt(e.target.value));
@@ -88,7 +91,42 @@ export default function GridToolbar({gridWidth, setGridWidth, gridHeight, setGri
 
             {/* Token Icon */}
             <div className="flex justify-center mt-6"><GiEvilMinion className="w-[3rem] h-[3rem] color-white"/></div>
-            Manage Tokens
+            Manage Tokens<br />
+
+            {tokens.map((tokenObj) => {
+              return (
+                <div key={tokenObj.id}>
+                  <span className="inline-block w-[5rem] mb-2" >
+                    {tokenObj.name}</span>
+                  <span className="cursor-pointer">Edit </span>
+                  &nbsp;
+                  <span className="cursor-pointer"> X </span>
+                  <br />
+                </div>
+              )
+            })}
+
+            <button className="bg-red-500 px-2 border-2 mb-8 border-white rounded-md">Add New Token </button><br />
+            
+            {/* New Token Form */}
+            <span>Character Name </span>
+            <input type="text" placeholder="Charcter Name" />
+
+            <span>Token Image URL </span>
+            <input type="text" placeholder="Charcter Name" />
+
+            <span>User</span>
+            <input type="text" placeholder="Charcter Name" />
+
+            {/* <label for="dog-names">Choose a dog name:</label> 
+            {}
+            <select name="dog-names" id="dog-names"> 
+                <option value="rigatoni">Rigatoni</option> 
+                <option value="dave">Dave</option> 
+                <option value="pumpernickel">Pumpernickel</option> 
+                <option value="reeses">Reeses</option> 
+            </select>
+             */}
           </div>
         </div>
     </>
