@@ -52,7 +52,7 @@ export function CreateAdventureForm() {
 
 
     return (
-        <div className=" w-screen shadow-xl bg-slate-900 border border-transparent border-2 hover:border-yellow-500 hover:border-2 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 max-w-sm mx-auto my-4 p-4">
+        <div className=" w-screen bg-slate-900 border-transparent border-2 hover:border-yellow-500 hover:border-2 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 max-w-sm mx-auto my-4 p-4">
 
 
         <form
@@ -62,7 +62,7 @@ export function CreateAdventureForm() {
             <div className="relative mb-4">
                 <label
                     htmlFor="profileImg"
-                    className="block text-slate-300 font-semibold mb-2 flex flex-row"
+                    className="text-slate-300 font-semibold mb-2 flex flex-row"
                 >
                     Adventure Image:{  <button type="button" className=" bg-slate-800 rounded-full px-3 py-1 text-xs font-thin text-yellow-500 hover:font-bold " onClick={ProfileImageToggle}>toggle img type</button>}
                 </label>

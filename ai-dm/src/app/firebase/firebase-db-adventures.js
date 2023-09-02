@@ -2,6 +2,7 @@ const {
     collection,
     doc,
     getDocs,
+    onSnapshot,
     setDoc,
     Timestamp,
     getDoc,
@@ -113,6 +114,7 @@ export async function getAdventureById(adventureId) {
     }
 }
 
+
 // Update Adventure by ID - firestore adventure
 export async function updateAdventure(adventureId, updateData) {
     try {
@@ -140,6 +142,19 @@ export async function deleteAdventure(adventureId) {
 }
 
 // * Adventure Interaction Methods * ----------------
+
+// Real-Time Adventure Listener
+// export async function realtimeTokens(adventureId) {
+//     const tokensRef = doc(db, "adventure", adventureId)
+  
+//     // Listen for changes to 'tokens' data
+//     tokensRef.on('value', (snapshot) => {
+//       const updatedTokens = snapshot.val();
+//       if (updatedTokens) {
+//         setTokens(updatedTokens);
+//       }
+//     });
+//   };
 
 export async function addPlayerToAdventure(adventureId, identifier) {
     try {
@@ -235,3 +250,4 @@ export async function removePlayerFromAdventure(adventureId, identifier) {
         throw error;
     }
 }
+
