@@ -4,6 +4,8 @@ import GridToolbar from './GridToolbar';
 
 import { updateTokens } from '@/app/firebase/firebase-db-adventures';
 
+import { realtimeTokens } from '@/app/firebase/firebase-db-adventures';
+
 import './grid.css'
 // import { set } from 'firebase/database';
 
@@ -50,6 +52,12 @@ const Grid = (selectedAdventure) => {
     }
   };
 
+  // Listen for token changes
+  useEffect(() => {
+    realtimeTokens(selectedAdventure.selectedAdventure.id);
+    console.log('useEffect used. listening to token changes on adventureId: ', selectedAdventure.selectedAdventure.id)
+  }, []);
+
   // Dynamic Grid Style Function
   const gridContainerStyle = {
     display: 'grid',
@@ -68,7 +76,8 @@ const Grid = (selectedAdventure) => {
           // Grid Tiles
           <div 
             key={`${x}-${y}`}
-            className={` w-10 h-10 flex items-center justify-center z-20 relative
+            className={` w-10 h-10 flex items-center justify-center z-20 relative 
+            transition-all duration-200
             ${playersHere && 'grabbable draggable'}`} 
             onDragOver={handleDragOver}
             onDrop={(e) => handleDrop(e, x, y)}
