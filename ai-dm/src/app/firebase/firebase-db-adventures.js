@@ -15,15 +15,47 @@ const {
     arrayRemove,
     runTransaction,
 } = require("firebase/firestore");
-import { auth, db } from "./firebase-config";
+import { auth, db, realtimeDB } from "./firebase-config";
 import { ITEMS } from "../utils/variables/database-vars";
 import { getUserIdByUsername } from "./firebase-auth";
 import { navToFullRoute } from "../utils/helpers/navigation";
 // import { useUser } from "../contexts/UserContext";
 
 // const {currentUser} = useUser();
+// ********* realtimeDB update functionality ****************
 
-// * adventures collection CRUD Methods * ----------------
+import { getDatabase, ref, set } from "firebase/database";
+
+// Initialize your Realtime Database
+
+export async function updateRealtimeAdventure(adventureId, gameState) {
+    try {
+        // Log for debugging
+        console.log(JSON.stringify(gameState, null, 2));
+
+        // Clean the object
+        const cleanGameState = JSON.parse(JSON.stringify(gameState));
+
+        // Update Realtime Database
+        const gameStateRef = ref(
+            realtimeDB,
+            `/adventure/${adventureId}/game-state`
+        );
+        await set(gameStateRef, cleanGameState);
+
+        console.log(
+            "Adventure's game-state updated successfully in Realtime Database"
+        );
+    } catch (error) {
+        console.error(
+            "Error updating adventure's game-state in Realtime Database:",
+            error
+        );
+        throw error;
+    }
+}
+
+// * Firestore adventures collection CRUD Methods * ----------------
 
 // Create Adventure
 export async function createAdventure(adventureData) {
@@ -35,10 +67,10 @@ export async function createAdventure(adventureData) {
             createdAt: Timestamp.fromDate(new Date()),
             createdBy: auth.currentUser.uid,
             players: [],
-            tokens: []
+            tokens: [],
         });
 
-        navToFullRoute(`./adventures/${newAdventureRef.id}`)
+        navToFullRoute(`./adventures/${newAdventureRef.id}`);
         console.log("Adventure created with ID: ", newAdventureRef.id);
         return newAdventureRef.id;
     } catch (error) {
@@ -81,7 +113,7 @@ export async function getAdventureById(adventureId) {
     }
 }
 
-// Update Adventure by ID
+// Update Adventure by ID - firestore adventure
 export async function updateAdventure(adventureId, updateData) {
     try {
         const adventureDocRef = doc(db, "adventures", adventureId);
@@ -195,10 +227,11 @@ export async function removePlayerFromAdventure(adventureId, identifier) {
             }
         });
 
-        console.log("Player removed from the adventure successfully and adventure removed from player's lists");
+        console.log(
+            "Player removed from the adventure successfully and adventure removed from player's lists"
+        );
     } catch (error) {
         console.error("Error removing player from adventure: ", error);
         throw error;
     }
 }
-
