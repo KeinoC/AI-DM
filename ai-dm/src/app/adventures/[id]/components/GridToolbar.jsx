@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
 
+import { FaDiceD20 } from 'react-icons/fa'
 import { BiMapAlt } from 'react-icons/bi'
 import { GiEvilMinion } from 'react-icons/gi'
 import { LuSettings2 } from 'react-icons/lu'
+
 
 export default function GridToolbar({gridWidth, setGridWidth, gridHeight, setGridHeight, mapImage, setMapImage, tokens, setTokens, selectedAdventure}) {
 
@@ -39,11 +41,14 @@ export default function GridToolbar({gridWidth, setGridWidth, gridHeight, setGri
       {/* Toolbar */}
       <div className="absolute z-[2000] left-6">
 
+          {/* Dice Menu Toggle */}
+          <span onClick={handleShowTools} className="block bg-[#eab308] rounded-[50%]  cursor-pointer mb-6">
+            <FaDiceD20 className="w-[5rem] h-[5rem] p-[1rem]"/>
+          </span>
+
           {/* All Settings Toggle */}
           <span onClick={handleShowTools} className="block bg-[#eab308] rounded-[50%]  cursor-pointer mb-6">
-            {/* <GrGamepad className="w-[5rem] h-[5rem] p-[1rem]"/> */}
             <LuSettings2 className="w-[5rem] h-[5rem] p-[1rem]"/>
-            {/* <BiMapAlt className="w-[5rem] h-[5rem] p-[1rem]"/> */}
           </span>
 
         </div>

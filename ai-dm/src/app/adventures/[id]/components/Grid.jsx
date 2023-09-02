@@ -4,7 +4,7 @@ import GridToolbar from './GridToolbar';
 
 import { updateTokens } from '@/app/firebase/firebase-db-adventures';
 
-import { realtimeTokens } from '@/app/firebase/firebase-db-adventures';
+// import { realtimeTokens } from '@/app/firebase/firebase-db-adventures';
 
 import './grid.css'
 // import { set } from 'firebase/database';
@@ -53,10 +53,10 @@ const Grid = (selectedAdventure) => {
   };
 
   // Listen for token changes
-  useEffect(() => {
-    realtimeTokens(selectedAdventure.selectedAdventure.id);
-    console.log('useEffect used. listening to token changes on adventureId: ', selectedAdventure.selectedAdventure.id)
-  }, []);
+  // useEffect(() => {
+  //   realtimeTokens(selectedAdventure.selectedAdventure.id);
+  //   console.log('useEffect used. listening to token changes on adventureId: ', selectedAdventure.selectedAdventure.id)
+  // }, []);
 
   // Dynamic Grid Style Function
   const gridContainerStyle = {

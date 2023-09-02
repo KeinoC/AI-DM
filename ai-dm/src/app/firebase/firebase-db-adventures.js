@@ -112,17 +112,17 @@ export async function deleteAdventure(adventureId) {
 // * Adventure Interaction Methods * ----------------
 
 // Real-Time Adventure Listener
-export async function realtimeTokens(adventureId) {
-    const tokensRef = doc(db, "adventures", adventureId)
+// export async function realtimeTokens(adventureId) {
+//     const tokensRef = doc(db, "adventure", adventureId)
   
-    // Listen for changes to 'tokens' data
-    tokensRef.on('value', (snapshot) => {
-      const updatedTokens = snapshot.val();
-      if (updatedTokens) {
-        setTokens(updatedTokens);
-      }
-    });
-  };
+//     // Listen for changes to 'tokens' data
+//     tokensRef.on('value', (snapshot) => {
+//       const updatedTokens = snapshot.val();
+//       if (updatedTokens) {
+//         setTokens(updatedTokens);
+//       }
+//     });
+//   };
 
 export async function addPlayerToAdventure(adventureId, identifier) {
     try {
