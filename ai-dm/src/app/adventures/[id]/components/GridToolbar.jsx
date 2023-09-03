@@ -11,7 +11,7 @@ export default function GridToolbar({gridWidth, setGridWidth, gridHeight, setGri
   const [showTools, setShowTools] = useState(false)
   const [toolsClass, setToolsClass] = useState("hidden")
 
-  const [players, _] = useState(selectedAdventure.selectedAdventure?.players)
+  const [players, _] = useState(selectedAdventure?.selectedAdventure?.players)
 
   const handleWidthChange = (e) => {
     setGridWidth(parseInt(e.target.value));

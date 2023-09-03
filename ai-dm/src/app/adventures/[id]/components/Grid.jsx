@@ -1,45 +1,32 @@
 import React, {useState, useEffect } from 'react';
 
-import GridToolbar from '../[id]/components/GridToolbar';
+import GridToolbar from './GridToolbar';
 
 import './grid.css'
 import { set } from 'firebase/database';
 
-const Grid = (selectedAdventure) => {
-  // TO--DO: 
-  // 1.1 Move Array up one level and connect to Game ID
-  // 2.1. all tokens NOT on grid rendered somewhere to match tokenArray keys
-  // 2.2. x, y = null
-  // 2.3. onDrop = add to tokenArray, set x & y
+import { realtimeDB } from '@/app/firebase/firebase-config';
+import { useAdventure } from '@/app/contexts/AdventureContext';
 
-    // replaced with selectedAdventure.tokens || selectedAdventure.selectedAdventure.tokens
-  // let tokenArray = [
-  //   {
-  //     id: "id-1",
-  //     name: "Umnos",
-  //     img: "https://i.imgur.com/0wWKQfp.png",
-  //     user: "Damani",
-  //     position: {x: 0,y: 0}
-  //   },
-  //   {
-  //     id: "id-2",
-  //     name: "Safzira",
-  //     img: "https://i.imgur.com/tP9YWqe.png",
-  //     user: "Tessa",
-  //     position: {x:1, y: 1},
-  //   }
-  // ]
+import { listenRealtimeTokens, realtimeTokens, updateGamestate, getTokensData } from '@/app/firebase/firebase-db-adventures';
 
+const Grid = (selectedAdventure, tokens, setTokens) => {
+
+  // const { tokens, setTokens } = useAdventure()
   const [gridWidth, setGridWidth] = useState(15);
   const [gridHeight, setGridHeight] = useState(15);
   const [mapImage, setMapImage] = useState("https://i.imgur.com/ppIn5BV.jpg");
 
+  const adventureId = selectedAdventure.selectedAdventure.id
+
   const [selectedToken, setSelectedToken] = useState("")
-  const [tokens, setTokens] = useState(selectedAdventure.selectedAdventure.tokens)
+
+  // const [tokens, setTokens] = useState(selectedAdventure.selectedAdventure?.tokens)
 
   // Character Token Functions
   const getPlayersAtPosition = (x,y, players) => {
-    const isPlayerHere =  players.filter(player => player.position?.x === x && player.position?.y === y )
+    console.log('testing bullshit', tokens)
+    const isPlayerHere =  players?.filter(player => player.position?.x === x && player.position?.y === y )
     return isPlayerHere
   }
 
@@ -68,8 +55,44 @@ const Grid = (selectedAdventure) => {
 
       setTokens(updatedTokens);
       setSelectedToken(updatedTokens.find(token => token.id === selectedToken.id));
+    
+      updateGamestate(adventureId, updatedTokens)
+      // realtimeTokens(adventureId)
     }
   };
+
+
+
+  // useEffect(() => {
+  //   console.log("beginning of useEffect")
+  //   const initialTokenData = async () => {
+  //     if (!adventureId) return
+  //     try {
+  //       const initialTokensData = await realtimeTokens(adventureId);
+  //       console.log("Initial Token Data: ", initialTokensData);
+  //       await setTokens(initialTokensData)
+  //       console.log("Initial Tokens Fetched Successfully: ", tokens)
+
+  //     } catch(error) {
+  //       console.error(error)
+  //       throw error
+  //     }
+
+  //     initialTokenData()
+
+  //     const tokenRef = ref(realtimeDB, `adventures/${adventureId}/game-state/tokens`)
+  //     const handleTokenData = (snapshot) => {
+  //       const tokenData = snapshot.val()
+  //       setTokens(tokenData)
+  //     }
+  //     const unsubscribe = onChildAdded(tokenRef, handleTokenData);
+
+  //     return () => {
+  //       unsubscribe(tokenRef, handleTokenData)
+  //     }
+
+  //   }
+  // }, [])
 
   // Dynamic Grid Style Function
   const gridContainerStyle = {
@@ -137,7 +160,9 @@ const Grid = (selectedAdventure) => {
       <GridToolbar 
         gridWidth={gridWidth} setGridWidth={setGridWidth} 
         gridHeight={gridHeight} setGridHeight={setGridHeight} 
-        mapImage={mapImage} setMapImage={setMapImage}/>
+        mapImage={mapImage} setMapImage={setMapImage}
+        tokens={tokens} setTokens={setTokens}
+        selectedAdventure={selectedAdventure} />
 
     </div>
   );
