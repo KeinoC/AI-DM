@@ -10,7 +10,7 @@ import { useAdventure } from '@/app/contexts/AdventureContext';
 
 import { listenRealtimeTokens, realtimeTokens, updateGamestate, getTokensData } from '@/app/firebase/firebase-db-adventures';
 
-const Grid = (selectedAdventure, tokens, setTokens) => {
+const Grid = (selectedAdventure) => {
 
   // const { tokens, setTokens } = useAdventure()
   const [gridWidth, setGridWidth] = useState(15);
@@ -21,11 +21,10 @@ const Grid = (selectedAdventure, tokens, setTokens) => {
 
   const [selectedToken, setSelectedToken] = useState("")
 
-  // const [tokens, setTokens] = useState(selectedAdventure.selectedAdventure?.tokens)
+  const [tokens, setTokens] = useState(selectedAdventure.selectedAdventure?.tokens)
 
   // Character Token Functions
   const getPlayersAtPosition = (x,y, players) => {
-    console.log('testing bullshit', tokens)
     const isPlayerHere =  players?.filter(player => player.position?.x === x && player.position?.y === y )
     return isPlayerHere
   }
