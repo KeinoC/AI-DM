@@ -8,7 +8,7 @@ import { set } from 'firebase/database';
 import { realtimeDB } from '@/app/firebase/firebase-config';
 import { useAdventure } from '@/app/contexts/AdventureContext';
 
-import { listenRealtimeTokens, realtimeTokens, updateGamestate, getTokensData } from '@/app/firebase/firebase-db-adventures';
+import { listenRealtimeTokens, realtimeTokens, updateGamestate, getTokensData, testRealtimeGet } from '@/app/firebase/firebase-db-adventures';
 
 const Grid = (selectedAdventure) => {
 
@@ -60,6 +60,12 @@ const Grid = (selectedAdventure) => {
     }
   };
 
+  // progress on this, we had a type in our path. working out kinks now.
+  // useEffect(() =>{
+  //   if(adventureId) {
+  //     testRealtimeGet(adventureId)
+  //   }
+  // },[])
 
 
   // useEffect(() => {
