@@ -54,8 +54,10 @@ const Grid = (selectedAdventure) => {
 
       setTokens(updatedTokens);
       setSelectedToken(updatedTokens.find(token => token.id === selectedToken.id));
+      // const testData =  testRealtimeGet();
+      // console.log(testData)
     
-      updateGamestate(adventureId, updatedTokens)
+      updateGamestate(adventureId, updatedTokens, setTokens)
       // realtimeTokens(adventureId)
     }
   };
@@ -63,41 +65,52 @@ const Grid = (selectedAdventure) => {
   // progress on this, we had a type in our path. working out kinks now.
   // useEffect(() =>{
   //   if(adventureId) {
-  //     testRealtimeGet(adventureId)
+  //     const testData = testRealtimeGet(adventureId)
+  //     console.log(testData);
   //   }
-  // },[])
-
+  // },[tokens])
 
   // useEffect(() => {
-  //   console.log("beginning of useEffect")
-  //   const initialTokenData = async () => {
-  //     if (!adventureId) return
-  //     try {
-  //       const initialTokensData = await realtimeTokens(adventureId);
+  //   const unsubscribe = realtimeTokens(adventureId, setTokens);
+    
+  //   // Cleanup function to remove the listener when the component unmounts
+  //   return () => {
+  //     unsubscribe();
+  //   };
+  // }, [adventureId]);
+
+  console.log("tokens state: ", tokens)
+
+  useEffect(() => {
+    console.log("beginning of useEffect")
+    const initialTokenData = async () => {
+      if (!adventureId) return
+      try {
+        const initialTokensData = await realtimeTokens(adventureId);
+        await setTokens(initialTokensData)
+        console.log("Initial Tokens Fetched Successfully: ", tokens)
+
+      } catch(error) {
+        console.error(error)
+        throw error
+      }
+
+      initialTokenData()
+
+      const tokenRef = ref(realtimeDB, `adventures/${adventureId}/game-state/tokens`)
+      const handleTokenData = (snapshot) => {
+        const tokenData = snapshot.val()
+        setTokens(tokenData)
+      }
+      const unsubscribe = onChildAdded(tokenRef, handleTokenData);
+
+      return () => {
+        unsubscribe(tokenRef, handleTokenData)
+      }
+
+    }
+  }, [])
   //       console.log("Initial Token Data: ", initialTokensData);
-  //       await setTokens(initialTokensData)
-  //       console.log("Initial Tokens Fetched Successfully: ", tokens)
-
-  //     } catch(error) {
-  //       console.error(error)
-  //       throw error
-  //     }
-
-  //     initialTokenData()
-
-  //     const tokenRef = ref(realtimeDB, `adventures/${adventureId}/game-state/tokens`)
-  //     const handleTokenData = (snapshot) => {
-  //       const tokenData = snapshot.val()
-  //       setTokens(tokenData)
-  //     }
-  //     const unsubscribe = onChildAdded(tokenRef, handleTokenData);
-
-  //     return () => {
-  //       unsubscribe(tokenRef, handleTokenData)
-  //     }
-
-  //   }
-  // }, [])
 
   // Dynamic Grid Style Function
   const gridContainerStyle = {

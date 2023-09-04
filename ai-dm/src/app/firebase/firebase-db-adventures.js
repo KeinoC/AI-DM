@@ -38,7 +38,7 @@ import {
 // testing generic get based on firebase docs
 
 export async function testRealtimeGet(adventureId) {
-    console.log(adventureId)
+    console.log(adventureId);
     try {
         const tokensRef = ref(
             realtimeDB,
@@ -56,7 +56,10 @@ export async function testRealtimeGet(adventureId) {
 
 // *** this section is where we model gamestate off of the global chat
 
-export async function updateGamestate(adventureId, updatedTokensData) {
+export async function updateGamestate(
+    adventureId,
+    updatedTokensData,
+) {
     try {
         // adventure argument check.
 
@@ -83,6 +86,7 @@ export async function updateGamestate(adventureId, updatedTokensData) {
         });
 
         await set(gameStateRef, newTokenData);
+        console.log(Object.values(newTokenData));
         // return Object.values(data);
     } catch (error) {
         console.error("Error updating game state", error);
@@ -90,23 +94,44 @@ export async function updateGamestate(adventureId, updatedTokensData) {
     }
 }
 
-export async function realtimeTokens(adventureId) {
+
+export function realtimeTokens(adventureId, setTokens) {
     try {
         const dbRef = ref(
             realtimeDB,
             `adventures/${adventureId}/game-state/tokens`
         );
-        const dbQuery = realtimeQuery(dbRef, limitToLast(1));
-        const snapshot = await get(dbQuery);
 
-        if (!snapshot.exists()) {
-            return [];
-        }
+        // Set up a query to get the latest tokens (limiting to the last one in this case)
+        const dbQuery = query(dbRef, limitToLast(1));
 
-        const tokensData = snapshot.val();
-        return Object.values(tokensData);
+        // Attach an event listener to this query
+        const unsubscribe = onValue(
+            dbQuery,
+            (snapshot) => {
+                if (!snapshot.exists()) {
+                    setTokens([]);
+                    return;
+                }
+
+                const tokensData = snapshot.val();
+                const tokenDataObject = Object.values(tokensData);
+
+                // Update your component's state here
+                setTokens(tokenDataObject);
+
+                console.log("Updated tokens: ", tokenDataObject);
+            },
+            (error) => {
+                console.error("Error fetching data: ", error);
+            }
+        );
+
+        // The 'unsubscribe' function can be used to remove this listener when you no longer need it,
+        // for example, when the component unmounts
+        return unsubscribe;
     } catch (error) {
-        console.error("error retriving tokens data", error);
+        console.error("Error retrieving tokens data: ", error);
     }
 }
 
