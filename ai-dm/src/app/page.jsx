@@ -8,7 +8,7 @@ import LandingPage from "./components/LandingPage";
 import Hub from "./components/Hub/Hub";
 import { useUser } from "./contexts/UserContext";
 import RainParticleOverlay from "./components/Weather/rain";
-import HubChatComponent from "./components/Hub/components/HubChat";
+import Chat from "./components/ChatWindow/Chat";
 
 
 export default function Home() {
@@ -21,9 +21,11 @@ export default function Home() {
                 {currentUser ?
                 <div>
                     <Hub />
-            <div className=" fixed right-0 bottom-0 z-[50]">
-                <HubChatComponent />
-            </div>
+
+                <div className=" fixed right-0 bottom-0 z-[50]">
+                    <Chat roomId={"Global"} />
+                </div>
+
                 </div>
                 :
                 <LandingPage />

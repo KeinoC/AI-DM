@@ -15,83 +15,39 @@ const firebaseConfig = {
     measurementId: "G-38W8CS831Y"
 };
 
-let db, auth, realtimeDB; // Declare the variables outside the try-catch block
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+const realtimeDB = getDatabase(app);
 
-// Initialize Firebase
-try {
-    const app = initializeApp(firebaseConfig);
-    db = getFirestore(app);
-    auth = getAuth(app);
-    realtimeDB = getDatabase(app);
+// async function signIn(email, password) {
 
-    // getUsers(db);
-    // createUser(db);
-
-
-
-    // console.log("Firebase App initialized:", !!app);
-    // console.log("Firestore initialized:", !!db);
-    // console.log("Auth initialized:", !!auth);
-    // console.log("Realtime Database initialized:", !!realtimeDB);
-
-} catch (error) {
-    console.error("Error initializing Firebase:", error);
-}
-
-async function signIn(email, password) {
-
-    try {
-        const authUser = await signInWithFirebase(email, password);
-        console.log(authUser.uid);
-
-        // Get user data from Firestore USERS collection
-        const userDocRef = doc(db, "users", authUser.uid);
-        const userDocSnapshot = await getDoc(userDocRef);
-
-        if (userDocSnapshot.exists()) {
-            const userData = userDocSnapshot.data();
-            console.log('user data: ', userData)
-            setCurrentUser(userData);
-        } else {
-            // User does not exist in Firestore, create a new document
-            const user = {
-                uid: authUser.uid,
-                email: email,
-            };
-            setCurrentUser(user);
-        }
-
-    } catch (error) {
-        console.error("Sign-in error:", error);
-    }
-};
-
-
-// async function getUsers(db) {
-//     // debugger;
-//     const usersCol = collection(db, 'users');
-//     const usersSnapshot = await getDocs(usersCol);
-//     const usersList = usersSnapshot.docs.map(doc => doc.data());
-//     console.log(usersList);
-// }
-
-// async function createUser(db) {
 //     try {
-//         const newUser = {
-//             id: "1",
-//             email: "abc@abc.com",
-//             createdAt: "now",
-//         };
-//         // debugger;
-//         const docRef = doc(db, "users", "1");
-//         await setDoc(docRef, newUser);
-//         // const userCollection = db.ref("users")
+//         const authUser = await signInWithFirebase(email, password);
+//         console.log(authUser.uid);
 
-//         console.log("User document created successfully");
+//         // Get user data from Firestore USERS collection
+//         const userDocRef = doc(db, "users", authUser.uid);
+//         const userDocSnapshot = await getDoc(userDocRef);
+
+//         if (userDocSnapshot.exists()) {
+//             const userData = userDocSnapshot.data();
+//             console.log('user data: ', userData)
+//             setCurrentUser(userData);
+//         } else {
+//             // User does not exist in Firestore, create a new document
+//             const user = {
+//                 uid: authUser.uid,
+//                 email: email,
+//             };
+//             setCurrentUser(user);
+//         }
+
 //     } catch (error) {
-//         console.error("Error creating user document:", error);
+//         console.error("Sign-in error:", error);
 //     }
 // };
 
-export { db, auth, realtimeDB, signIn };
+
+export { db, auth, realtimeDB, };
 

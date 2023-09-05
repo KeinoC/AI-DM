@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from "react";
-
 import GridToolbar from "./GridToolbar";
-
 import "./grid.css";
 import { set } from "firebase/database";
-
 import { realtimeDB } from "@/app/firebase/firebase-config";
 import { useAdventure } from "@/app/contexts/AdventureContext";
-
 import {
     listenRealtimeTokens,
     realtimeTokens,
@@ -15,6 +11,7 @@ import {
     getTokensData,
     testRealtimeGet,
 } from "@/app/firebase/firebase-db-adventures";
+
 
 const Grid = () => {
     const { selectedAdventure, selectedAdventureId, tokens, setTokens } =
@@ -31,7 +28,7 @@ const Grid = () => {
     const [selectedToken, setSelectedToken] = useState("");
 
 
-    console.log(tokens);
+    // console.log(tokens);
     // Character Token Functions
     const getPlayersAtPosition = (x, y, players) => {
         if (!players || players.length === 0) {
@@ -41,8 +38,8 @@ const Grid = () => {
         const isPlayerHere = players.filter(
             (player) => player.position?.x === x && player.position?.y === y
         );
-        console.log(players)
-          console.log(isPlayerHere);
+        // console.log(players)
+        //   console.log(isPlayerHere);
         return isPlayerHere || [];
     };
 
@@ -89,7 +86,7 @@ const Grid = () => {
         const grid = [];
         for (let y = 0; y < gridHeight; y++) {
             for (let x = 0; x < gridWidth; x++) {
-                const playersHere = () => getPlayersAtPosition(x, y, tokens);
+                const playersHere = getPlayersAtPosition(x, y, tokens);
 
                 grid.push(
                     // Grid Tiles
