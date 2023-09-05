@@ -116,8 +116,8 @@ export const subscribeToChatUpdates = (channel, callback, limit = 1) => {
     // Subscribe to child_added event
     try {
         on(dbQuery, 'child_added', handleNewMessage);  // Using `on` method on the Query object
-        console.log("dbQuery:"+ dbQuery)
-        console.log("on", on)
+        // console.log("dbQuery:"+ dbQuery)
+        // console.log("on", on)
     } catch (error) {
         console.error("Error subscribing to chat updates:", error);
         throw error; // Propagate the error for further handling

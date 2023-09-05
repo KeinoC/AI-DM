@@ -2,7 +2,7 @@
 import AdvCharCards from "./AdvCharCards";
 import ChatWindow from "@/app/components/ChatWindow";
 import AdvCommands from "./AdvCommands";
-import AdvChatComponent from "../../[id]/components/sidebar-components/AdvChatComponent";
+// import AdvChatComponent from "../../[id]/components/sidebar-components/AdvChatComponent";
 
 export default function SideBarContainer({selectedAdventure}) {
     // const roomId = selectedAdventure.id.toString()
@@ -13,7 +13,7 @@ export default function SideBarContainer({selectedAdventure}) {
                 {/* roll20 uses a Player Profile with game-specific nickname input */}
                 <AdvCharCards />
                 <AdvCommands />
-                <AdvChatComponent />
+                {/* <AdvChatComponent /> */}
                 {/* {console.log('testing for Game ID in SideBarContainer', )} */}
                 {/* <ChatWindow roomId={roomId} /> */}
         </div>

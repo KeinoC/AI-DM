@@ -20,28 +20,62 @@ import { auth, db, realtimeDB } from "./firebase-config";
 import { ITEMS } from "../utils/variables/database-vars";
 import { getUserIdByUsername } from "./firebase-auth";
 import { navToFullRoute } from "../utils/helpers/navigation";
-import { ref, limitToLast, onValue, on, off, get, set, query as realtimeQuery } from "firebase/database";
+import {
+    ref,
+    limitToLast,
+    onValue,
+    on,
+    off,
+    get,
+    set,
+    query as realtimeQuery,
+} from "firebase/database";
 // import { useUser } from "../contexts/UserContext";
 
 // const {currentUser} = useUser();
 // ********* realtimeDB update functionality ****************
 
+// testing generic get based on firebase docs
+
+export async function testRealtimeGet(adventureId, setTokens) {
+    // console.log(adventureId);
+    try {
+        const tokensRef = ref(
+            realtimeDB,
+            `adventures/${adventureId}/game-state/tokens`
+        );
+        onValue(tokensRef, (snapshot) => {
+            const tokensData = snapshot.val();
+            // console.log(tokensData);
+            if(setTokens) {
+                setTokens(tokensData);
+                // console.log("tokens set - fb-db-adv: ", tokensData);
+            }
+        });
+    } catch (error) {
+        console.error("Error fetching tokens data", error);
+        throw error;
+    }
+}
+
 // *** this section is where we model gamestate off of the global chat
 
-export async function updateGamestate(adventureId, updatedTokensData) {
+export async function updateGamestate(
+    adventureId,
+    updatedTokensData,
+) {
     try {
-
         // adventure argument check.
 
         if (!updatedTokensData) {
             throw new Error("No tokens");
         }
-        
+
         const gameStateRef = ref(
             realtimeDB,
-            `adventures/${adventureId}/game-state/tokens}`
-        )
-        if(!gameStateRef){
+            `adventures/${adventureId}/game-state/tokens`
+        );
+        if (!gameStateRef) {
             throw new Error("No game state ref");
         }
 
@@ -56,89 +90,138 @@ export async function updateGamestate(adventureId, updatedTokensData) {
         });
 
         await set(gameStateRef, newTokenData);
+        console.log(Object.values(newTokenData));
         // return Object.values(data);
-
     } catch (error) {
         console.error("Error updating game state", error);
         throw error;
     }
 }
 
-export async function realtimeTokens(adventureId) {
+
+export function realtimeTokens(adventureId, setTokens) {
     try {
-        const dbRef = ref(realtimeDB, `adventures/${adventureId}/game-state/tokens`);
-        const dbQuery = realtimeQuery(dbRef, limitToLast(1));
-        const snapshot = await get(dbQuery);
+        const dbRef = ref(
+            realtimeDB,
+            `adventures/${adventureId}/game-state/tokens`
+        );
 
-        if (!snapshot.exists()) {
-            return [];
-        }
+        // Set up a query to get the latest tokens (limiting to the last one in this case)
+        const dbQuery = query(dbRef, limitToLast(1));
 
-        const tokensData = snapshot.val();
-        return Object.values(tokensData);
+        // Attach an event listener to this query
+        const unsubscribe = onValue(
+            dbQuery,
+            (snapshot) => {
+                if (!snapshot.exists()) {
+                    setTokens([]);
+                    return;
+                }
 
+                const tokensData = snapshot.val();
+                const tokenDataObject = Object.values(tokensData);
+
+                // Update your component's state here
+                setTokens(tokenDataObject);
+
+                // console.log("Updated tokens: ", tokenDataObject);
+            },
+            (error) => {
+                console.error("Error fetching data: ", error);
+            }
+        );
+
+        // The 'unsubscribe' function can be used to remove this listener when you no longer need it,
+        // for example, when the component unmounts
+        return unsubscribe;
     } catch (error) {
-        console.error("error retriving tokens data", error);
+        console.error("Error retrieving tokens data: ", error);
     }
 }
-
 
 export async function getTokensData(adventureId, setTokens) {
-  try {
-    // Create a reference to the tokens data in the Realtime Database
-    const tokensRef = ref(realtimeDB, `adventures/${adventureId}/game-state/tokens`);
+    try {
+        // Create a reference to the tokens data in the Realtime Database
+        const tokensRef = ref(
+            realtimeDB,
+            `adventures/${adventureId}/game-state/tokens`
+        );
 
-    // Fetch the data
-    const snapshot = await get(tokensRef);
+        // Fetch the data
+        const snapshot = await get(tokensRef);
 
-    // Check if data exists
-    if (snapshot.exists()) {
-        setTokens(snapshot.val());
-      return snapshot.val(); // Returns the tokens data
-    } else {
-      throw new Error("No tokens data found");
+        // Check if data exists
+        if (snapshot.exists()) {
+            setTokens(snapshot.val());
+            return snapshot.val(); // Returns the tokens data
+        } else {
+            throw new Error("No tokens data found");
+        }
+    } catch (error) {
+        console.error("Error fetching tokens data", error);
+        throw error;
     }
-  } catch (error) {
-    console.error("Error fetching tokens data", error);
-    throw error;
-  }
 }
 
+export async function getRealtimeAdventure(adventureId, setSelectedAdventure) {
+    try {
+        // Create a reference to the tokens data in the Realtime Database
+        const adventureRef = ref(
+            realtimeDB,
+            `adventures/${adventureId}`
+        );
+
+        // Fetch the data
+        const snapshot = await get(adventureRef);
+
+        // Check if data exists
+        if (snapshot.exists()) {
+            setSelectedAdventure(snapshot.val());
+            // return snapshot.val(); // Returns the tokens data
+        } else {
+            return
+        }
+    } catch (error) {
+        console.error("Error fetching adventure data", error);
+        throw error;
+    }
+}
 
 export const listenRealtimeTokens = (adventureId, setTokens) => {
-    const dbRef = ref(realtimeDB, `adventures/${adventureId}/game-state/tokens`);
+    const dbRef = ref(
+        realtimeDB,
+        `adventures/${adventureId}/game-state/tokens`
+    );
     const dbQuery = realtimeQuery(dbRef, limitToLast(1));
 
-    const handleTokensData = snapshot => {
+    const handleTokensData = (snapshot) => {
         const tokensData = snapshot.val();
-        setTokens(tokensData)
-    }
+        setTokens(tokensData);
+    };
 
     // Subscribe to child_added event
 
     try {
         on(dbQuery, handleTokensData);
-        console.log("dbQuery: " + dbQuery)
-        console.log("on: "+ on)
-    } catch(error) {
+        // console.log("dbQuery: " + dbQuery);
+        // console.log("on: " + on);
+    } catch (error) {
         console.error("Error listening to tokens data", error);
         throw error;
     }
 
     // return an unsubscribe function for cleanup
     return () => {
-    try {
-        off(dbQuery, 'child_added', handleTokensData);
-        console.log("off: " + off)
-    } catch(error) {
-        console.error("Error listening to tokens data", error);
-    }
-    }
-}
+        try {
+            off(dbQuery, "child_added", handleTokensData);
+            // console.log("off: " + off);
+        } catch (error) {
+            console.error("Error listening to tokens data", error);
+        }
+    };
+};
 
 // ***
-
-
 
 // Initialize your Realtime Database
 
@@ -171,57 +254,61 @@ export async function updateRealtimeAdventure(adventureId, gameState) {
 
 export async function realtime(adventureId, updatedTokenData) {
     try {
-      // Create a reference to the specific adventure
-      const adventureRef = ref(realtimeDB, `/adventures/${adventureId}/game-state/tokens`);
-  
-      // Perform the update
-      await update(adventureRef, updatedTokenData);
-  
-      console.log(`Token Positions Reassigned`);
+        // Create a reference to the specific adventure
+        const adventureRef = ref(
+            realtimeDB,
+            `/adventures/${adventureId}/game-state/tokens`
+        );
+
+        // Perform the update
+        await update(adventureRef, updatedTokenData);
+
+        console.log(`Token Positions Reassigned`);
     } catch (error) {
-      console.error("Error updating token positions:", error);
+        console.error("Error updating token positions:", error);
     }
-  }
-  
-  // Listener to automatically update all clients
-  export function realtimeListener(adventureId, callback) {
-    const tokensRef = ref(realtimeDB, `/adventures/${adventureId}/game-state/tokens`);
-    
+}
+
+// Listener to automatically update all clients
+export function realtimeListener(adventureId, callback) {
+    const tokensRef = ref(
+        realtimeDB,
+        `/adventures/${adventureId}/game-state/tokens`
+    );
+
     const unsubscribe = onValue(tokensRef, (snapshot) => {
-      const tokens = snapshot.val();
-      callback(tokens);
+        const tokens = snapshot.val();
+        callback(tokens);
     });
-  
+
     // Use this function to stop listening to changes
     return () => off(tokensRef, unsubscribe);
-  }
-
+}
 
 export async function updateTokenPosition(adventureId, tokenId, newPosition) {
     try {
-      // Initialize database
+        // Initialize database
 
-  
-      // Prepare the updates
-      let updates = {};
-      updates[`/adventure/${adventureId}/game-state/tokens/${tokenId}/position`] = newPosition;
-  
-      // Update the data in the Realtime Database
-      await update(ref(realtimeDB), updates);
-  
-      console.log("Token's position updated successfully in Realtime Database");
+        // Prepare the updates
+        let updates = {};
+        updates[
+            `/adventure/${adventureId}/game-state/tokens/${tokenId}/position`
+        ] = newPosition;
+
+        // Update the data in the Realtime Database
+        await update(ref(realtimeDB), updates);
+
+        console.log(
+            "Token's position updated successfully in Realtime Database"
+        );
     } catch (error) {
-      console.error("Error updating tokens in Realtime Database:", error);
-      throw error;
+        console.error("Error updating tokens in Realtime Database:", error);
+        throw error;
     }
-  }
+}
 
-
-
-
-
-  // * Firestore adventures collection CRUD Methods * ----------------
-  // Create Adventure
+// * Firestore adventures collection CRUD Methods * ----------------
+// Create Adventure
 export async function createAdventure(adventureData) {
     try {
         const adventuresCollection = collection(db, "adventures");
@@ -277,7 +364,6 @@ export async function getAdventureById(adventureId) {
     }
 }
 
-
 // Update Adventure by ID - firestore adventure
 export async function updateAdventure(adventureId, updateData) {
     try {
@@ -309,7 +395,7 @@ export async function deleteAdventure(adventureId) {
 // Real-Time Adventure Listener
 // export async function realtimeTokens(adventureId) {
 //     const tokensRef = doc(db, "adventure", adventureId)
-  
+
 //     // Listen for changes to 'tokens' data
 //     tokensRef.on('value', (snapshot) => {
 //       const updatedTokens = snapshot.val();
@@ -415,4 +501,3 @@ export async function removePlayerFromAdventure(adventureId, identifier) {
 }
 
 // Token CRUD
-

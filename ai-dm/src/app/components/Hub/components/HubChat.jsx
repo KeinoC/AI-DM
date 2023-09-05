@@ -54,7 +54,7 @@ export default function HubChatComponent() {
             try {
                 const initialHistory = await getChatHistoryByChannel(channel);
                 setGlobalChatHistory(initialHistory);
-                console.log("Initial chat history fetched successfully:", initialHistory);
+                // console.log("Initial chat history fetched successfully:", initialHistory);
             } catch (error) {
                 console.error("Failed to fetch initial chat history: ", error);
             }
@@ -80,9 +80,9 @@ export default function HubChatComponent() {
 
     // Render the chat history window
     const RenderChatHistoryWindow = () => {
-        console.log("Rendering chat history window");
+        // console.log("Rendering chat history window");
         const globalChatHistoryDisplay = renderChatHistoryWindow(globalChatHistory);
-        console.log("Output from renderChatHistoryWindow:", globalChatHistory);
+        // console.log("Output from renderChatHistoryWindow:", globalChatHistory);
         return globalChatHistoryDisplay;
     };
 

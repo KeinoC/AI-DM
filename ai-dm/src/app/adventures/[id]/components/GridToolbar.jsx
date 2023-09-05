@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import { useAdventure } from '@/app/contexts/AdventureContext'
+import { testRealtimeGet } from '@/app/firebase/firebase-db-adventures'
 
 import { FaDiceD20 } from 'react-icons/fa'
 import { BiMapAlt } from 'react-icons/bi'
@@ -6,12 +8,24 @@ import { GiEvilMinion } from 'react-icons/gi'
 import { LuSettings2 } from 'react-icons/lu'
 
 
-export default function GridToolbar({gridWidth, setGridWidth, gridHeight, setGridHeight, mapImage, setMapImage, tokens, setTokens, selectedAdventure}) {
+export default function GridToolbar({gridWidth, setGridWidth, gridHeight, setGridHeight, mapImage, setMapImage, selectedAdventure}) { // << removed tokens and set tokens from props, trying global version from context
 
   const [showTools, setShowTools] = useState(false)
   const [toolsClass, setToolsClass] = useState("hidden")
-
   const [players, _] = useState(selectedAdventure?.selectedAdventure?.players)
+  const { tokens, setTokens } = useAdventure()
+
+  const adventureId = selectedAdventure?.selectedAdventure?.id
+
+useEffect(() => {
+  const updateTokens =  async () => {
+    const tokensData = await testRealtimeGet(selectedAdventure?.selectedAdventure?.id, setTokens)
+    // setTokens(tokensData)
+    // console.log("token set successfully in grid toolbar:", tokensData)
+  }
+  updateTokens()
+},[])
+
 
   const handleWidthChange = (e) => {
     setGridWidth(parseInt(e.target.value));
@@ -96,7 +110,7 @@ export default function GridToolbar({gridWidth, setGridWidth, gridHeight, setGri
             <div className="flex justify-center mt-6"><GiEvilMinion className="w-[3rem] h-[3rem] color-white"/></div>
             Manage Tokens<br />
 
-            {tokens.map((tokenObj) => {
+            {tokens?.map((tokenObj) => {
               return (
                 <div key={tokenObj.id}>
                   <span className="inline-block w-[5rem] mb-2" >
@@ -122,7 +136,7 @@ export default function GridToolbar({gridWidth, setGridWidth, gridHeight, setGri
               <span>User </span>
               <select name="dog-names" id="dog-names"> 
                 <option value="null">Host Only</option>
-                  {players.map((playersObj) => {
+                  {players?.map((playersObj) => {
                     return (
                       <option key={playersObj._key.path.segments[6]}> 
                         {playersObj._key.path.segments[6]}
