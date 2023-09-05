@@ -37,7 +37,7 @@ import {
 
 // testing generic get based on firebase docs
 
-export async function testRealtimeGet(adventureId) {
+export async function testRealtimeGet(adventureId, setTokens) {
     console.log(adventureId);
     try {
         const tokensRef = ref(
@@ -47,6 +47,10 @@ export async function testRealtimeGet(adventureId) {
         onValue(tokensRef, (snapshot) => {
             const tokensData = snapshot.val();
             console.log(tokensData);
+            if(setTokens) {
+                setTokens(tokensData);
+                console.log("tokens set - fb-db-adv: ", tokensData);
+            }
         });
     } catch (error) {
         console.error("Error fetching tokens data", error);

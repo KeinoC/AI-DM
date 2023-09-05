@@ -21,7 +21,9 @@ const Grid = (selectedAdventure) => {
 
   const [selectedToken, setSelectedToken] = useState("")
 
-  const [tokens, setTokens] = useState(selectedAdventure.selectedAdventure?.tokens)
+  // const [tokens, setTokens] = useState(selectedAdventure.selectedAdventure?.tokens) // attempting to make this global, in order to set it in the handleJoinAdventure button.
+const { tokens, setTokens } = useAdventure()
+
 
   // Character Token Functions
   const getPlayersAtPosition = (x,y, players) => {
@@ -52,7 +54,7 @@ const Grid = (selectedAdventure) => {
         return token;
       });
 
-      setTokens(updatedTokens);
+      // setTokens(updatedTokens);
       setSelectedToken(updatedTokens.find(token => token.id === selectedToken.id));
       // const testData =  testRealtimeGet();
       // console.log(testData)
@@ -148,7 +150,7 @@ const Grid = (selectedAdventure) => {
               }
 
               {/* Grid Lines + Drop */}
-              {!playersHere.length && (
+              {!playersHere?.length && (
                 <div
                   className="w-10 h-10 opacity-25 border-white border-[1px] absolute"
                   onDragStart={(e) => handleDragStart(e, x, y)}

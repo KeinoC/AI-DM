@@ -1,6 +1,6 @@
 "use client";
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { getAllAdventures } from "../firebase/firebase-db-adventures";
+import { getAllAdventures, testRealtimeGet } from "../firebase/firebase-db-adventures";
 
 // * Initialize Context
 const AdventureContext = createContext();
@@ -17,7 +17,7 @@ export const AdventureProvider = ({ children }) => {
     const [allAdventures, setAllAdventures] = useState([]);
     const [createAdventureMode, setCreateAdventureMode] = useState(false);
     const [selectedAdventure, setSelectedAdventure] = useState({});
-
+    const [tokens, setTokens] = useState(selectedAdventure?.selectedAdventure?.tokens || []) // attempting to make this global, in order to set it in the handleJoinAdventure button.
 
 // *** Fetch Adventure Functionality ***
     useEffect(() => {
@@ -30,8 +30,26 @@ export const AdventureProvider = ({ children }) => {
             }
         };
 
+        const fetchTokens = async () => {
+            if (selectedAdventure) {
+                const advId = await selectedAdventure.id;
+                console.log(advId);
+                try {
+                    const fetchedTokens = await testRealtimeGet(advId);
+                    setTokens(fetchedTokens);
+                    console.log("tokens fetched:", fetchedTokens);
+                } catch(error) {
+                    console.error("Failed to fetchTokens:", error);
+                }
+            }
+        };
+
         fetchAdventures();
+        fetchTokens();
     }, []);
+
+
+
 
     const value = {
         allAdventures,
@@ -42,6 +60,8 @@ export const AdventureProvider = ({ children }) => {
         setCreateAdventureMode,
         selectedAdventure,
         setSelectedAdventure,
+        tokens,
+        setTokens,
     
     };
 
