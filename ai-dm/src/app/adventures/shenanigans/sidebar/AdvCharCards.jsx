@@ -27,7 +27,7 @@ export default function AdvCharCards() {
 
     useEffect(() => {
         setAdvChars(charObjs);
-        console.log("character state set to: ", advChars);
+        // console.log("character state set to: ", advChars);
     }, []);
 
     const CharCards = () => {

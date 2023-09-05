@@ -81,16 +81,16 @@ const { tokens, setTokens } = useAdventure()
   //   };
   // }, [adventureId]);
 
-  console.log("tokens state: ", tokens)
+  // console.log("tokens state: ", tokens)
 
   useEffect(() => {
-    console.log("beginning of useEffect")
+    // console.log("beginning of useEffect")
     const initialTokenData = async () => {
       if (!adventureId) return
       try {
         const initialTokensData = await realtimeTokens(adventureId);
         await setTokens(initialTokensData)
-        console.log("Initial Tokens Fetched Successfully: ", tokens)
+        // console.log("Initial Tokens Fetched Successfully: ", tokens)
 
       } catch(error) {
         console.error(error)

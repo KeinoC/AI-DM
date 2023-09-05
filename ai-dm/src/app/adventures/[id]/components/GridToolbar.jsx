@@ -21,7 +21,7 @@ useEffect(() => {
   const updateTokens =  async () => {
     const tokensData = await testRealtimeGet(selectedAdventure?.selectedAdventure?.id, setTokens)
     // setTokens(tokensData)
-    console.log("token set successfully in grid toolbar:", tokensData)
+    // console.log("token set successfully in grid toolbar:", tokensData)
   }
   updateTokens()
 },[])

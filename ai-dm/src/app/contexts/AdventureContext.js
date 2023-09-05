@@ -33,11 +33,11 @@ export const AdventureProvider = ({ children }) => {
         const fetchTokens = async () => {
             if (selectedAdventure) {
                 const advId = await selectedAdventure.id;
-                console.log(advId);
+                // console.log(advId);
                 try {
                     const fetchedTokens = await testRealtimeGet(advId);
                     setTokens(fetchedTokens);
-                    console.log("tokens fetched:", fetchedTokens);
+                    // console.log("tokens fetched:", fetchedTokens);
                 } catch(error) {
                     console.error("Failed to fetchTokens:", error);
                 }

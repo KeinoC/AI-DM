@@ -38,7 +38,7 @@ import {
 // testing generic get based on firebase docs
 
 export async function testRealtimeGet(adventureId, setTokens) {
-    console.log(adventureId);
+    // console.log(adventureId);
     try {
         const tokensRef = ref(
             realtimeDB,
@@ -46,10 +46,10 @@ export async function testRealtimeGet(adventureId, setTokens) {
         );
         onValue(tokensRef, (snapshot) => {
             const tokensData = snapshot.val();
-            console.log(tokensData);
+            // console.log(tokensData);
             if(setTokens) {
                 setTokens(tokensData);
-                console.log("tokens set - fb-db-adv: ", tokensData);
+                // console.log("tokens set - fb-db-adv: ", tokensData);
             }
         });
     } catch (error) {
@@ -124,7 +124,7 @@ export function realtimeTokens(adventureId, setTokens) {
                 // Update your component's state here
                 setTokens(tokenDataObject);
 
-                console.log("Updated tokens: ", tokenDataObject);
+                // console.log("Updated tokens: ", tokenDataObject);
             },
             (error) => {
                 console.error("Error fetching data: ", error);
@@ -179,8 +179,8 @@ export const listenRealtimeTokens = (adventureId, setTokens) => {
 
     try {
         on(dbQuery, handleTokensData);
-        console.log("dbQuery: " + dbQuery);
-        console.log("on: " + on);
+        // console.log("dbQuery: " + dbQuery);
+        // console.log("on: " + on);
     } catch (error) {
         console.error("Error listening to tokens data", error);
         throw error;
@@ -190,7 +190,7 @@ export const listenRealtimeTokens = (adventureId, setTokens) => {
     return () => {
         try {
             off(dbQuery, "child_added", handleTokensData);
-            console.log("off: " + off);
+            // console.log("off: " + off);
         } catch (error) {
             console.error("Error listening to tokens data", error);
         }

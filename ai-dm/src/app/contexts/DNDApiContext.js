@@ -43,7 +43,7 @@ export const DNDApiProvider = ({ children }) => {
                     // 1. Fetch the categories objects
                     const fetchedCategories = await getEquipmentCategories();
                     setEquipCatObjs(fetchedCategories.results);
-                    console.log("equipment categories fetched");
+                    // console.log("equipment categories fetched");
                 } catch (error) {
                     console.error("Error fetching categories: ", error);
                 }

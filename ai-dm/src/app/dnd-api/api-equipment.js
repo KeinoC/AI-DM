@@ -20,7 +20,7 @@ export async function getEquipmentListByCategory(category) {
     );
     const data = await res.json();
     if(data.length > 0) {
-    console.log('Equipment List by Category fetched');
+    // console.log('Equipment List by Category fetched');
     }
     return data;
 }
