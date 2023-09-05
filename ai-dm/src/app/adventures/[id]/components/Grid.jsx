@@ -14,6 +14,7 @@ import {
     updateGamestate,
     getTokensData,
     testRealtimeGet,
+    updateRealtimeAdventure,
 } from "@/app/firebase/firebase-db-adventures";
 
 const Grid = () => {
@@ -41,15 +42,16 @@ const Grid = () => {
         const isPlayerHere = players.filter(
             (player) => player.position?.x === x && player.position?.y === y
         );
-        console.log(players)
-          console.log(isPlayerHere);
         return isPlayerHere || [];
     };
 
     const handleDragStart = (event, x, y) => {
         event.dataTransfer.setData("text/plain", JSON.stringify({ x, y }));
         event.target.position({ x, y });
-    };
+        
+      };
+
+console.log(tokens)
 
     const handleDragOver = (event) => {
         event.preventDefault();
@@ -72,6 +74,7 @@ const Grid = () => {
             // setTokens(updatedTokens);
             setSelectedToken(
                 updatedTokens.find((token) => token.id === selectedToken.id)
+                
             );
         }
     };
@@ -83,13 +86,13 @@ const Grid = () => {
         gridTemplateColumns: `repeat(${gridWidth}, 1fr)`,
         display: "relative",
     };
-
+    
     // Grid Tiles
     const renderGrid = () => {
-        const grid = [];
-        for (let y = 0; y < gridHeight; y++) {
-            for (let x = 0; x < gridWidth; x++) {
-                const playersHere = () => getPlayersAtPosition(x, y, tokens);
+      const grid = [];
+      for (let y = 0; y < gridHeight; y++) {
+        for (let x = 0; x < gridWidth; x++) {
+          const playersHere = getPlayersAtPosition(x, y, tokens);
 
                 grid.push(
                     // Grid Tiles
@@ -101,8 +104,8 @@ const Grid = () => {
                         onDrop={(e) => handleDrop(e, x, y)}
                     >
                         {/* Player Token Styles and Drag */}
-                        {playersHere &&
-                            playersHere?.map((tokensObj) => {
+                        {tokens &&
+                            tokens?.map((tokensObj) => {
                                 return (
                                     <img
                                         key={tokensObj.id}

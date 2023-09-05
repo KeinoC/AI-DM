@@ -236,7 +236,7 @@ export async function updateRealtimeAdventure(adventureId, gameState) {
         // Update Realtime Database
         const gameStateRef = ref(
             realtimeDB,
-            `/adventure/${adventureId}/game-state`
+            `/adventure/${adventureId}`
         );
         await set(gameStateRef, cleanGameState);
 
