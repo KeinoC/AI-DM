@@ -163,6 +163,30 @@ export async function getTokensData(adventureId, setTokens) {
     }
 }
 
+export async function getRealtimeAdventure(adventureId, setSelectedAdventure) {
+    try {
+        // Create a reference to the tokens data in the Realtime Database
+        const adventureRef = ref(
+            realtimeDB,
+            `adventures/${adventureId}`
+        );
+
+        // Fetch the data
+        const snapshot = await get(adventureRef);
+
+        // Check if data exists
+        if (snapshot.exists()) {
+            setSelectedAdventure(snapshot.val());
+            // return snapshot.val(); // Returns the tokens data
+        } else {
+            return
+        }
+    } catch (error) {
+        console.error("Error fetching adventure data", error);
+        throw error;
+    }
+}
+
 export const listenRealtimeTokens = (adventureId, setTokens) => {
     const dbRef = ref(
         realtimeDB,

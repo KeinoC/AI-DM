@@ -136,7 +136,7 @@ useEffect(() => {
               <span>User </span>
               <select name="dog-names" id="dog-names"> 
                 <option value="null">Host Only</option>
-                  {players.map((playersObj) => {
+                  {players?.map((playersObj) => {
                     return (
                       <option key={playersObj._key.path.segments[6]}> 
                         {playersObj._key.path.segments[6]}

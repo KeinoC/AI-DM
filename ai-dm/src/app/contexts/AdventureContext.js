@@ -1,6 +1,13 @@
 "use client";
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { getAllAdventures, testRealtimeGet } from "../firebase/firebase-db-adventures";
+import {
+    getAllAdventures,
+    testRealtimeGet,
+    realtimeTokens,
+    getTokensData,
+    getRealtimeAdventure,
+} from "../firebase/firebase-db-adventures";
+import { useRouter, usePathname, getRoute } from "next/navigation";
 
 // * Initialize Context
 const AdventureContext = createContext();
@@ -13,13 +20,16 @@ export const useAdventure = () => {
 };
 
 export const AdventureProvider = ({ children }) => {
+    const [currentPath, setCurrentPath] = useState("");
+    const [selectedAdventureId, setSelectedAdventureId] = useState("");
     const [newAdventureData, setNewAdventureData] = useState([]);
     const [allAdventures, setAllAdventures] = useState([]);
     const [createAdventureMode, setCreateAdventureMode] = useState(false);
     const [selectedAdventure, setSelectedAdventure] = useState({});
-    const [tokens, setTokens] = useState(selectedAdventure?.selectedAdventure?.tokens || []) // attempting to make this global, in order to set it in the handleJoinAdventure button.
+    const [tokens, setTokens] = useState([]);
 
-// *** Fetch Adventure Functionality ***
+    // *** Fetch Adventure Functionality ***
+
     useEffect(() => {
         const fetchAdventures = async () => {
             try {
@@ -30,26 +40,48 @@ export const AdventureProvider = ({ children }) => {
             }
         };
 
-        const fetchTokens = async () => {
-            if (selectedAdventure) {
-                const advId = await selectedAdventure.id;
-                // console.log(advId);
-                try {
-                    const fetchedTokens = await testRealtimeGet(advId);
-                    setTokens(fetchedTokens);
-                    // console.log("tokens fetched:", fetchedTokens);
-                } catch(error) {
-                    console.error("Failed to fetchTokens:", error);
-                }
-            }
-        };
-
         fetchAdventures();
-        fetchTokens();
+        // fetchTokens();
     }, []);
 
+    const pathname = usePathname();
+
+    useEffect(() => {
+        console.log(pathname);
+        if (pathname) {
+            // console.log(pathname)
+            const pathnameString = pathname.toString();
+            const pathSegments = pathnameString?.split("/");
+            const idSegment =
+                pathSegments[pathSegments?.length - 1].toLowerCase();
+            // console.log(idSegment);
+            setSelectedAdventureId(idSegment);
+        }
+    }, []);
+
+    useEffect(() => {
+        const fetchCurrentAdventure = async () => {
+            if (selectedAdventureId) {
+                const adventureData = await getRealtimeAdventure(selectedAdventureId, setSelectedAdventure);
+
+                adventureData && setSelectedAdventure(adventureData);
+                // console.log(selectedAdventure);
+            }
+        };
+        fetchCurrentAdventure();
+    }, [selectedAdventureId]);
 
 
+    useEffect(() => {
+        const fetchTokens = async () => {
+            if (selectedAdventure) {
+                const tokensData = await selectedAdventure.tokens
+                console.log(tokensData);
+                tokensData && setTokens(tokensData);
+            }
+        };
+        fetchTokens();
+    },[selectedAdventure])
 
     const value = {
         allAdventures,
@@ -62,7 +94,8 @@ export const AdventureProvider = ({ children }) => {
         setSelectedAdventure,
         tokens,
         setTokens,
-    
+        selectedAdventureId,
+
     };
 
     return (
