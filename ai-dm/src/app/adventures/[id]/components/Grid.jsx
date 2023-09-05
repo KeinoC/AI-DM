@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from "react";
-
 import GridToolbar from "./GridToolbar";
-
 import "./grid.css";
 import { set } from "firebase/database";
-
 import { realtimeDB } from "@/app/firebase/firebase-config";
 import { useAdventure } from "@/app/contexts/AdventureContext";
-
 import {
     listenRealtimeTokens,
     realtimeTokens,
@@ -16,6 +12,7 @@ import {
     testRealtimeGet,
     updateRealtimeAdventure,
 } from "@/app/firebase/firebase-db-adventures";
+
 
 const Grid = () => {
     const { selectedAdventure, selectedAdventureId, tokens, setTokens } =
@@ -32,7 +29,7 @@ const Grid = () => {
     const [selectedToken, setSelectedToken] = useState("");
 
 
-    console.log(tokens);
+    // console.log(tokens);
     // Character Token Functions
     const getPlayersAtPosition = (x, y, players) => {
         if (!players || players.length === 0) {
