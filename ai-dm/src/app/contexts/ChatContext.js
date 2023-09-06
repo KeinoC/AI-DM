@@ -20,6 +20,9 @@ export const ChatProvider = ({ children }) => {
     const [newAdvMessage, setNewAdvMessage] = useState("")
     const [advChatHistory, setAdvChatHistory] = useState([])
 
+    // * hub 
+    const [hubArea, setHubArea] = useState(100)
+
     const value = {
         chatHistory,
         setChatHistory,
@@ -33,6 +36,8 @@ export const ChatProvider = ({ children }) => {
         setNewAdvMessage,
         advChatHistory,
         setAdvChatHistory,
+        hubArea,
+        setHubArea,
     };
 
     return (

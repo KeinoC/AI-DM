@@ -19,7 +19,7 @@ const Chat = ({ roomId }) => {
     const [newMessage, setNewMessage] = useState("");
     const messagesRef = collection(db, "messages");
     const scrollRef = useRef(null);
-    const [chatIsOpen, setChatIsOpen] = useState(true);
+    const [chatIsOpen, setChatIsOpen] = useState(false);
 
     var currentUser = useUser();
     // console.log(currentUser.currentUser.username)
@@ -58,6 +58,7 @@ const Chat = ({ roomId }) => {
         });
 
         setNewMessage("");
+        setChatIsOpen(false);
     };
 
     useEffect(() => {
@@ -70,9 +71,9 @@ const Chat = ({ roomId }) => {
         <div className=" w-[400px] h-auto z-20 bg-slate-800 p-5 round-md bg-opacity-80">
             <button
                 onClick={toggleMinimize}
-                className="bg-purple-700 text-white px-2 py-1 rounded flex flex-end"
+                className="bg-purple-700 text-white px-2 py-1 rounded flex flex-end w-full justify-center"
             >
-                {chatIsOpen ? "Minimize" : "Maximize"}
+                {chatIsOpen ? "Minimize" : "View Chat History"}
             </button>
             {chatIsOpen && (
                 <div

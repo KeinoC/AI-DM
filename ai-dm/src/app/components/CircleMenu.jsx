@@ -7,7 +7,7 @@ import RainParticleOverlay from './Weather/rain'
 
 export default function CircleMenu() {
   return (
-    <div className="circle__page">
+    <div className="circle__page ">
 
 <RainParticleOverlay />
 

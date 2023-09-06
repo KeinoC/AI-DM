@@ -22,7 +22,7 @@ export default function Home() {
                 <div>
                     <Hub />
 
-                <div className=" fixed right-0 bottom-0 z-[50]">
+                <div className=" fixed right-0 bottom-0 z-50">
                     <Chat roomId={"Global"} />
                 </div>
 

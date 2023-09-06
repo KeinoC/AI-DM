@@ -1,13 +1,18 @@
 import React, { useRef, useEffect } from "react";
+import { useChat } from "@/app/contexts/ChatContext"
 
 function RainParticleOverlay() {
+
+    const {hubArea, setHubArea} = useChat()
     const canvasRef = useRef(null);
 
     useEffect(() => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext("2d");
-        canvas.width = window.innerWidth * 2;
+        canvas.width = window.innerWidth;
         canvas.height = window.innerHeight ;
+
+        // console.log(hubArea);
 
         let raindrops = [];
 
@@ -88,7 +93,7 @@ function RainParticleOverlay() {
     return (
         <canvas
             ref={canvasRef}
-            className="absolute top-0 left-0 w-full h-full z-50"
+            className="absolute top-0 left-0  z-20"
             style={{ pointerEvents: 'none'}}
         ></canvas>
     );
