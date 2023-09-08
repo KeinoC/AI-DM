@@ -4,8 +4,9 @@ const { USERS } = require("../utils/variables/database-vars");
 import {
     signUp as signUpWithFirebase,
     signOut as signOutWithFirebase,
-    createUser
+    createUser,
 } from "../firebase/firebase-auth";
+import { getAdventuresByUserId } from "../firebase/firebase-db-adventures";
 const { doc, getDoc } = require("firebase/firestore");
 import {
     navToMyProfile,
@@ -26,6 +27,10 @@ export const useUser = () => {
 export const UserProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null);
     const [selectedUser, setSelectedUser] = useState(null);
+    
+    // Profile Details
+    const [advUserIsIn, setAdvUserIsIn] = useState(0);
+    const [advCreatedByUser, setAdvCreatedByUser] = useState(0);
 
     // const [links, setLinks] = useState([])
 
@@ -46,15 +51,16 @@ export const UserProvider = ({ children }) => {
                     const userData = userDocSnapshot.data();
                     setCurrentUser(userData);
                 } else {
-                    console.log("user does not exist in firestore, creating a new document.")
+                    console.log(
+                        "user does not exist in firestore, creating a new document."
+                    );
                     // User does not exist in Firestore, create a new document
                     const user = {
                         uid: authUser.uid,
                         email: authUser.email,
                     };
                     // ... creates new user in firestore
-                    createFirestoreUser(user)
-
+                    createFirestoreUser(user);
                 }
             } else {
                 // Auth user is null, meaning user signed out
@@ -65,59 +71,30 @@ export const UserProvider = ({ children }) => {
         return () => unsubscribe();
     }, []);
 
-
-    // async function signIn(email, password) {
-    //     try {
-    //         const authUser = await signInWithFirebase(email, password);
-    //         console.log(authUser.uid);
-    //         debugger;
-
-    //         // Get user data from Firestore USERS collection
-    //         const userDocRef = doc(db, "users", authUser.uid);
-    //         const userDocSnapshot = await getDoc(userDocRef);
-    //         if (userDocSnapshot.exists()) {
-    //             const userData = userDocSnapshot.data();
-    //             console.log("user data: ", userData);
-    //             setCurrentUser(userData);
-    //         } else {
-    //             // User does not exist in Firestore, create a new document
-    //             const user = {
-    //                 uid: authUser.uid,
-    //                 email: email,
-    //             };
-    //             setCurrentUser(user);
-    //         }
-    //     } catch (error) {
-    //         console.error("Sign-in error:", error);
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     const unsubscribe = auth.onAuthStateChanged(async (user) => {
-    //         if (user) {
-    //             try {
-    //                 const userDocRef = doc(db, "users", user.uid); // Reference to the user document
-    //                 const userDocSnapshot = await getDoc(userDocRef); // Get the document snapshot
-
-    //                 if (userDocSnapshot.exists()) {
-    //                     const userData = userDocSnapshot.data(); // Get user data from the snapshot
-    //                     const updatedUser = { ...user, profile: userData };
-    //                     setCurrentUser(updatedUser);
-    //                     navToMyProfile();
-    //                 } else {
-    //                     console.log("User profile document does not exist.");
-    //                 }
-    //             } catch (error) {
-    //                 console.error("Error fetching user profile:", error);
-    //             }
-    //         } else {
-    //             setCurrentUser(null);
-    //             navToHome();
-    //         }
-    //     });
-
-    //     return unsubscribe;
-    // }, []);
+    // Parse profile data / current user stats
+    useEffect(() => {
+        const parseUserData = async () => {
+            try {
+                if (currentUser?.myAdventures) {
+                    setAdvUserIsIn(currentUser.myAdventures);
+                    console.log(currentUser.myAdventures);
+                }
+    
+                if (currentUser?.id) {
+                    const createdAdv = await getAdventuresByUserId(currentUser.id);
+                    setAdvCreatedByUser(createdAdv);
+                    console.log(createdAdv);
+                }
+            } catch (error) {
+                console.error("Error parsing user data: ", error);
+            }
+        };
+    
+        if (currentUser) {
+            parseUserData();
+        }
+    }, [currentUser]);  // Added dependency on currentUser
+    
 
     const signOut = async () => {
         await signOutWithFirebase();
@@ -134,6 +111,8 @@ export const UserProvider = ({ children }) => {
         signOut,
         selectedUser,
         setSelectedUser,
+        advUserIsIn,
+
         // links,
         // setLinks
         // ... Add other CRUD operations as needed

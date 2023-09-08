@@ -127,36 +127,3 @@ export const signOut = async () => {
     await auth.signOut();
     navToHome();
 }
-
-// // Password Reset
-// export const resetPassword = (email) => auth.sendPasswordResetEmail(email);
-
-// // Update Password
-// export const updatePassword = async (newPassword) => {
-//     const user = auth.currentUser;
-//     if (!user) {
-//         throw new Error("No user is signed in");
-//     }
-//     return user.updatePassword(newPassword);
-// };
-
-// CRUD Operations for the 'users' collection in Firestore
-
-// // Read user details
-// export const getUserDetails = async (uid) => {
-//     const userDoc = await db.collection("users").doc(uid).get();
-//     if (!userDoc.exists) {
-//         throw new Error("User not found");
-//     }
-//     return userDoc.data();
-// };
-
-// // Update user details
-// export const updateUserDetails = (uid, data) => {
-//     return db.collection("users").doc(uid).update(data);
-// };
-
-// // Delete user document (consider this carefully, as it's permanent!)
-// export const deleteUserDocument = (uid) => {
-//     return db.collection("users").doc(uid).delete();
-// };

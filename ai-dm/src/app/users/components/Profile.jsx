@@ -4,7 +4,7 @@ import React from 'react';
 import Top from './Top';
 import Sidebar from './Sidebar';
 // import Left from './Left';
-// import Mid from './Mid';
+import Mid from './Mid';
 // import Right from './right';
 // import Bottom from './Bottom';
 
@@ -15,6 +15,7 @@ export default function Profile() {
             <div className="w-full flex flex-col m-2">
 
             <Top />
+            <Mid />
             {/* <div>
                 <Left />
                 <Mid />

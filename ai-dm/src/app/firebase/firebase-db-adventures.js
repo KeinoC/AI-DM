@@ -499,4 +499,27 @@ export async function removePlayerFromAdventure(adventureId, identifier) {
     }
 }
 
+// ** adventure query methods **
+
+export async function getAdventuresByUserId(userId) {
+    try {
+        // Reference to the adventures collection
+        const adventuresCollection = collection(db, "adventures");
+
+        // Create a query against the collection.
+        const q = query(adventuresCollection, where("createdBy", "==", userId));
+
+        const querySnapshot = await getDocs(q);
+
+        // Convert to array of adventure objects
+        return querySnapshot.docs.map((adventure) => ({
+            id: adventure.id,
+            ...adventure.data(),
+        }));
+    } catch (error) {
+        console.error("Error getting adventures by user ID: ", error);
+        throw error;
+    }
+}
+
 // Token CRUD

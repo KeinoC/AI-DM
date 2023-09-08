@@ -53,8 +53,8 @@ export default function NavBar() {
     
     <li>
                                 <button >
-                                    <Link href="/profile">
-                                        Profile
+                                    <Link href="/users/my-profile">
+                                        My Profile
                                     </Link>
                                 </button>
                             </li>
