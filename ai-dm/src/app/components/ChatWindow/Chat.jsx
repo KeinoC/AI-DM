@@ -58,7 +58,7 @@ const Chat = ({ roomId }) => {
         });
 
         setNewMessage("");
-        setChatIsOpen(false);
+        setChatIsOpen(true);
     };
 
     useEffect(() => {
