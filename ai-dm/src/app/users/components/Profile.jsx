@@ -15,7 +15,7 @@ export default function Profile() {
             <div className="w-full flex flex-col m-2">
 
             <Top />
-            <Mid  />
+            <Mid />
             {/* <div>
                 <Left />
                 <Mid />
