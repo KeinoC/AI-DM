@@ -21,6 +21,7 @@ export const useAdventure = () => {
 
 export const AdventureProvider = ({ children }) => {
     const [currentPath, setCurrentPath] = useState("");
+    const [adventureCreator, setAdventureCreator] = useState(null)
     const [selectedAdventureId, setSelectedAdventureId] = useState("");
     const [newAdventureData, setNewAdventureData] = useState([]);
     const [allAdventures, setAllAdventures] = useState([]);
@@ -95,6 +96,8 @@ export const AdventureProvider = ({ children }) => {
         tokens,
         setTokens,
         selectedAdventureId,
+        adventureCreator,
+        setAdventureCreator,
 
     };
 

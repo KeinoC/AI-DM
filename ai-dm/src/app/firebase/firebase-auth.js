@@ -118,6 +118,21 @@ export async function getUserIdByUsername(username) {
     }
 }
 
+export async function getUserByUserId(userId) {
+    try {
+        const userDocRef = doc(db, "users", userId);  // create a reference to the user document
+        const userSnapshot = await getDoc(userDocRef); // fetch the document
+
+        if (userSnapshot.exists()) {  // check if the document actually exists
+            return { id: userSnapshot.id, ...userSnapshot.data() };  // return the user data
+        } else {
+            throw new Error("User not found");  // throw an error if the user is not found
+        }
+    } catch (error) {
+        console.error('Error fetching user by user ID: ', error);
+        throw error;  // propagate the error further
+    }
+}
 
 
 
