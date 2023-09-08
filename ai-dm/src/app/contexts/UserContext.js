@@ -25,6 +25,7 @@ export const useUser = () => {
 
 export const UserProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null);
+    const [selectedUser, setSelectedUser] = useState(null);
 
     // const [links, setLinks] = useState([])
 
@@ -63,6 +64,7 @@ export const UserProvider = ({ children }) => {
 
         return () => unsubscribe();
     }, []);
+
 
     // async function signIn(email, password) {
     //     try {
@@ -130,6 +132,8 @@ export const UserProvider = ({ children }) => {
         currentUser,
         signUp,
         signOut,
+        selectedUser,
+        setSelectedUser,
         // links,
         // setLinks
         // ... Add other CRUD operations as needed
