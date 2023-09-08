@@ -1,8 +1,9 @@
 'use client'
 import React from 'react';
-import ChatWindow from '@/app/components/ChatWindow';
+// import ChatWindow from '@/app/components/ChatWindow';
 import NavBar from '@/app/components/NavBar';
-import Grid from '@/app/adventures/all-adventures/Grid';
+// import Grid from '@/app/adventures/all-adventures/Grid';
+import Grid from '@/app/adventures/[id]/components/Grid';
 
 
 export default function WaterdeepMap() {
