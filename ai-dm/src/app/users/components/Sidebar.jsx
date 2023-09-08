@@ -22,7 +22,7 @@ export default function Sidebar() {
         },
     ];
 
-    const sideBarStyle = "left-0 flex flex-col flex-start border-2 m-2 rounded-lg";
+    const sideBarStyle = "left-0 flex flex-col flex-start border-2 m-2 rounded-lg h-[87.5vh]";
 
     return (
         <div className={`${sideBarStyle} p-2`}>

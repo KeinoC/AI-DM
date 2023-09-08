@@ -501,7 +501,7 @@ export async function removePlayerFromAdventure(adventureId, identifier) {
 
 // ** adventure query methods **
 
-export async function getAdventuresByUserId(userId) {
+export async function getAdventuresCreatedByUserId(userId) {
     try {
         // Reference to the adventures collection
         const adventuresCollection = collection(db, "adventures");

@@ -6,7 +6,10 @@ import {
     signOut as signOutWithFirebase,
     createUser,
 } from "../firebase/firebase-auth";
-import { getAdventuresByUserId } from "../firebase/firebase-db-adventures";
+import {
+    getAdventuresCreatedByUserId,
+    getAdventureById,
+} from "../firebase/firebase-db-adventures";
 const { doc, getDoc } = require("firebase/firestore");
 import {
     navToMyProfile,
@@ -27,7 +30,7 @@ export const useUser = () => {
 export const UserProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null);
     const [selectedUser, setSelectedUser] = useState(null);
-    
+
     // Profile Details
     const [advUserIsIn, setAdvUserIsIn] = useState(0);
     const [advCreatedByUser, setAdvCreatedByUser] = useState(0);
@@ -76,25 +79,32 @@ export const UserProvider = ({ children }) => {
         const parseUserData = async () => {
             try {
                 if (currentUser?.myAdventures) {
-                    setAdvUserIsIn(currentUser.myAdventures);
-                    console.log(currentUser.myAdventures);
+                    const advIds = currentUser.myAdventures;
+
+                    // Using Promise.all to fetch all adventures by their IDs in parallel
+                    const fullAdvData = await Promise.all(
+                        advIds.map((advId) => getAdventureById(advId))
+                    );
+
+                    setAdvUserIsIn(fullAdvData);
                 }
-    
+
                 if (currentUser?.id) {
-                    const createdAdv = await getAdventuresByUserId(currentUser.id);
+                    const createdAdv = await getAdventuresCreatedByUserId(
+                        currentUser.id
+                    );
                     setAdvCreatedByUser(createdAdv);
-                    console.log(createdAdv);
                 }
             } catch (error) {
                 console.error("Error parsing user data: ", error);
             }
         };
-    
+
         if (currentUser) {
             parseUserData();
         }
-    }, [currentUser]);  // Added dependency on currentUser
-    
+    }, [currentUser]);
+    // Added dependency on currentUser
 
     const signOut = async () => {
         await signOutWithFirebase();
@@ -111,6 +121,8 @@ export const UserProvider = ({ children }) => {
         signOut,
         selectedUser,
         setSelectedUser,
+        advUserIsIn,
+        advCreatedByUser,
         advUserIsIn,
 
         // links,

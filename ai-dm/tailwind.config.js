@@ -19,7 +19,11 @@ module.exports = {
       },
     },
   },
-  plugins: [require("daisyui"), require('tailwind-scrollbar'),],
+  plugins: [
+    require("daisyui"),
+    require('tailwind-scrollbar'),
+    require('@tailwindcss/aspect-ratio'),
+  ],
   daisyui: {
     themes: ['dark'],
     base: false,

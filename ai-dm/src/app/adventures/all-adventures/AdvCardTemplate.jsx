@@ -5,8 +5,8 @@ import { addPlayerToAdventure } from "@/app/firebase/firebase-db-adventures";
 import { useUser } from "@/app/contexts/UserContext";
 import { useAdventure } from "@/app/contexts/AdventureContext";
 
-export const cardDesign =
-    "bg-slate-900 border border-transparent border-2 hover:border-yellow-500 hover:border-2 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 max-w-sm mx-2 my-2";
+export const advCardDesign =
+    "aspect-[16/9] h-[30rem] bg-slate-900 border border-transparent border-2 hover:border-yellow-500 hover:border-2 rounded-lg overflow-hidden shadow-2xl hover:shadow-xl transition-all duration-300 max-w-sm mx-2 my-2";
 
 export function createAdventureCard(adventure) {
     // ****** STATES AND VARIABLES ****** ------------------------->
@@ -35,7 +35,7 @@ export function createAdventureCard(adventure) {
         <Link
             href={`/adventures/${adventure.id}`}
             key={adventure.id}
-            className={cardDesign}
+            className={advCardDesign}
         >
             <div className="overflow-hidden transform transition-transform duration-300 hover:scale-110">
                 <img
