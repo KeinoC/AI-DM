@@ -1,8 +1,7 @@
 const { initializeApp } = require("firebase/app");
 const { getFirestore, collection, getDocs, doc, setDoc } = require("firebase/firestore");
-const { getAuth } = require("firebase/auth");
+const { getAuth, browserSessionPersistence } = require("firebase/auth");
 const { getDatabase } = require("firebase/database");
-
 
 const firebaseConfig = {
     apiKey: "AIzaSyCZDLfPHplyTOzke4UfJtLCYaBJrzctJAs",
@@ -20,34 +19,11 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 const realtimeDB = getDatabase(app);
 
-// async function signIn(email, password) {
+// Set the Auth persistence to SESSION
+try {
+    auth.setPersistence(browserSessionPersistence);
+} catch (err) {
+    console.error("Could not set Auth persistence", err);
+}
 
-//     try {
-//         const authUser = await signInWithFirebase(email, password);
-//         console.log(authUser.uid);
-
-//         // Get user data from Firestore USERS collection
-//         const userDocRef = doc(db, "users", authUser.uid);
-//         const userDocSnapshot = await getDoc(userDocRef);
-
-//         if (userDocSnapshot.exists()) {
-//             const userData = userDocSnapshot.data();
-//             console.log('user data: ', userData)
-//             setCurrentUser(userData);
-//         } else {
-//             // User does not exist in Firestore, create a new document
-//             const user = {
-//                 uid: authUser.uid,
-//                 email: email,
-//             };
-//             setCurrentUser(user);
-//         }
-
-//     } catch (error) {
-//         console.error("Sign-in error:", error);
-//     }
-// };
-
-
-export { db, auth, realtimeDB, };
-
+export { db, auth, realtimeDB };
