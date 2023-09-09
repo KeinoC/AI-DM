@@ -1,12 +1,8 @@
 "use client";
 import React from "react";
-
 import Top from "./Top";
 import Sidebar from "./Sidebar";
-// import Left from './Left';
-// import Mid from "./Mid";
-// import Right from './right';
-// import Bottom from './Bottom';
+import Mid from "./Mid";
 
 export default function Profile() {
     return (
@@ -14,7 +10,7 @@ export default function Profile() {
             <Sidebar />
             <div className="w-full flex flex-col m-2">
                 <Top />
-                {/* <Mid /> */}
+                <Mid />
             </div>
         </div>
     );

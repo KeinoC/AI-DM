@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useUser } from "@/app/contexts/UserContext";
 import { createAdventureCard } from "@/app/adventures/all-adventures/AdvCardTemplate";
-import { advCardDesign } from "@/app/adventures/all-adventures/AdvCardTemplate";
+// import { advCardDesign } from "@/app/adventures/all-adventures/AdvCardTemplate";
 
 export default function Mid() {
     const [activeTab, setActiveTab] = useState("profileInfo");
