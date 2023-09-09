@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useUser } from "@/app/contexts/UserContext";
 import { createAdventureCard } from "@/app/adventures/all-adventures/AdvCardTemplate";
 // import { advCardDesign } from "@/app/adventures/all-adventures/AdvCardTemplate";
@@ -14,7 +14,7 @@ export default function Mid2() {
             case "profileInfo":
                 return <div>Profile Information</div>;
             case "adventuresIn":
-                return <div className='flex flex-wrap  gap-7 pt-10 max-w-screen-xl overflow-hidden overflow-y-scroll'>{advUserIsIn.map((adv) => createAdventureCard(adv))}</div>
+                return <div className='flex flex-wrap  gap-7 pt-10 max-w-screen-xl overflow-hidden overflow-y-scroll'>{advUserIsIn?.map((advIn) => createAdventureCard(advIn))}</div>
             case "adventuresCreated":
                 return <div className='flex w-full flex-wrap  gap-7 pt-10 max-w-screen-xl overflow-hidden overflow-y-scroll'>{advCreatedByUser.map((adv) => createAdventureCard(adv))}</div>
             default:

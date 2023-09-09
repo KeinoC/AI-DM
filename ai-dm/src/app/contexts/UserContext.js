@@ -1,6 +1,9 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { auth, db } from "../firebase/firebase-config";
 const { USERS } = require("../utils/variables/database-vars");
+import { initializeUserStatus, cleanUpUserStatus } from "../firebase/firebase-online-status"; // Added this line
+
+
 import {
     signUp as signUpWithFirebase,
     signOut as signOutWithFirebase,
@@ -53,6 +56,9 @@ export const UserProvider = ({ children }) => {
                 if (userDocSnapshot.exists()) {
                     const userData = userDocSnapshot.data();
                     setCurrentUser(userData);
+
+                         // Initialize user status to "online"
+        initializeUserStatus();
                 } else {
                     console.log(
                         "user does not exist in firestore, creating a new document."
@@ -68,6 +74,8 @@ export const UserProvider = ({ children }) => {
             } else {
                 // Auth user is null, meaning user signed out
                 setCurrentUser(null);
+                // Cleanup
+                cleanUpUserStatus();
             }
         });
 

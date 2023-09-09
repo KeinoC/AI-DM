@@ -21,7 +21,7 @@ export const useAdventure = () => {
 
 export const AdventureProvider = ({ children }) => {
     const [currentPath, setCurrentPath] = useState("");
-    const [adventureCreator, setAdventureCreator] = useState(null)
+    const [adventureCreator, setAdventureCreator] = useState(null);
     const [selectedAdventureId, setSelectedAdventureId] = useState("");
     const [newAdventureData, setNewAdventureData] = useState([]);
     const [allAdventures, setAllAdventures] = useState([]);
@@ -47,23 +47,46 @@ export const AdventureProvider = ({ children }) => {
 
     const pathname = usePathname();
 
+    // useEffect(() => {
+    //     console.log(pathname);
+    //     if (pathname) {
+    //         console.log(pathname)
+    //         const pathnameString = pathname.toString();
+    //         const pathSegments = pathnameString?.split("/");
+    //         const idSegment =
+    //             pathSegments[pathSegments?.length - 1].toLowerCase();
+    //         // console.log(idSegment);
+    //         setSelectedAdventureId(idSegment);
+    //     }
+    // }, [pathname]);
+
     useEffect(() => {
-        console.log(pathname);
-        if (pathname) {
-            // console.log(pathname)
-            const pathnameString = pathname.toString();
-            const pathSegments = pathnameString?.split("/");
-            const idSegment =
-                pathSegments[pathSegments?.length - 1].toLowerCase();
-            // console.log(idSegment);
-            setSelectedAdventureId(idSegment);
-        }
-    }, []);
+        const fetchData = async () => {
+            try {
+                if (pathname) {
+                    const pathnameString = pathname.toString();
+                    if (typeof pathnameString === "string") {
+                        const pathSegments = pathnameString.split("/");
+                        const idSegment =
+                            pathSegments[pathSegments.length - 1].toLowerCase();
+                        setSelectedAdventureId(idSegment);
+                    }
+                }
+            } catch (error) {
+                console.error("An error occurred:", error);
+            }
+        };
+
+        fetchData();
+    }, [pathname]);
 
     useEffect(() => {
         const fetchCurrentAdventure = async () => {
             if (selectedAdventureId) {
-                const adventureData = await getRealtimeAdventure(selectedAdventureId, setSelectedAdventure);
+                const adventureData = await getRealtimeAdventure(
+                    selectedAdventureId,
+                    setSelectedAdventure
+                );
 
                 adventureData && setSelectedAdventure(adventureData);
                 // console.log(selectedAdventure);
@@ -72,17 +95,16 @@ export const AdventureProvider = ({ children }) => {
         fetchCurrentAdventure();
     }, [selectedAdventureId]);
 
-
     useEffect(() => {
         const fetchTokens = async () => {
             if (selectedAdventure) {
-                const tokensData = await selectedAdventure.tokens
+                const tokensData = await selectedAdventure.tokens;
                 console.log(tokensData);
                 tokensData && setTokens(tokensData);
             }
         };
         fetchTokens();
-    },[selectedAdventure])
+    }, [selectedAdventure]);
 
     const value = {
         allAdventures,
@@ -98,7 +120,6 @@ export const AdventureProvider = ({ children }) => {
         selectedAdventureId,
         adventureCreator,
         setAdventureCreator,
-
     };
 
     return (
