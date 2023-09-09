@@ -9,7 +9,6 @@ export default function NavBar() {
 
     return (
         <div className="flex gap-4 top-0 w-full relative z-[100] bg-slate-500 backdrop-blur-sm bg-opacity-20 h-15 justify-between p-4">
-            
             <div className="flex">
                 <a href="/" className="btn btn-ghost normal-case text-xl mr-4">
                     AI D&D
@@ -30,9 +29,9 @@ export default function NavBar() {
 
             {currentUser && (
                 <div className="flex flex-row justify-around">
-                    <div className="dropdown dropdown-end">
+                    <div className="group relative">
                         <div className="flex gap-2 items-center">
-                            <h2>{currentUser.username}</h2>
+                            <h2>Sup, {currentUser.username}!</h2>
                             <label
                                 tabIndex={0}
                                 className="btn btn-ghost btn-circle avatar"
@@ -48,11 +47,10 @@ export default function NavBar() {
 
                         <ul
                             tabIndex={0}
-                            className="relative z-10 mt-3 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+                            className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-0 absolute z-10 mt-3 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
                         >
-    
-    <li>
-                                <button >
+                            <li>
+                                <button className="opacity-0 group-hover:opacity-100 duration-200 delay-100">
                                     <Link href="/users/my-profile">
                                         My Profile
                                     </Link>
@@ -60,31 +58,15 @@ export default function NavBar() {
                             </li>
 
                             <li>
-                                <button >
+                                <button className="opacity-0 group-hover:opacity-100 duration-300 delay-100">
                                     <Link href="/routes/grimoire">
                                         Grimoire
                                     </Link>
                                 </button>
                             </li>
 
-                            {/* <li>
-                                <button >
-                                    <Link href="/routes/maps/waterdeep">
-                                        Waterdeep
-                                    </Link>
-                                </button>
-                            </li> */}
-
-                            {/* <li>
-                                <button >
-                                    <Link href="/routes/gameboard">
-                                        Gameboard Testing
-                                    </Link>
-                                </button>
-                            </li> */}
-                            
                             <li>
-                                <button >
+                                <button className="opacity-0 group-hover:opacity-100 duration-400 delay-100">
                                     <Link href="/adventures">
                                         Explore Adventures
                                     </Link>
@@ -92,7 +74,7 @@ export default function NavBar() {
                             </li>
 
                             <li>
-                                <button >
+                                <button className="opacity-0 group-hover:opacity-100 duration-500 delay-100">
                                     <Link href="/adventures/shenanigans">
                                         Current Adventure
                                     </Link>
@@ -100,12 +82,13 @@ export default function NavBar() {
                             </li>
 
                             <li>
-                                <button className="text-red-300 hover:font-bold hover:text-red-400" onClick={() => signOut()}>
+                                <button
+                                    className="opacity-0 group-hover:opacity-100 duration-600 delay-100 text-red-300 hover:font-bold hover:text-red-400"
+                                    onClick={() => signOut()}
+                                >
                                     Sign Out
                                 </button>
                             </li>
-
-
                         </ul>
                     </div>
                 </div>
