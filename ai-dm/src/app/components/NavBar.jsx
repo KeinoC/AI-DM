@@ -1,11 +1,16 @@
 "use client";
-import React, { useContext } from "react";
+import React, {useEffect } from "react";
 import Link from "next/link"; // Import Link from next/link
 import { UserContext, useUser } from "../contexts/UserContext"; // Assuming this file is in the same directory
 import { signOut } from "../firebase/firebase-auth";
+import { NavBarOnlineStatus } from "../users/components/OnlineStatuses";
 
 export default function NavBar() {
-    const { currentUser } = useUser();
+    const { currentUser, userStatusArray } = useUser();
+
+    // console.log(NavBarOnlineStatus)
+
+
 
     return (
         <div className="flex gap-4 top-0 w-full relative z-[100] bg-slate-500 backdrop-blur-sm bg-opacity-20 h-15 justify-between p-4">
@@ -13,6 +18,9 @@ export default function NavBar() {
                 <a href="/" className="btn btn-ghost normal-case text-xl mr-4">
                     AI D&D
                 </a>
+            </div>
+            <div className="flex">
+                <NavBarOnlineStatus />
             </div>
 
             {!currentUser && (

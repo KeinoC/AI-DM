@@ -2,6 +2,7 @@ import { auth, db } from "./firebase-config";
 import { navToMapNamed, navToHome } from "../utils/helpers/navigation";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { cleanUpUserStatus } from "./firebase-online-status";
 const {
     doc,
     setDoc,
@@ -145,5 +146,6 @@ export async function getUserByUserId(userId) {
 // Sign Out
 export const signOut = async () => {
     await auth.signOut();
+    await cleanUpUserStatus()
     navToHome();
 }

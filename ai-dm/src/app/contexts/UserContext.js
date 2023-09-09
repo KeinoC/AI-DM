@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { auth, db } from "../firebase/firebase-config";
 const { USERS } = require("../utils/variables/database-vars");
-import { initializeUserStatus, cleanUpUserStatus } from "../firebase/firebase-online-status"; // Added this line
+import { initializeUserStatus, cleanUpUserStatus, getUserStatuses } from "../firebase/firebase-online-status";
 
 
 import {
@@ -37,6 +37,7 @@ export const UserProvider = ({ children }) => {
     // Profile Details
     const [advUserIsIn, setAdvUserIsIn] = useState(0);
     const [advCreatedByUser, setAdvCreatedByUser] = useState(0);
+    const [userStatusArray, setUserStatusArray] = useState([]);
 
     // const [links, setLinks] = useState([])
 
@@ -44,6 +45,21 @@ export const UserProvider = ({ children }) => {
         const user = await signUpWithFirebase(email, password);
         // TODO: create firestore instance and set currentUser to it
     };
+    // user statuses
+
+    useEffect(() => {
+        const fetchUserStatuses = async () => {
+            try {
+                const fetchedUserStatuses = await getUserStatuses();
+                console.log(fetchedUserStatuses)
+                setUserStatusArray(fetchedUserStatuses);
+            } catch (error) {
+                console.error("Failed to fetch user statuses:", error);
+            }
+        };
+        fetchUserStatuses();
+    }, [])
+
 
     // auth change
 
@@ -58,24 +74,22 @@ export const UserProvider = ({ children }) => {
                     setCurrentUser(userData);
 
                          // Initialize user status to "online"
-        initializeUserStatus();
-                } else {
-                    console.log(
-                        "user does not exist in firestore, creating a new document."
-                    );
-                    // User does not exist in Firestore, create a new document
-                    const user = {
-                        uid: authUser.uid,
-                        email: authUser.email,
-                    };
-                    // ... creates new user in firestore
-                    createFirestoreUser(user);
-                }
-            } else {
-                // Auth user is null, meaning user signed out
-                setCurrentUser(null);
-                // Cleanup
-                cleanUpUserStatus();
+                        } else {
+                            console.log(
+                                "user does not exist in firestore, creating a new document."
+                                );
+                                // User does not exist in Firestore, create a new document
+                                const user = {
+                                    uid: authUser.uid,
+                                    email: authUser.email,
+                                };
+                                // ... creates new user in firestore
+                                createFirestoreUser(user);
+                            }
+                            initializeUserStatus();
+                        } else {
+                            cleanUpUserStatus();
+                            setCurrentUser(null);
             }
         });
 
@@ -115,6 +129,7 @@ export const UserProvider = ({ children }) => {
     // Added dependency on currentUser
 
     const signOut = async () => {
+        cleanUpUserStatus()
         await signOutWithFirebase();
         setCurrentUser(null);
         if (!currentUser) {
@@ -132,6 +147,7 @@ export const UserProvider = ({ children }) => {
         advUserIsIn,
         advCreatedByUser,
         advUserIsIn,
+        userStatusArray,
 
         // links,
         // setLinks
