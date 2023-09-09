@@ -27,7 +27,7 @@ export function createAdventureCard(adventure) {
         try {
             const advCreator = getUserByUserId(uId);
             setAdventureCreator(advCreator);
-            console.log("advcreatorset", advCreator)
+            // console.log("advcreatorset", advCreator)
         } catch (error) {
             console.error(error)
         }

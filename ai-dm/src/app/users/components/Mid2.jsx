@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useUser } from "@/app/contexts/UserContext";
 import { createAdventureCard } from "@/app/adventures/all-adventures/AdvCardTemplate";
+import { renderProfileSummary } from "@/app/users/components/ProfileSummaryTemplate";
 // import { advCardDesign } from "@/app/adventures/all-adventures/AdvCardTemplate";
 
 export default function Mid2() {
@@ -9,10 +10,12 @@ export default function Mid2() {
 
     console.log(advUserIsIn, advCreatedByUser);
 
+
+
     const renderContent = () => {
         switch (activeTab) {
             case "profileInfo":
-                return <div>Profile Information</div>;
+                return <div> {renderProfileSummary(currentUser)} </div>;
             case "adventuresIn":
                 return <div className='flex flex-wrap  gap-7 pt-10 max-w-screen-xl overflow-hidden overflow-y-scroll'>{advUserIsIn?.map((advIn) => createAdventureCard(advIn))}</div>
             case "adventuresCreated":
