@@ -1,5 +1,4 @@
 import React from 'react';
-import { CenterTW } from './profile.utils';
 import { FaHome, FaMap, FaBook } from 'react-icons/fa';  // Import new icons
 
 export default function Sidebar() {

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { CenterTW } from "./profile.utils";
 import { useUser } from "@/app/contexts/UserContext";
 import { createAdventureCard } from "@/app/adventures/all-adventures/AdvCardTemplate";
 import { advCardDesign } from "@/app/adventures/all-adventures/AdvCardTemplate";
@@ -24,7 +23,7 @@ export default function Mid() {
     };
 
     return (
-        <div className={`${CenterTW} border-2 h-2/3 my-4 w-full rounded-lg overflow-hidden overflow-y-scroll`}>
+        <div className={`border-2 h-2/3 my-4 w-full rounded-lg overflow-hidden overflow-y-scroll`}>
             <div className="tabs">
                 <a
                     className={`tab tab-lifted ${
