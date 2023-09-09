@@ -1,6 +1,6 @@
 import { auth, db } from "./firebase-config";
 import { navToMapNamed, navToHome } from "../utils/helpers/navigation";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
 const {
     doc,
@@ -49,6 +49,11 @@ export const signUp = async (email, password, username) => {
             password
         );
         const user = userCredential.user;
+        if (user) {
+            await updateProfile(user, {
+                displayName: username,
+            });
+        }
         // Check if email already exists in the 'users' collection
         if (user) {
             const id = user?.uid;
