@@ -2,7 +2,7 @@
 import React from "react";
 import Top from "./Top";
 import Sidebar from "./Sidebar";
-import Mid from "./Mid";
+import Mid2 from "./Mid2";
 
 export default function Profile() {
     return (
@@ -10,7 +10,7 @@ export default function Profile() {
             <Sidebar />
             <div className="w-full flex flex-col m-2">
                 <Top />
-                <Mid />
+                <Mid2 />
             </div>
         </div>
     );
