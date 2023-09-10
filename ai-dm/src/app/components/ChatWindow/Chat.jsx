@@ -3,6 +3,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { useUser } from "../../contexts/UserContext";
 // import { db } from '../../firebase/firebase-config'
 import { db } from "./firebase";
+import { limit } from "firebase/firestore";
+
 
 import {
     collection,
@@ -32,7 +34,8 @@ const Chat = ({ roomId }) => {
         const queryMessages = query(
             messagesRef,
             where("roomId", "==", roomId),
-            orderBy("createdAt")
+            orderBy("createdAt"),
+            limit(10) // limit initial fetch to 10
         );
         const unsuscribe = onSnapshot(queryMessages, (snapshot) => {
             let messages = [];

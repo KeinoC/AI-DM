@@ -7,15 +7,9 @@ export function NavBarOnlineStatus() {
     const { userStatusArray } = useUser();
     const count = userStatusArray.length;
 
-    // Check if userStatusArray is an array and not empty
-    if (!Array.isArray(userStatusArray) || userStatusArray.length === 0) {
-        console.error("userStatusArray should be a non-empty array. Received:", userStatusArray);
-        return null;
-    }
-
     return (
         <div>
-            { 
+            { userStatusArray.length < 1 &&
                 userStatusArray.map((user, index) => {
                     console.log(user)
                     return (

@@ -39,7 +39,7 @@ export const getUserStatuses = async () => {
     const snapshot = await get(userStatusDatabaseRef);
     const value = snapshot.val();
 
-    const userStatusArray = [];
+    const userStatusArray = []
 
     for (const uid in value) {
         if (value.hasOwnProperty(uid)) {
@@ -50,7 +50,7 @@ export const getUserStatuses = async () => {
             });
         }
     }
-console.log(userStatusArray)
+// console.log(userStatusArray)
     return userStatusArray;
 };
 
