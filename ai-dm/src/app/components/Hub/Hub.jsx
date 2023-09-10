@@ -69,7 +69,7 @@ export default function Hub() {
                                 : "https://tinyurl.com/aidmprofileimg"
                         }
                     />
-                    <div class="absolute top-0 right-0 h-3 w-3 rounded-full bg-green-500 border-2 border-slate-600 shadow-2xl"></div>
+                    <div className="absolute top-0 right-0 h-3 w-3 rounded-full bg-green-500 border-2 border-slate-600 shadow-2xl"></div>
                 </div>
                 <div className="h-[5vh] text-xs text-slate-300 flex flex-col justify-start w-[20vh] pl-5 ">
                 <p className="font-medium">{user.username}</p>

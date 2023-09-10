@@ -4,6 +4,7 @@ import { useUser } from "../../contexts/UserContext";
 // import { db } from '../../firebase/firebase-config'
 import { db } from "./firebase";
 import { limit } from "firebase/firestore";
+import { formatShortDateAndTime } from "@/app/utils/helpers/timestamp";
 
 
 import {
@@ -23,6 +24,8 @@ const Chat = ({ roomId }) => {
     const scrollRef = useRef(null);
     const [chatIsOpen, setChatIsOpen] = useState(false);
 
+    // console.log(messages)
+
     var currentUser = useUser();
     // console.log(currentUser.currentUser.username)
 
@@ -34,7 +37,7 @@ const Chat = ({ roomId }) => {
         const queryMessages = query(
             messagesRef,
             where("roomId", "==", roomId),
-            orderBy("createdAt"),
+            orderBy("createdAt", "desc"),
             limit(10) // limit initial fetch to 10
         );
         const unsuscribe = onSnapshot(queryMessages, (snapshot) => {
@@ -43,12 +46,11 @@ const Chat = ({ roomId }) => {
                 messages.push({ ...doc.data(), id: doc.id });
             });
             // console.log(messages);
-            setMessages(messages);
+            setMessages(messages.reverse());
         });
 
         return () => unsuscribe();
     }, [roomId]);
-
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -57,9 +59,10 @@ const Chat = ({ roomId }) => {
             message: newMessage,
             createdAt: serverTimestamp(),
             username: currentUser.currentUser.username,
+            profileImage: currentUser.currentUser.profileImage,
             roomId,
         });
-
+        console.log("message sent successfully")
         setNewMessage("");
         setChatIsOpen(true);
     };
@@ -104,6 +107,9 @@ const Chat = ({ roomId }) => {
                                         <span className="font-medium text-xs text-slate-400">
                                             {message.username}
                                         </span>
+                                    <span className="text-[.6rem] mr-5 font-thin">
+                                        {formatShortDateAndTime(message.createdAt) && formatShortDateAndTime(message.createdAt)}
+                                    </span>
                                     </div>
                                     <li className=" list-none mt-1 text-xs text-slate-300 break-words">
                                         {message.message}
