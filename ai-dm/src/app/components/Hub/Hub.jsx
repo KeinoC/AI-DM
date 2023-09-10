@@ -14,30 +14,38 @@ export default function Hub() {
     const { setUserStatusArray, userStatusArray } = useUser();
     const [combinedUsers, setCombinedUsers] = useState([]);
 
-    // const renderOnlineUsers = () => {
-    //     return userStatusArray.map((user) => {
-    //         const id = user.uid
-    //         const fetchUser = () => {
-    //             getUserByUserId(id)
-    //             .then((fetchedUser) => {
-    //                 console.log(fetchedUser)
 
-    //             }
-    //             )
-    //         }
+    // pardon this junk, just a self reminder to track online status better.
+    // import { getDatabase, ref, onValue, push, onDisconnect, set, serverTimestamp } from "firebase/database";
+// Since I can connect from multiple devices or browser tabs, we store each connection instance separately
+// any time that connectionsRef's value is null (i.e. has no children) I am offline
+// const db = getDatabase();
+// const myConnectionsRef = ref(db, 'users/joe/connections');
 
-    //         return (
-    //             <div key={user.uid}>
-    //                 {/* <p>{user.name}</p> */}
-    //                 <p>{user.status}</p>
-    //             </div>
-    //         );
-    //     });
-    // };
+// // stores the timestamp of my last disconnect (the last time I was seen online)
+// const lastOnlineRef = ref(db, 'users/joe/lastOnline');
+
+// const connectedRef = ref(db, '.info/connected');
+// onValue(connectedRef, (snap) => {
+//   if (snap.val() === true) {
+//     // We're connected (or reconnected)! Do anything here that should happen only if online (or on reconnect)
+//     const con = push(myConnectionsRef);
+
+//     // When I disconnect, remove this device
+//     onDisconnect(con).remove();
+
+//     // Add this device to my connections list
+//     // this value could contain info about the device or a timestamp too
+//     set(con, true);
+
+//     // When I disconnect, update the last time I was seen online
+//     onDisconnect(lastOnlineRef).set(serverTimestamp());
+//   }
+// });
+
+    //** Online Status useEffect */
 
     useEffect(() => {
-        // Your existing logic to populate userStatusArray
-        // After that's done, you can fetch all users
 
         const fetchAllUsers = async () => {
             const allFetchedUsers = await Promise.all(
@@ -60,9 +68,9 @@ export default function Hub() {
     const renderOnlineUsers = () => {
         return combinedUsers.map((user, index) => (
             <div className="flex flex-row-reverse  w-auto m-2 p-0 bg-slate-800 bg-opacity-60 rounded-full " key={index}>
-                <div className="relative h-[5vh] w-[5vh] rounded-full shadow-2xl">
+                <div className="relative h-[7vh] w-[7vh] rounded-full shadow-2xl">
                     <img
-                        className="rounded-full h-[5vh]"
+                        className="rounded-full h-[7vh]"
                         src={
                             user.profileImage
                                 ? user.ProfileImage
@@ -71,7 +79,7 @@ export default function Hub() {
                     />
                     <div className="absolute top-0 right-0 h-3 w-3 rounded-full bg-green-500 border-2 border-slate-600 shadow-2xl"></div>
                 </div>
-                <div className="h-[5vh] text-xs text-slate-300 flex flex-col justify-start w-[20vh] pl-5 ">
+                <div className="h-[7vh] text-xs text-slate-300 flex flex-col justify-center w-[20vh] pl-5 overflow-hidden ">
                 <p className="font-medium">{user.username}</p>
                 <p className={`${user.status==="online" ? "text-green-500" : "font-thin"}`}>{user.status}</p>
                 <p className="font-thin">{timeAgo(user.lastSeen)}</p>
@@ -80,7 +88,6 @@ export default function Hub() {
         ));
     };
 
-    //** Online Status useEffect */
     useEffect(() => {
         const userStatusDatabaseRef = ref(realtimeDB, "users/status");
 
@@ -114,6 +121,7 @@ export default function Hub() {
         };
     }, []);
 
+    //** map zoom logic */
     const [zoom, setZoom] = useState(100); // 100% by default
     const hubRef = useRef(null);
 
@@ -202,7 +210,7 @@ export default function Hub() {
                     className="z-10"
                 />
 
-                <div className="OnlineUsers fixed right-10 top-[35vh] z-10">
+                <div className="OnlineUsers max-h-[30vh] fixed right-10 top-[25vh] z-10 overflow-y-scroll">
                     {renderOnlineUsers()}
                 </div>
             </div>
