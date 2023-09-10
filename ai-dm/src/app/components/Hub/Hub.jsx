@@ -96,14 +96,14 @@ export default function Hub() {
                         <p className="font-thin">{timeAgo(user.lastSeen)}</p>
                     </div>
                 </div>
-                <div className="buttonsContainer opacity-0 group-hover:opacity-100 transition-all duration-300 h-[7vh] text-slate-200 justify-between m-2">
-                    <button className="h-full w-[7vh] shadow-sm rounded-2xl bg-purple-700 text-xs mx-2 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-0 translate-x-12 transition-all duration-500 ease-in-out delay-200">
+                <div className="buttonsContainer opacity-0 group-hover:opacity-100 transition-all duration-600 h-[7vh] text-slate-200 justify-between m-2">
+                    <button className="h-full w-[7vh] shadow-sm rounded-full bg-purple-700 text-xs mx-2 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-0 translate-x-10 transition-all duration-600 ease-in-out delay-200">
                         Preview Profile
                     </button>
-                    <button className="h-full w-[7vh] shadow-sm rounded-2xl bg-purple-700 text-xs mx-2 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-0 translate-x-12 transition-all duration-600 ease-in-out delay-300">
+                    {/* <button className="h-full w-[7vh] shadow-sm rounded-2xl bg-purple-700 text-xs mx-2 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-0 translate-x-30 transition-all duration-600 ease-in-out delay-300">
                         View Full Profile
-                    </button>
-                    <button className="h-full w-[7vh] shadow-sm rounded-2xl bg-purple-700 text-xs mx-2 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-0 translate-x-12 transition-all duration-700 ease-in-out delay-400">
+                    </button> */}
+                    <button className="h-full w-[7vh] shadow-sm rounded-full bg-purple-700 text-xs mx-2 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-0 translate-x-20 transition-all duration-600 ease-in-out delay-200">
                         Send Message
                     </button>
                 </div>
