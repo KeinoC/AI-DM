@@ -45,7 +45,7 @@ export default function LandingPage() {
                     }}
                     exit={{ opacity: 0, x: "100vw", delay: 0 }}
                 >
-                    A Big AI.Table Energy Production
+                    An AI.Table Top Production
                 </motion.div>
 
                 <motion.div
