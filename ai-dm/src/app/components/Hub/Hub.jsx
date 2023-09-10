@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import HubZoom from "./HubZoom";
-import OnlineStatus from "./OnlineStatus";
+import OnlineStatus from "./OnlineStatus"; // i had the status bubbles built here but was getting error so i built it in Hub, it should work because HubZoom works just fine
+import ProfilePreviewModal from "./ProfilePreviewModal";
 import CircleMenu from "../CircleMenu";
 import { useChat } from "@/app/contexts/ChatContext";
 import { useUser } from "@/app/contexts/UserContext";
@@ -14,39 +15,37 @@ export default function Hub() {
     const { setUserStatusArray, userStatusArray } = useUser();
     const [combinedUsers, setCombinedUsers] = useState([]);
 
-
     // pardon this junk, just a self reminder to track online status better.
     // import { getDatabase, ref, onValue, push, onDisconnect, set, serverTimestamp } from "firebase/database";
-// Since I can connect from multiple devices or browser tabs, we store each connection instance separately
-// any time that connectionsRef's value is null (i.e. has no children) I am offline
-// const db = getDatabase();
-// const myConnectionsRef = ref(db, 'users/joe/connections');
+    // Since I can connect from multiple devices or browser tabs, we store each connection instance separately
+    // any time that connectionsRef's value is null (i.e. has no children) I am offline
+    // const db = getDatabase();
+    // const myConnectionsRef = ref(db, 'users/joe/connections');
 
-// // stores the timestamp of my last disconnect (the last time I was seen online)
-// const lastOnlineRef = ref(db, 'users/joe/lastOnline');
+    // // stores the timestamp of my last disconnect (the last time I was seen online)
+    // const lastOnlineRef = ref(db, 'users/joe/lastOnline');
 
-// const connectedRef = ref(db, '.info/connected');
-// onValue(connectedRef, (snap) => {
-//   if (snap.val() === true) {
-//     // We're connected (or reconnected)! Do anything here that should happen only if online (or on reconnect)
-//     const con = push(myConnectionsRef);
+    // const connectedRef = ref(db, '.info/connected');
+    // onValue(connectedRef, (snap) => {
+    //   if (snap.val() === true) {
+    //     // We're connected (or reconnected)! Do anything here that should happen only if online (or on reconnect)
+    //     const con = push(myConnectionsRef);
 
-//     // When I disconnect, remove this device
-//     onDisconnect(con).remove();
+    //     // When I disconnect, remove this device
+    //     onDisconnect(con).remove();
 
-//     // Add this device to my connections list
-//     // this value could contain info about the device or a timestamp too
-//     set(con, true);
+    //     // Add this device to my connections list
+    //     // this value could contain info about the device or a timestamp too
+    //     set(con, true);
 
-//     // When I disconnect, update the last time I was seen online
-//     onDisconnect(lastOnlineRef).set(serverTimestamp());
-//   }
-// });
+    //     // When I disconnect, update the last time I was seen online
+    //     onDisconnect(lastOnlineRef).set(serverTimestamp());
+    //   }
+    // });
 
     //** Online Status useEffect */
 
     useEffect(() => {
-
         const fetchAllUsers = async () => {
             const allFetchedUsers = await Promise.all(
                 userStatusArray.map((user) => getUserByUserId(user.uid))
@@ -67,22 +66,46 @@ export default function Hub() {
 
     const renderOnlineUsers = () => {
         return combinedUsers.map((user, index) => (
-            <div className="flex flex-row-reverse  w-auto m-2 p-0 bg-slate-800 bg-opacity-60 rounded-full " key={index}>
-                <div className="relative h-[7vh] w-[7vh] rounded-full shadow-2xl">
-                    <img
-                        className="rounded-full h-[7vh]"
-                        src={
-                            user.profileImage
-                                ? user.ProfileImage
-                                : "https://tinyurl.com/aidmprofileimg"
-                        }
-                    />
-                    <div className="absolute top-0 right-0 h-3 w-3 rounded-full bg-green-500 border-2 border-slate-600 shadow-2xl"></div>
+            <div className="group flex flex-row-reverse ">
+                <div
+                    className="statusBubble flex flex-row-reverse  w-auto m-2 p-0 bg-slate-800 bg-opacity-60 rounded-full hover:bg-opacity-80 transition-bg-opacity duration-[1s] ease-out cursor-pointer trace-border "
+                    key={index}
+                >
+                    <div className="relative h-[7vh] w-[7vh] rounded-full shadow-2xl">
+                        <img
+                            className="rounded-full h-[7vh]"
+                            src={
+                                user.profileImage
+                                    ? user.ProfileImage
+                                    : "https://tinyurl.com/aidmprofileimg"
+                            }
+                        />
+                        <div className="absolute top-0 right-0 h-3 w-3 rounded-full bg-green-500 border-2 border-slate-600 shadow-2xl"></div>
+                    </div>
+                    <div className="h-[7vh] text-xs text-slate-300 flex flex-col justify-center w-[20vh] pl-5 overflow-hidden ">
+                        <p className="font-medium">{user.username}</p>
+                        <p
+                            className={`${
+                                user.status === "online"
+                                    ? "text-green-500"
+                                    : "font-thin"
+                            }`}
+                        >
+                            {user.status}
+                        </p>
+                        <p className="font-thin">{timeAgo(user.lastSeen)}</p>
+                    </div>
                 </div>
-                <div className="h-[7vh] text-xs text-slate-300 flex flex-col justify-center w-[20vh] pl-5 overflow-hidden ">
-                <p className="font-medium">{user.username}</p>
-                <p className={`${user.status==="online" ? "text-green-500" : "font-thin"}`}>{user.status}</p>
-                <p className="font-thin">{timeAgo(user.lastSeen)}</p>
+                <div className="buttonsContainer opacity-0 group-hover:opacity-100 transition-all duration-300 h-[7vh] text-slate-200 justify-between m-2">
+                    <button className="h-full w-[7vh] shadow-sm rounded-2xl bg-purple-700 text-xs mx-2 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-0 translate-x-12 transition-all duration-500 ease-in-out delay-200">
+                        Preview Profile
+                    </button>
+                    <button className="h-full w-[7vh] shadow-sm rounded-2xl bg-purple-700 text-xs mx-2 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-0 translate-x-12 transition-all duration-600 ease-in-out delay-300">
+                        View Full Profile
+                    </button>
+                    <button className="h-full w-[7vh] shadow-sm rounded-2xl bg-purple-700 text-xs mx-2 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-0 translate-x-12 transition-all duration-700 ease-in-out delay-400">
+                        Send Message
+                    </button>
                 </div>
             </div>
         ));
