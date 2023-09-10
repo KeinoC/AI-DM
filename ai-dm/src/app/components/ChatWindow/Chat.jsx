@@ -71,7 +71,7 @@ const Chat = ({ roomId }) => {
     }, [messages]);
 
     return (
-        <div className=" w-[400px] h-auto z-20 bg-slate-800 p-5 round-md bg-opacity-80">
+        <div className=" w-[400px] h-auto z-20 bg-slate-800 p-5 round-md bg-opacity-60">
             <button
                 onClick={toggleMinimize}
                 className="bg-purple-700 text-white px-2 py-1 rounded flex flex-end w-full justify-center"

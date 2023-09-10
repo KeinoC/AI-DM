@@ -6,6 +6,7 @@ import {
     initializeUserStatus,
     cleanUpUserStatus,
     getUserStatuses,
+    updateUserStatus,
 } from "../firebase/firebase-online-status";
 
 import {
@@ -101,6 +102,15 @@ export const UserProvider = ({ children }) => {
 
     // * status update
 
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((authUser) => {
+            if (authUser) {
+                // ... your existing logic
+                initializeUserStatus();
+            }
+        });
+        return () => unsubscribe();
+    }, []);
 
     // useEffect(() => {
     //     const userStatusDatabaseRef = ref(realtimeDB, "users/status");

@@ -22,6 +22,7 @@ export const updateUserStatus = (status) => {
         onDisconnect(userStatusDatabaseRef).set({
             status: "offline",
             lastSeen: new Date().toISOString(),
+            username: auth.currentUser?.displayName,
         });
     } catch (error) {
         console.error("Error in updateUserStatus:", error);

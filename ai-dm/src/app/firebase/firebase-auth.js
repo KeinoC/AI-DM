@@ -9,6 +9,7 @@ const {
     Timestamp,
     collection,
     getDocs,
+    getDoc,
     addDoc,
     updateDoc,
     getFirestore,
