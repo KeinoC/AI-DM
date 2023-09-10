@@ -1,6 +1,6 @@
 import React from "react";
 
-const HubSidebar = ({ zoom, handleZoom, incrementZoom, decrementZoom }) => {
+const HubZoom = ({ zoom, handleZoom, incrementZoom, decrementZoom }) => {
     return (
         <div className="fixed top-1/4 right-4 transform -translate-y-1/2 bg-purple-700 bg-opacity-20 p-2 rounded-lg shadow-md z-50">
             <button
@@ -27,4 +27,4 @@ const HubSidebar = ({ zoom, handleZoom, incrementZoom, decrementZoom }) => {
     );
 };
 
-export default HubSidebar;
+export default HubZoom;

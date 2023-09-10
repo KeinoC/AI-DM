@@ -1,14 +1,53 @@
 import React, { useState, useRef, useEffect } from "react";
-import HubSidebar from "./HubSidebar";
+import HubZoom from "./HubZoom";
 import CircleMenu from "../CircleMenu";
 import { useChat } from "@/app/contexts/ChatContext";
+import { useUser } from "@/app/contexts/UserContext";
+import { ref, onValue } from "firebase/database";
+import { updateUserStatus } from "@/app/firebase/firebase-online-status";
+import { realtimeDB } from "@/app/firebase/firebase-config";
 
 export default function Hub() {
+    const { setUserStatusArray, userStatusArray } = useUser();
+
+    // useEffect(() => {
+    //     const userStatusDatabaseRef = ref(realtimeDB, "users/status");
+
+    //     // Setup a listener for any changes on /users/status path
+    //     const userStatusListener = onValue(
+    //         userStatusDatabaseRef,
+    //         (snapshot) => {
+    //             const value = snapshot.val();
+    //             const updatedUserStatusArray = [];
+    //             // console.log(value)
+
+    //             for (const uid in value) {
+    //                 if (value.hasOwnProperty(uid)) {
+    //                     // console.log(uid)
+    //                     const userData = value[uid];
+    //                     updatedUserStatusArray.push({
+    //                         uid,
+    //                         ...userData,
+    //                     });
+    //                 }
+    //             }
+    //             console.log(updatedUserStatusArray);
+
+    //             setUserStatusArray(updatedUserStatusArray);
+    //         }
+    //     );
+
+    //     return () => {
+    //         // Detach the listener when the component is unmounted
+    //         userStatusListener();
+    //     };
+    // }, []);
+
     const [zoom, setZoom] = useState(100); // 100% by default
     const hubRef = useRef(null);
 
     const handleMouseDown = (e) => {
-      console.log("MouseDown")
+        console.log("MouseDown");
         const pos = {
             left: hubRef.current.scrollLeft,
             top: hubRef.current.scrollTop,
@@ -24,7 +63,7 @@ export default function Hub() {
         };
 
         const handleMouseUp = () => {
-          console.log("MouseUp")
+            console.log("MouseUp");
             document.removeEventListener("mousemove", handleMouseMove);
             document.removeEventListener("mouseup", handleMouseUp);
         };
@@ -46,33 +85,32 @@ export default function Hub() {
         setZoom((prevZoom) => Math.max(prevZoom - 5));
     };
 
-    const {hubArea, setHubArea} = useChat()
-
+    const { hubArea, setHubArea } = useChat();
 
     function handleGlobalHubMeasurement() {
-        const zoomRate = zoom / 100
-        const clientWidth = hubRef.current?.clientWidth
-        const clientHeight = hubRef.current?.clientHeight
-        const widthInVw = clientWidth / window.innerWidth * 100 
-        const heightInVh = clientHeight / window.innerHeight * 100 *2
+        const zoomRate = zoom / 100;
+        const clientWidth = hubRef.current?.clientWidth;
+        const clientHeight = hubRef.current?.clientHeight;
+        const widthInVw = (clientWidth / window.innerWidth) * 100;
+        const heightInVh = (clientHeight / window.innerHeight) * 100 * 2;
 
         const hubMeasurement = {
-            width: widthInVw.toString()+"vw",
-            height: heightInVh.toString()+"vh",
-        }
-        setHubArea(hubMeasurement)
-        console.log("HUB measurement: ", hubMeasurement)
-        console.log(zoom)
+            width: widthInVw.toString() + "vw",
+            height: heightInVh.toString() + "vh",
+        };
+        setHubArea(hubMeasurement);
+        console.log("HUB measurement: ", hubMeasurement);
+        console.log(zoom);
     }
 
     // console.log(hubMeasurement)
 
     useEffect(() => {
-        handleGlobalHubMeasurement() 
-    },[])
+        handleGlobalHubMeasurement();
+    }, []);
 
     const bgStyle = {
-        backgroundSize: `${zoom}%`, 
+        backgroundSize: `${zoom}%`,
         backgroundImage:
             "url('https://inkarnate-api-as-production.s3.amazonaws.com/FAmSMkNscB2pHJJLnPB5So')",
         backgroundRepeat: "no-repeat",
@@ -80,7 +118,6 @@ export default function Hub() {
         height: `${hubArea.height}`,
         // minWidth: "100vw",
     };
-   
 
     return (
         <div>
@@ -88,14 +125,20 @@ export default function Hub() {
                 Smart Tabletop
             </div> */}
             <CircleMenu className="z-10" />
-            <HubSidebar
+            <HubZoom
                 zoom={zoom}
                 handleZoom={handleZoom}
                 incrementZoom={incrementZoom}
                 decrementZoom={decrementZoom}
                 className="z-10"
             />
-            <div className="overflow-auto relative" style={{ width: `${hubArea.width}`, height: `${hubArea.height}` }}>
+            <div
+                className="overflow-auto relative"
+                style={{
+                    width: `${hubArea.width}`,
+                    height: `${hubArea.height}`,
+                }}
+            >
                 <div
                     ref={hubRef}
                     // onMouseDown={handleMouseDown}

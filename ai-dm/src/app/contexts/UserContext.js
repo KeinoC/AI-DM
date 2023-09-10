@@ -1,8 +1,12 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { auth, db } from "../firebase/firebase-config";
+import { auth, db, realtimeDB } from "../firebase/firebase-config";
 const { USERS } = require("../utils/variables/database-vars");
-import { initializeUserStatus, cleanUpUserStatus, getUserStatuses } from "../firebase/firebase-online-status";
-
+import { onValue, ref } from "firebase/database";
+import {
+    initializeUserStatus,
+    cleanUpUserStatus,
+    getUserStatuses,
+} from "../firebase/firebase-online-status";
 
 import {
     signUp as signUpWithFirebase,
@@ -51,15 +55,15 @@ export const UserProvider = ({ children }) => {
         const fetchUserStatuses = async () => {
             try {
                 const fetchedUserStatuses = await getUserStatuses();
-                console.log(fetchedUserStatuses)
+                console.log(fetchedUserStatuses);
                 setUserStatusArray(fetchedUserStatuses);
+                console.log(fetchedUserStatuses);
             } catch (error) {
                 console.error("Failed to fetch user statuses:", error);
             }
         };
         fetchUserStatuses();
-    }, [])
-
+    }, []);
 
     // auth change
 
@@ -73,29 +77,65 @@ export const UserProvider = ({ children }) => {
                     const userData = userDocSnapshot.data();
                     setCurrentUser(userData);
 
-                         // Initialize user status to "online"
-                        } else {
-                            console.log(
-                                "user does not exist in firestore, creating a new document."
-                                );
-                                // User does not exist in Firestore, create a new document
-                                const user = {
-                                    uid: authUser.uid,
-                                    email: authUser.email,
-                                };
-                                // ... creates new user in firestore
-                                createFirestoreUser(user);
-                            }
-                            initializeUserStatus();
-                        } else {
-                            cleanUpUserStatus();
-                            setCurrentUser(null);
+                } else {
+                    console.log(
+                        "user does not exist in firestore, creating a new document."
+                    );
+                    // User does not exist in Firestore, create a new document
+                    const user = {
+                        uid: authUser.uid,
+                        email: authUser.email,
+                    };
+                    // ... creates new user in firestore
+                    createFirestoreUser(user);
+                }
+                // initializeUserStatus();
+            } else {
+                // cleanUpUserStatus();
+                setCurrentUser(null);
             }
         });
 
         return () => unsubscribe();
     }, []);
 
+    // * status update
+
+
+    // useEffect(() => {
+    //     const userStatusDatabaseRef = ref(realtimeDB, "users/status");
+        
+    //     // Setup a listener for any changes on /users/status path
+    //     const userStatusListener = onValue(userStatusDatabaseRef, (snapshot) => {
+    //         const value = snapshot.val();
+    //         const updatedUserStatusArray = [];
+    //         // console.log(value)
+    
+    //         for (const uid in value) {
+    //             if (value.hasOwnProperty(uid)) {
+    //                 // console.log(uid)
+    //                 const userData = value[uid];
+    //                 updatedUserStatusArray.push({
+    //                     uid,
+    //                     ...userData,
+    //                 });
+    //             }
+    //         }
+    //         console.log(updatedUserStatusArray)
+            
+    //         setUserStatusArray(updatedUserStatusArray);
+    //     });
+    
+    //     return () => {
+    //         // Detach the listener when the component is unmounted
+    //         userStatusListener();
+    //     };
+    // }, []);
+    
+
+    // ...
+
+    
     // Parse profile data / current user stats
     useEffect(() => {
         const parseUserData = async () => {
@@ -129,7 +169,7 @@ export const UserProvider = ({ children }) => {
     // Added dependency on currentUser
 
     const signOut = async () => {
-        cleanUpUserStatus()
+        cleanUpUserStatus();
         await signOutWithFirebase();
         setCurrentUser(null);
         if (!currentUser) {
@@ -148,6 +188,7 @@ export const UserProvider = ({ children }) => {
         advCreatedByUser,
         advUserIsIn,
         userStatusArray,
+        setUserStatusArray,
 
         // links,
         // setLinks

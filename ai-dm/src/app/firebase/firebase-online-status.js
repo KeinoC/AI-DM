@@ -2,8 +2,6 @@
 import { ref, get, set, onDisconnect } from "firebase/database";
 import { auth, realtimeDB } from "./firebase-config";
 
-console.log(auth);
-
 export const updateUserStatus = (status) => {
     try {
         const uid = auth.currentUser.uid;
@@ -73,7 +71,3 @@ export const cleanUpUserStatus = () => {
     }
 };
 
-
-
-
-// No event listeners or idle timer needed
