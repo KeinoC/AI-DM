@@ -68,7 +68,7 @@ export default function Hub() {
         return combinedUsers.map((user, index) => (
             <div className="group flex flex-row-reverse ">
                 <div
-                    className="statusBubble flex flex-row-reverse  w-auto m-2 p-0 bg-slate-800 bg-opacity-60 rounded-full hover:bg-opacity-80 transition-bg-opacity duration-[1s] ease-out cursor-pointer trace-border "
+                    className="statusBubble flex flex-row-reverse  w-auto m-2 p-0 bg-slate-800 bg-opacity-60 rounded-full hover:bg-opacity-90 transition-bg-opacity duration-[1s] ease-out cursor-pointer trace-border "
                     key={index}
                 >
                     <div className="relative h-[7vh] w-[7vh] rounded-full shadow-2xl">
@@ -80,15 +80,16 @@ export default function Hub() {
                                     : "https://tinyurl.com/aidmprofileimg"
                             }
                         />
-                        <div className="absolute top-0 right-0 h-3 w-3 rounded-full bg-green-500 border-2 border-slate-600 shadow-2xl"></div>
+                        <div className={`${user.status === "online" ? "bg-green-500" : "bg-slate-400"}
+                        absolute top-0 right-0 h-5 w-5 rounded-full border-2 shadow-2xl  border-slate-600`}></div>
                     </div>
-                    <div className="h-[7vh] text-xs text-slate-300 flex flex-col justify-center w-[20vh] pl-5 overflow-hidden ">
+                    <div className="h-[7vh] text-xs text-slate-300 flex flex-col justify-center w-[20vh] pl-5 overflow-hidden">
                         <p className="font-medium">{user.username}</p>
                         <p
                             className={`${
                                 user.status === "online"
                                     ? "text-green-500"
-                                    : "font-thin"
+                                    : "text-slate-300 font-thin"
                             }`}
                         >
                             {user.status}
