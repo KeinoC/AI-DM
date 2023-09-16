@@ -13,7 +13,6 @@ import {
     updateRealtimeAdventure,
 } from "@/app/firebase/firebase-db-adventures";
 
-
 const Grid = () => {
     const { selectedAdventure, selectedAdventureId, tokens, setTokens } =
         useAdventure();
@@ -27,7 +26,6 @@ const Grid = () => {
     // const adventureId = selectedAdventure?.id
 
     const [selectedToken, setSelectedToken] = useState("");
-
 
     // console.log(tokens);
     // Character Token Functions
@@ -45,10 +43,9 @@ const Grid = () => {
     const handleDragStart = (event, x, y) => {
         event.dataTransfer.setData("text/plain", JSON.stringify({ x, y }));
         event.target.position({ x, y });
-        
-      };
+    };
 
-console.log(tokens)
+    console.log(tokens);
 
     const handleDragOver = (event) => {
         event.preventDefault();
@@ -71,11 +68,9 @@ console.log(tokens)
             // setTokens(updatedTokens);
             setSelectedToken(
                 updatedTokens.find((token) => token.id === selectedToken.id)
-                
             );
         }
     };
-
 
     // Dynamic Grid Style Function
     const gridContainerStyle = {
@@ -83,13 +78,13 @@ console.log(tokens)
         gridTemplateColumns: `repeat(${gridWidth}, 1fr)`,
         display: "relative",
     };
-    
+
     // Grid Tiles
     const renderGrid = () => {
-      const grid = [];
-      for (let y = 0; y < gridHeight; y++) {
-        for (let x = 0; x < gridWidth; x++) {
-          const playersHere = getPlayersAtPosition(x, y, tokens);
+        const grid = [];
+        for (let y = 0; y < gridHeight; y++) {
+            for (let x = 0; x < gridWidth; x++) {
+                const playersHere = getPlayersAtPosition(x, y, tokens);
 
                 grid.push(
                     // Grid Tiles

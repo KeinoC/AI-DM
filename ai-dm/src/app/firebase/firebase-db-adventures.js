@@ -162,29 +162,29 @@ export async function getTokensData(adventureId, setTokens) {
     }
 }
 
-export async function getRealtimeAdventure(adventureId, setSelectedAdventure) {
-    try {
-        // Create a reference to the tokens data in the Realtime Database
-        const adventureRef = ref(
-            realtimeDB,
-            `adventures/${adventureId}`
-        );
+// export async function getRealtimeAdventure(adventureId, setSelectedAdventure) {
+//     try {
+//         // Create a reference to the tokens data in the Realtime Database
+//         const adventureRef = ref(
+//             realtimeDB,
+//             `adventures/${adventureId}`
+//         );
 
-        // Fetch the data
-        const snapshot = await get(adventureRef);
+//         // Fetch the data
+//         const snapshot = await get(adventureRef);
 
-        // Check if data exists
-        if (snapshot.exists()) {
-            setSelectedAdventure(snapshot.val());
-            // return snapshot.val(); // Returns the tokens data
-        } else {
-            return
-        }
-    } catch (error) {
-        console.error("Error fetching adventure data", error);
-        throw error;
-    }
-}
+//         // Check if data exists
+//         if (snapshot.exists()) {
+//             setSelectedAdventure(snapshot.val());
+//             // return snapshot.val(); // Returns the tokens data
+//         } else {
+//             return
+//         }
+//     } catch (error) {
+//         console.error("Error fetching adventure data", error);
+//         throw error;
+//     }
+// }
 
 export const listenRealtimeTokens = (adventureId, setTokens) => {
     const dbRef = ref(
@@ -224,10 +224,36 @@ export const listenRealtimeTokens = (adventureId, setTokens) => {
 
 // Initialize your Realtime Database
 
+export async function getRealtimeAdventure(adventureId) {
+    try {
+        const gameStateRef = ref(
+            realtimeDB, // Make sure you've initialized this variable somewhere
+            `/adventures/${adventureId}`
+        );
+
+        const snapshot = await get(gameStateRef);
+
+        if (snapshot.exists()) {
+            console.log("Adventure game-state retrieved successfully from Realtime Database");
+            return snapshot.val();
+        } else {
+            console.log("No data available for this adventure ID");
+            return null;
+        }
+    } catch (error) {
+        console.error(
+            "Error retrieving adventure's game-state from Realtime Database:",
+            error
+        );
+        throw error;
+    }
+}
+
+
 export async function updateRealtimeAdventure(adventureId, gameState) {
     try {
         // Log for debugging
-        console.log(JSON.stringify(gameState, null, 2));
+        // console.log(JSON.stringify(gameState, null, 2));
 
         // Clean the object
         const cleanGameState = JSON.parse(JSON.stringify(gameState));
@@ -235,7 +261,7 @@ export async function updateRealtimeAdventure(adventureId, gameState) {
         // Update Realtime Database
         const gameStateRef = ref(
             realtimeDB,
-            `/adventure/${adventureId}`
+            `/adventures/${adventureId}`
         );
         await set(gameStateRef, cleanGameState);
 

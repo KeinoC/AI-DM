@@ -56,9 +56,9 @@ export const UserProvider = ({ children }) => {
         const fetchUserStatuses = async () => {
             try {
                 const fetchedUserStatuses = await getUserStatuses();
-                console.log(fetchedUserStatuses);
+                // console.log(fetchedUserStatuses);
                 setUserStatusArray(fetchedUserStatuses);
-                console.log(fetchedUserStatuses);
+                // console.log(fetchedUserStatuses);
             } catch (error) {
                 console.error("Failed to fetch user statuses:", error);
             }

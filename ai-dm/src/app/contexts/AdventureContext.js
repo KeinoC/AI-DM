@@ -99,8 +99,10 @@ export const AdventureProvider = ({ children }) => {
         const fetchTokens = async () => {
             if (selectedAdventure) {
                 const tokensData = await selectedAdventure.tokens;
-                console.log(tokensData);
-                tokensData && setTokens(tokensData);
+                // console.log(tokensData);
+                if (tokensData) {
+                    setTokens(tokensData)
+                }
             }
         };
         fetchTokens();

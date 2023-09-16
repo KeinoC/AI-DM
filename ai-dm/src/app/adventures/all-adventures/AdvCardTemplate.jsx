@@ -21,7 +21,7 @@ export function createAdventureCard(adventure) {
     } = useAdventure();
 
     const adventureCreatorId = adventure.createdBy;
-    console.log(adventureCreatorId);
+    // console.log(adventureCreatorId);
 
     const parseAdventureCreator = (uId) => {
         try {
