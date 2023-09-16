@@ -10,6 +10,18 @@ import {
     updateRealtimeAdventure,
 } from "@/app/firebase/firebase-db-adventures";
 
+
+// TODO: 
+//* [ ]listeners for full adventure in realtime
+    //  Mini Listeners to reduce data usage
+    //--- [ ] tokens only
+    //--- [ ] turn order
+//* [ ] Character sheets to inport token as, all data from sheet will transfer to token array.
+    //--- [ ] brainstorm a way to track buffs. I'm thinking an array of objects tempEffects = [{name: 'Bless', duration: 10, effect: '1d4'}]
+    //--- [ ] ** Priority over the above, just adding icons. make a drop down of items to add to a token, and have that in an array of icons via react icons or svgs.
+//* [ ] Movement Logic refinement
+    //--- [ ] character speed to determine character range.
+
 export default function GridV2() {
     const params = useParams();
     const adventureId = params.id;
