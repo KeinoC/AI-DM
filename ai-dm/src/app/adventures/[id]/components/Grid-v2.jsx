@@ -34,6 +34,8 @@ export default function GridV2() {
         }
     }, []);
 
+
+
     const generateGridBackground = () => {
         return {
             backgroundSize: `${gridSize.length}px ${gridSize.width}px`,

@@ -189,7 +189,7 @@ export async function getTokensData(adventureId, setTokens) {
 export const listenRealtimeTokens = (adventureId, setTokens) => {
     const dbRef = ref(
         realtimeDB,
-        `adventures/${adventureId}/game-state/tokens`
+        `adventures/${adventureId}/tokens`
     );
     const dbQuery = realtimeQuery(dbRef, limitToLast(1));
 
