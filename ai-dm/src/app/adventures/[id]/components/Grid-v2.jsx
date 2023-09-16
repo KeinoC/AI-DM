@@ -3,6 +3,7 @@ import { useUser } from "@/app/contexts/UserContext";
 import { useAdventure } from "@/app/contexts/AdventureContext";
 import { useParams } from "next/navigation";
 import Draggable from "react-draggable";
+import ReactDOM from 'react-dom';
 import { getAdventureById } from "@/app/firebase/firebase-db-adventures";
 import {
     getRealtimeAdventure,
@@ -13,8 +14,11 @@ export default function GridV2() {
     const params = useParams();
     const adventureId = params.id;
     const [adventure, setAdventure] = useState({});
-    const [gridSize, setGridSize] = useState({ length: 40, width: 40 });
-
+    const [gridSize, setGridSize] = useState({ length: 50, width: 50 });
+    const [turnStats, setTurnStats] = useState({
+        isTurn: true,
+        moved: 0,
+    });
 
     useEffect(() => {
         try {
@@ -34,30 +38,74 @@ export default function GridV2() {
         return {
             backgroundSize: `${gridSize.length}px ${gridSize.width}px`,
             backgroundImage: `
-        linear-gradient(to right, grey 1px, transparent 1px),
-        linear-gradient(to bottom, grey 1px, transparent 1px)
       `,
         };
     };
 
+    const handleDragStart = (e, data) => {
+        console.log("Drag started:", data);
+    };
+
+    const handleDragOver = (e, data) => {
+        console.log("Dragging:", data);
+    };
+
+    const handleDragDrop = async (e, data) => {
+        // const data = e
+        // Your drag drop logic here
+        console.log("Drag stopped:", data);
+
+        // Update token position in the adventure state
+        const newTokens = adventure?.tokens.map((token) => {
+            console.log(data)
+            if (token.id.toString() === data?.node.id) {
+                return {
+                    ...token,
+                    position: {
+                        x: data.x,
+                        y: data.y,
+                    },
+                };
+            }
+            return token;
+        });
+
+        const updatedAdventure = { ...adventure, tokens: newTokens };
+        setAdventure(updatedAdventure);
+
+        // save updated state to the server
+        console.log('updating realtime with adventure data. ')
+        await updateRealtimeAdventure(adventureId, updatedAdventure);
+    };
+
+
+    const handleTokenMove = (e, data) => {
+        console.log("Token moved:", data);
+      };
+
+
     const renderTokens = () => {
         const tokens = adventure.tokens;
-        console.log(tokens);
+        console.log(adventure);
 
         return tokens?.map((token) => {
-            console.log("here1");
-            console.log(token);
             return (
                 <Draggable
+                    key={token.id}
                     // handle=".handle"/
+                    // bounds={{ top: -240, left: -240, right: 240, bottom: 240 }}
                     defaultPosition={{
-                        x: token.position.x * 40,
-                        y: token.position.y * 40,
+                        x: token.position.x,
+                        y: token.position.y,
                     }}
-                    grid={[40, 40]}
+                    // grid={[50, 50]}
+                    onStart={handleDragStart}
+                    onDrag={handleDragOver}
+                    onStop={handleDragDrop}
                 >
-                    <div className="cursor-grab box handle absolute z-50">
-                        <img src={token.img} className="w-10 h-10 z-50" />
+                    <div id={token.id}  className="cursor-grab box handle absolute z-50 w-[50px] h-[50px] pm-0 flex flex-col items-center ">
+                        <img id={token.id} src={token.img} className="w-[50px] h-[50px] z-50 pm-0" />
+                        <div className="font-thin text-xs">{token?.name}</div>
                     </div>
                 </Draggable>
             );
@@ -66,7 +114,6 @@ export default function GridV2() {
 
     return (
         <div className="border rounded-md h-full w-full">
-            Grid v2
             <div
                 style={generateGridBackground()}
                 className="overflow-hidden w-full h-full relative"
