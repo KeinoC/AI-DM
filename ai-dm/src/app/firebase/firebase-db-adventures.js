@@ -225,16 +225,28 @@ export const listenRealtimeTokens = (adventureId, setTokens) => {
 // Initialize your Realtime Database
 
 export async function getRealtimeAdventure(adventureId) {
+
+    if (!adventureId) {
+        throw new Error("No adventure ID");
+    }
+
     try {
-        const gameStateRef = ref(
+        const adventureRef = ref(
             realtimeDB, // Make sure you've initialized this variable somewhere
             `/adventures/${adventureId}`
         );
+        console.log(`adventures/${adventureId}`)
 
-        const snapshot = await get(gameStateRef);
+        console.log('adventure ref: ', adventureRef)
 
+        console.log("before snapshot")
+        const snapshot = await get(adventureRef);
+        console.log(snapshot.val())
+        console.log("before return of snapshot value")
+        console.log(snapshot.exists())
         if (snapshot.exists()) {
             console.log("Adventure game-state retrieved successfully from Realtime Database");
+            // callback(snapshot.val());
             return snapshot.val();
         } else {
             console.log("No data available for this adventure ID");
