@@ -17,6 +17,8 @@ import {
     orderBy,
 } from "firebase/firestore";
 
+
+
 const Chat = ({ roomId }) => {
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
@@ -33,6 +35,7 @@ const Chat = ({ roomId }) => {
     const toggleMinimize = () => {
         setChatIsOpen(!chatIsOpen);
     }
+
     useEffect(() => {
         const queryMessages = query(
             messagesRef,
@@ -51,6 +54,8 @@ const Chat = ({ roomId }) => {
 
         return () => unsuscribe();
     }, [roomId]);
+
+    
     const handleSubmit = async (event) => {
         event.preventDefault();
 
