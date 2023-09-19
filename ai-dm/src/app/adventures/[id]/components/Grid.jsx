@@ -21,9 +21,11 @@ import {
 
 
 const Grid = (selectedAdventure) => {
+
   const [gridWidth, setGridWidth] = useState(15);
   const [gridHeight, setGridHeight] = useState(15);
   const [mapImage, setMapImage] = useState("https://i.imgur.com/ppIn5BV.jpg");
+
   const adventureId = selectedAdventure.selectedAdventure.id
   const [selectedToken, setSelectedToken] = useState("")
   const [tokens, setTokens] = useState(selectedAdventure.selectedAdventure?.tokens)
@@ -35,11 +37,32 @@ const Grid = (selectedAdventure) => {
     const unsubscribe = onSnapshot(queryMessages, (snapshot) => {
         snapshot.forEach((doc) => {
             setTokens(doc.data()["tokens"])
+            setGridWidth(doc.data()["map_width"])
+            setGridHeight(doc.data()["map_height"])
+            setMapImage(doc.data()["map_image_url"])
         });
     });
 
     return () => unsubscribe();
-  });
+  }, [tokens]);
+
+
+  const updateMapFields = async (newGridHeight, newGridWidth, newMapImage) => {
+    if (selectedAdventure.selectedAdventure.name != undefined) {
+        const docRef = doc(db, "adventures", String(selectedAdventure.selectedAdventure.id));
+    
+        try {
+        await updateDoc(docRef, {
+            map_height: newGridHeight,
+            map_width: newGridWidth,
+            map_image_url: newMapImage
+        });
+        console.log('map successfully updated!');
+        } catch (error) {
+        console.error('Error updating : ', error);
+        }
+    }
+  };
 
 
   const updateTokensField = async (updatedTokens) => {
@@ -161,8 +184,9 @@ const Grid = (selectedAdventure) => {
         gridHeight={gridHeight} setGridHeight={setGridHeight} 
         mapImage={mapImage} setMapImage={setMapImage}
         tokens={tokens} setTokens={setTokens}
-        selectedAdventure={selectedAdventure} />
-
+        selectedAdventure={selectedAdventure} 
+        updateMap={updateMapFields}
+        />
     </div>
   );
 };

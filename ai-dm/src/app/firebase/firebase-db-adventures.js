@@ -356,6 +356,9 @@ export async function createAdventure(adventureData) {
             createdBy: auth.currentUser.uid,
             players: [],
             tokens: [],
+            map_height: 20,
+            map_width: 20,
+            map_image_url: ""
         });
 
         navToFullRoute(`./adventures/${newAdventureRef.id}`);
