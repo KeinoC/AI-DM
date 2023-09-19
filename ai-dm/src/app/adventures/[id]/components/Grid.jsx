@@ -1,27 +1,20 @@
 import React, {useState, useEffect } from 'react';
 import GridToolbar from './GridToolbar';
 import './grid.css'
-
 import { db } from '@/app/components/ChatWindow/firebase';
-import { limit } from "firebase/firestore";
-import { formatShortDateAndTime } from "@/app/utils/helpers/timestamp";
-
-
+import { useUser } from '@/app/contexts/UserContext';
 import {
     collection,
-    addDoc,
     where,
-    serverTimestamp,
     onSnapshot,
     query,
-    orderBy,
     updateDoc,
     doc
 } from "firebase/firestore";
 
 
 const Grid = (selectedAdventure) => {
-
+  const { currentUser, userStatusArray } = useUser();
   const [gridWidth, setGridWidth] = useState(15);
   const [gridHeight, setGridHeight] = useState(15);
   const [mapImage, setMapImage] = useState("https://i.imgur.com/ppIn5BV.jpg");
@@ -60,6 +53,45 @@ const Grid = (selectedAdventure) => {
         console.log('map successfully updated!');
         } catch (error) {
         console.error('Error updating : ', error);
+        }
+    }
+  };
+
+  const AddUserToken = async (tokenName, tokenImageUrl) => {
+    if (tokenName == "" || tokenImageUrl == "") return
+
+    if (selectedAdventure.selectedAdventure.name != undefined) {
+        const docRef = doc(db, "adventures", String(selectedAdventure.selectedAdventure.id));
+    
+        try {
+            let newTokens = tokens
+            newTokens.push({"user": currentUser.username, "position": {"x": 9, "y": 5}, "name": tokenName, "img": tokenImageUrl, id: tokens.length+1})
+            console.log(newTokens)
+        await updateDoc(docRef, {
+            tokens: newTokens
+        });
+        console.log('token successfully updated!');
+        } catch (error) {
+        console.error('Error updating token: ', error);
+        }
+    }
+  };
+
+
+  const RemoveUserToken = async (tokenId) => {
+    if (tokenId == "") return
+
+    if (selectedAdventure.selectedAdventure.name != undefined) {
+        const docRef = doc(db, "adventures", String(selectedAdventure.selectedAdventure.id));
+        try {
+            const newTokens = tokens.filter(token => token.id !== tokenId);
+
+            await updateDoc(docRef, {
+                tokens: newTokens
+        });
+        console.log('token successfully updated!');
+        } catch (error) {
+        console.error('Error updating token: ', error);
         }
     }
   };
@@ -183,9 +215,11 @@ const Grid = (selectedAdventure) => {
         gridWidth={gridWidth} setGridWidth={setGridWidth} 
         gridHeight={gridHeight} setGridHeight={setGridHeight} 
         mapImage={mapImage} setMapImage={setMapImage}
-        tokens={tokens} setTokens={setTokens}
         selectedAdventure={selectedAdventure} 
         updateMap={updateMapFields}
+        AddUserToken={AddUserToken}
+        RemoveUserToken={RemoveUserToken}
+        tokens={tokens}
         />
     </div>
   );

@@ -1,31 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import { useAdventure } from '@/app/contexts/AdventureContext'
-import { testRealtimeGet } from '@/app/firebase/firebase-db-adventures'
-
 import { FaDiceD20 } from 'react-icons/fa'
 import { BiMapAlt } from 'react-icons/bi'
 import { GiEvilMinion } from 'react-icons/gi'
 import { LuSettings2 } from 'react-icons/lu'
 
 
-export default function GridToolbar({gridWidth, setGridWidth, gridHeight, setGridHeight, mapImage, setMapImage, selectedAdventure, updateMap}) { // << removed tokens and set tokens from props, trying global version from context
+export default function GridToolbar({gridWidth, setGridWidth, gridHeight, setGridHeight, mapImage, setMapImage, selectedAdventure, updateMap, AddUserToken, RemoveUserToken, tokens}) { // << removed tokens and set tokens from props, trying global version from context
 
   const [showTools, setShowTools] = useState(false)
   const [toolsClass, setToolsClass] = useState("hidden")
   const [players, _] = useState(selectedAdventure?.selectedAdventure?.players)
-  const { tokens, setTokens } = useAdventure()
   const adventureId = selectedAdventure?.selectedAdventure?.id
 
-  
-// useEffect(() => {
-//   const updateTokens =  async () => {
-//     const tokensData = await testRealtimeGet(selectedAdventure?.selectedAdventure?.id, setTokens)
-//     // setTokens(tokensData)
-//     // console.log("token set successfully in grid toolbar:", tokensData)
-//   }
-//   updateTokens()
-// },[])
 
+  const [tokenName, setTokenName] = useState("")
+  const [tokenImageUrl, setTokenImageUrl] = useState("")
+  
 
   const handleWidthChange = (e) => {
     setGridWidth(parseInt(e.target.value));
@@ -35,8 +26,11 @@ export default function GridToolbar({gridWidth, setGridWidth, gridHeight, setGri
     setGridHeight(parseInt(e.target.value));
   };
 
-  const handleMapChange = (e) => {
-    setMapImage(e.target.value)
+  const handleTokenChange = () => {
+    setShowTools(!showTools)
+    AddUserToken(tokenName, tokenImageUrl); 
+    setTokenImageUrl(""); 
+    setTokenName("")
   }
 
   const handleShowTools = () => {
@@ -117,26 +111,29 @@ export default function GridToolbar({gridWidth, setGridWidth, gridHeight, setGri
                 <div key={tokenObj.id}>
                   <span className="inline-block w-[5rem] mb-2" >
                     {tokenObj.name}</span>
-                  <span className="cursor-pointer">Edit </span>
+                  {/* <span className="cursor-pointer">Edit </span> */}
                   &nbsp;
-                  <span className="cursor-pointer"> X </span>
+                  <span onClick={() => RemoveUserToken(tokenObj.id)} className="cursor-pointer"> Delete </span>
                   <br />
                 </div>
               )
             })}
 
-            <button className="bg-red-500 px-2 border-2 mb-8 border-white rounded-md">Add New Token </button><br />
-            
             {/* New Token Form */}
+
             <div className="border-2 border-white rounded-md p-4">
+
               <span>Character Name </span>
-              <input type="text" className="mb-4" placeholder=" Charcter Name" /><br />
+              <input value={tokenName} onChange={(e) => setTokenName(e.target.value)} type="text" className="mb-4" placeholder=" Charcter Name" /><br />
 
               <span>Token Image URL </span>
-              <input type="text" className="mb-4" placeholder=" image.png" /><br />
+              <input value={tokenImageUrl} onChange={(e) => setTokenImageUrl(e.target.value)} type="text" className="mb-4" placeholder=" image.png" /><br />
 
-              <span>User </span>
-              <select name="dog-names" id="dog-names"> 
+              <button onClick={() => handleTokenChange()} className="bg-red-500 px-2 border-2 mb-8 border-white rounded-md w-full">Add New Token </button>
+
+
+              {/* <span>User </span> */}
+              {/* <select name="dog-names" id="dog-names"> 
                 <option value="null">Host Only</option>
                   {players?.map((playersObj) => {
                     return (
@@ -145,7 +142,7 @@ export default function GridToolbar({gridWidth, setGridWidth, gridHeight, setGri
                         </option>
                     )
                   })}
-              </select>
+              </select> */}
 
             </div>
             
