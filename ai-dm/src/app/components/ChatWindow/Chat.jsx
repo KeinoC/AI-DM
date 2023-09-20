@@ -50,6 +50,7 @@ const Chat = ({ roomId }) => {
             });
             // console.log(messages);
             setMessages(messages.reverse());
+            console.log("getting messages.")
         });
 
         return () => unsuscribe();
