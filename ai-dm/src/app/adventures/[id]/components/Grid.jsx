@@ -184,7 +184,7 @@ const Grid = (selectedAdventure) => {
               }
 
               {/* Grid Lines + Drop */}
-              {!playersHere.length && (
+              {!playersHere && (
                 <div
                   className="w-10 h-10 opacity-25 border-white border-[1px] absolute"
                   onDragStart={(e) => handleDragStart(e, x, y)}

@@ -8,8 +8,8 @@ import Grid from '@/app/adventures/[id]/components/Grid';
 export default function LoginPage() {
     return (
       <>
-        <br />Gameboard<br /><br />
-        <Grid />
+        {/* <br />Gameboard<br /><br /> */}
+        {/* <Grid /> */}
       </>
     );
 }
