@@ -1,16 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useUser } from "@/app/contexts/UserContext";
-import { useAdventure } from "@/app/contexts/AdventureContext";
 import { useParams } from "next/navigation";
 import Draggable from "react-draggable";
-import ReactDOM from "react-dom";
 import { realtimeDB } from "@/app/firebase/firebase-config";
 import { ref, on, onValue, set } from "firebase/database";
-import { getAdventureById } from "@/app/firebase/firebase-db-adventures";
-import {
-    getRealtimeAdventure,
-    updateRealtimeAdventure,
-} from "@/app/firebase/firebase-db-adventures";
+
 
 // TODO:
 //* [ ]listeners for full adventure in realtime
