@@ -41,7 +41,7 @@ const Chat = ({ roomId }) => {
             messagesRef,
             where("roomId", "==", roomId),
             orderBy("createdAt", "desc"),
-            limit(10) // limit initial fetch to 10
+            limit(10)
         );
         const unsuscribe = onSnapshot(queryMessages, (snapshot) => {
             let messages = [];
