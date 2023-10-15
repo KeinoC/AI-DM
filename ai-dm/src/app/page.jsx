@@ -11,9 +11,12 @@ import RainParticleOverlay from "./components/Weather/rain";
 import Chat from "./components/ChatWindow/Chat";
 
 
+
+
 export default function Home() {
 
     const { currentUser } = useUser();
+
 
     return (
         <layout>

@@ -36,6 +36,13 @@ import {
 
 // testing generic get based on firebase docs
 
+/**
+ * Test Realtime Get
+ * @param {*} adventureId
+ * @param {*} setTokens - callback function to set tokens state
+ */
+
+
 export async function testRealtimeGet(adventureId, setTokens) {
     // console.log(adventureId);
     try {
@@ -306,7 +313,7 @@ export async function realtime(adventureId, updatedTokenData) {
     }
 }
 
-// Listener to automatically update all clients
+/** Listener to automatically update all clients */
 export function realtimeListener(adventureId, callback) {
     const tokensRef = ref(
         realtimeDB,

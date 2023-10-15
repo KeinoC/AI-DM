@@ -10,9 +10,6 @@ export default function AllAdventures() {
         return createAdventureCard(adventure);
     })
 
-
-
-
     return (
         <div className="flex justify-center">
             <div className="flex flex-wrap gap-7 pt-10 max-w-screen-xl">
